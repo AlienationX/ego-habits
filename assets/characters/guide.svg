@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" width="160" height="160" fill="none">
+  <!-- Legs & Shoes -->
+  <path d="M60 120 L60 138 M100 120 L100 138" stroke="#232323" stroke-width="4.5" stroke-linecap="round"/>
+  <ellipse cx="55" cy="140" rx="9" ry="4.5" fill="#232323"/>
+  <ellipse cx="105" cy="140" rx="9" ry="4.5" fill="#232323"/>
+
+  <!-- Arch Body -->
+  <path d="M40 122 V70 C40 42 60 28 80 28 C100 28 120 42 120 70 V122 H102 V72 C102 58 92 50 80 50 C68 50 58 58 58 72 V122 Z" fill="#4FA65A"/>
+
+  <!-- Left Relaxed Arm -->
+  <path d="M42 82 Q30 85 24 94" stroke="#232323" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="23" cy="95" r="4.5" fill="#232323"/>
+
+  <!-- Right Waving Arm -->
+  <path d="M118 78 Q132 75 140 60" stroke="#232323" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="140" cy="59" r="4.5" fill="#232323"/>
+
+  <!-- Cute Face -->
+  <circle cx="73" cy="62" r="3.5" fill="#232323"/>
+  <circle cx="87" cy="62" r="3.5" fill="#232323"/>
+  <path d="M76 70 Q80 75 84 70" stroke="#232323" stroke-width="3" stroke-linecap="round" fill="none"/>
+</svg>

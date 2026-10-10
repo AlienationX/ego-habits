@@ -1,0 +1,8 @@
+<view class="character-box {{animate ? 'animate-gentle' : ''}}" style="width: {{size}}rpx; height: {{size}}rpx;">
+  <image 
+    class="character-img" 
+    src="{{imageSrc}}" 
+    mode="aspectFit" 
+    style="width: 100%; height: 100%;"
+  />
+</view>

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" width="160" height="160" fill="none">
+  <!-- Walking Legs & Feet -->
+  <path d="M52 118 L44 132 M90 118 L96 132" stroke="#232323" stroke-width="4.5" stroke-linecap="round"/>
+  <ellipse cx="40" cy="134" rx="8" ry="4" fill="#232323"/>
+  <ellipse cx="102" cy="134" rx="8" ry="4" fill="#232323"/>
+
+  <!-- Sneaker Sole (White/Cream) -->
+  <path d="M28 114 C28 110 32 108 38 108 H124 C132 108 138 112 136 116 C134 120 128 122 120 122 H36 C30 122 28 118 28 114 Z" fill="#E8F0E4"/>
+
+  <!-- Sneaker Upper (Green) -->
+  <path d="M30 108 C30 92 42 84 56 84 C62 84 66 80 68 74 C72 66 78 64 88 64 C94 64 98 70 102 78 L124 100 C130 106 128 108 124 108 H30 Z" fill="#4FA65A"/>
+
+  <!-- White Lace Details -->
+  <path d="M84 76 L94 72 M88 84 L98 80 M92 92 L102 88" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"/>
+
+  <!-- Face on Sneaker -->
+  <circle cx="54" cy="94" r="3" fill="#232323"/>
+  <circle cx="68" cy="94" r="3" fill="#232323"/>
+  <path d="M57 100 Q61 104 65 100" stroke="#232323" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+</svg>

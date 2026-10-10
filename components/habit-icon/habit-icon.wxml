@@ -1,0 +1,4 @@
+<view 
+  class="icon-mask {{active ? 'icon-active' : ''}}" 
+  style="width: {{size}}rpx; height: {{size}}rpx; -webkit-mask-image: url('{{iconUrl}}'); mask-image: url('{{iconUrl}}'); background-color: {{resolvedColor}};"
+></view>

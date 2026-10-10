@@ -1,0 +1,150 @@
+/**
+ * EgoHabits - Design Tokens & Theme Engine
+ * 8px Rhythm System · Light & Dark Modes
+ */
+
+/* Light Mode (Default Cream Aesthetic) */
+page,
+.theme-light {
+  --ink: #232323;
+  --green: #4FA65A;
+  --green-hover: #43934D;
+  --sage: #DCE8BD;
+  --blue: #CCE6ED;
+  --mint: #BAD8BE;
+  --cream: #F6F5EE;
+
+  /* Semantic Theme Tokens */
+  --bg-page: #F6F5EE;
+  --bg-card: #FFFFFF;
+  --bg-card-hover: #F2F1EA;
+  --bg-card-sage: #DCE8BD;
+  --bg-card-blue: #CCE6ED;
+  --bg-card-mint: #BAD8BE;
+  --bg-pill: #ECEBE2;
+
+  --text-primary: #232323;
+  --text-secondary: #6B7068;
+  --text-muted: #9DA39A;
+  --text-inverse: #FFFFFF;
+
+  --border-light: rgba(35, 35, 35, 0.06);
+  --border-focus: #232323;
+
+  /* Button Tokens */
+  --btn-ink-bg: #232323;
+  --btn-ink-text: #FFFFFF;
+  --btn-green-bg: #4FA65A;
+  --btn-green-text: #FFFFFF;
+  --btn-sage-bg: #DCE8BD;
+  --btn-sage-text: #232323;
+
+  /* Navigation / TabBar Tokens */
+  --tabbar-bg: #232323;
+  --tabbar-text: #8E928A;
+  --tabbar-text-active: #FFFFFF;
+  --tabbar-pill-active: #323532;
+  --tabbar-shadow: 0 16rpx 48rpx rgba(35, 35, 35, 0.16);
+
+  /* Chart & Accent Colors */
+  --chart-bar-bg: #BAD8BE;
+  --chart-bar-active: #232323;
+  --progress-fill: #4FA65A;
+  --progress-bg: #E3E9DC;
+}
+
+/* Dark Mode (Subtle Olive & Midnight Palette) */
+.theme-dark {
+  --ink: #EDEFEA;
+  --green: #54B560;
+  --green-hover: #459E50;
+  --sage: #2C382C;
+  --blue: #1D353E;
+  --mint: #253928;
+  --cream: #181A18;
+
+  /* Semantic Theme Tokens */
+  --bg-page: #171917;
+  --bg-card: #222622;
+  --bg-card-hover: #292E29;
+  --bg-card-sage: #273727;
+  --bg-card-blue: #1D353E;
+  --bg-card-mint: #243827;
+  --bg-pill: #262B26;
+
+  --text-primary: #EDEFEA;
+  --text-secondary: #9EA39B;
+  --text-muted: #6F756C;
+  --text-inverse: #171917;
+
+  --border-light: rgba(255, 255, 255, 0.08);
+  --border-focus: #54B560;
+
+  /* Button Tokens */
+  --btn-ink-bg: #EDEFEA;
+  --btn-ink-text: #171917;
+  --btn-green-bg: #54B560;
+  --btn-green-text: #171917;
+  --btn-sage-bg: #2D3D2D;
+  --btn-sage-text: #EDEFEA;
+
+  /* Navigation / TabBar Tokens */
+  --tabbar-bg: #222722;
+  --tabbar-text: #7A8177;
+  --tabbar-text-active: #EDEFEA;
+  --tabbar-pill-active: #2F362F;
+  --tabbar-shadow: 0 16rpx 48rpx rgba(0, 0, 0, 0.36);
+
+  /* Chart & Accent Colors */
+  --chart-bar-bg: #354837;
+  --chart-bar-active: #EDEFEA;
+  --progress-fill: #54B560;
+  --progress-bg: #263327;
+}
+
+/* System Dark Mode Follower */
+@media (prefers-color-scheme: dark) {
+  page:not(.theme-light) {
+    --ink: #EDEFEA;
+    --green: #54B560;
+    --green-hover: #459E50;
+    --sage: #2C382C;
+    --blue: #1D353E;
+    --mint: #253928;
+    --cream: #181A18;
+
+    --bg-page: #171917;
+    --bg-card: #222622;
+    --bg-card-hover: #292E29;
+    --bg-card-sage: #273727;
+    --bg-card-blue: #1D353E;
+    --bg-card-mint: #243827;
+    --bg-pill: #262B26;
+
+    --text-primary: #EDEFEA;
+    --text-secondary: #9EA39B;
+    --text-muted: #6F756C;
+    --text-inverse: #171917;
+
+    --border-light: rgba(255, 255, 255, 0.08);
+    --border-focus: #54B560;
+
+    --btn-ink-bg: #EDEFEA;
+    --btn-ink-text: #171917;
+    --btn-green-bg: #54B560;
+    --btn-green-text: #171917;
+    --btn-sage-bg: #2D3D2D;
+    --btn-sage-text: #EDEFEA;
+
+    --tabbar-bg: #222722;
+    --tabbar-text: #7A8177;
+    --tabbar-text-active: #EDEFEA;
+    --tabbar-pill-active: #2F362F;
+    --tabbar-shadow: 0 16rpx 48rpx rgba(0, 0, 0, 0.36);
+
+    --chart-bar-bg: #354837;
+    --chart-bar-active: #EDEFEA;
+    --progress-fill: #54B560;
+    --progress-bg: #263327;
+  }
+}

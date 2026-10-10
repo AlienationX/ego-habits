@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" width="160" height="160" fill="none">
+  <!-- Legs & Feet -->
+  <path d="M68 122 L68 136 M92 122 L92 136" stroke="#232323" stroke-width="4.5" stroke-linecap="round"/>
+  <ellipse cx="64" cy="138" rx="8" ry="4" fill="#232323"/>
+  <ellipse cx="96" cy="138" rx="8" ry="4" fill="#232323"/>
+
+  <!-- Puffy Pillow Body (Cream White with indented soft corners) -->
+  <path d="M46 54 C46 48 54 46 62 48 C70 50 90 50 98 48 C106 46 114 48 114 54 C112 62 112 78 114 86 C114 92 106 94 98 92 C90 90 70 90 62 92 C54 94 46 92 46 86 C48 78 48 62 46 54 Z" transform="scale(1.05) translate(-4, 12)" fill="#F5F5EA"/>
+
+  <!-- Left Resting Arm -->
+  <path d="M44 86 Q34 90 30 98" stroke="#232323" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="29" cy="99" r="4" fill="#232323"/>
+
+  <!-- Right Waving Arm -->
+  <path d="M116 82 Q128 76 134 64" stroke="#232323" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="135" cy="63" r="4" fill="#232323"/>
+
+  <!-- Peaceful Closed Eyes (Down-arcs) & Sweet Smile -->
+  <path d="M68 76 Q72 80 76 76" stroke="#232323" stroke-width="3" stroke-linecap="round" fill="none"/>
+  <path d="M84 76 Q88 80 92 76" stroke="#232323" stroke-width="3" stroke-linecap="round" fill="none"/>
+  <path d="M76 84 Q80 88 84 84" stroke="#232323" stroke-width="2.8" stroke-linecap="round" fill="none"/>
+</svg>

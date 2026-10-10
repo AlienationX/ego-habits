@@ -1,0 +1,15 @@
+# OS Files
+.DS_Store
+Thumbs.db
+
+# WeChat DevTools private config
+project.private.config.json
+
+# Node dependencies (if any added later)
+node_modules/
+miniprogram_npm/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

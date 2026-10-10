@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" width="160" height="160" fill="none">
+  <!-- Legs & Feet -->
+  <path d="M68 126 L68 140 M92 126 L92 140" stroke="#232323" stroke-width="4.5" stroke-linecap="round"/>
+  <ellipse cx="64" cy="142" rx="8" ry="4" fill="#232323"/>
+  <ellipse cx="96" cy="142" rx="8" ry="4" fill="#232323"/>
+
+  <!-- Top & Bottom Wooden Plates -->
+  <rect x="46" y="38" width="68" height="10" rx="5" fill="#4FA65A"/>
+  <rect x="46" y="118" width="68" height="10" rx="5" fill="#4FA65A"/>
+
+  <!-- Clear Glass Hourglass Bulb -->
+  <path d="M54 48 C54 72 74 80 77 83 C74 86 54 94 54 118 H106 C106 94 86 86 83 83 C86 80 106 72 106 48 Z" fill="#E8F4F8"/>
+
+  <!-- Green Sand (Top & Bottom) -->
+  <path d="M60 52 C60 66 74 72 80 76 C86 72 100 66 100 52 Z" fill="#4FA65A"/>
+  <path d="M57 118 C57 106 70 96 80 96 C90 96 103 106 103 118 Z" fill="#4FA65A"/>
+
+  <!-- Falling Sand Droplet -->
+  <circle cx="80" cy="85" r="2" fill="#4FA65A"/>
+
+  <!-- Left Resting Arm -->
+  <path d="M52 88 Q40 92 34 100" stroke="#232323" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="33" cy="101" r="4" fill="#232323"/>
+
+  <!-- Right Waving Arm -->
+  <path d="M108 84 Q122 78 128 66" stroke="#232323" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="129" cy="65" r="4" fill="#232323"/>
+
+  <!-- Smiling Face on Lower Chamber -->
+  <circle cx="74" cy="106" r="3" fill="#232323"/>
+  <circle cx="86" cy="106" r="3" fill="#232323"/>
+  <path d="M76 112 Q80 115 84 112" stroke="#232323" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+</svg>

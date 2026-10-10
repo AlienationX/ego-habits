@@ -1,0 +1,11 @@
+.icon-mask {
+  display: inline-block;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+  transition: background-color 0.2s ease;
+  vertical-align: middle;
+}

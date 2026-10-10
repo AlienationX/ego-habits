@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" width="160" height="160" fill="none">
+  <!-- Legs & Feet -->
+  <path d="M68 122 L68 136 M92 122 L92 136" stroke="#232323" stroke-width="4.5" stroke-linecap="round"/>
+  <ellipse cx="64" cy="138" rx="8" ry="4" fill="#232323"/>
+  <ellipse cx="96" cy="138" rx="8" ry="4" fill="#232323"/>
+
+  <!-- Tapered Glass Body -->
+  <path d="M52 46 L60 120 C60 123 63 125 66 125 H94 C97 125 100 123 100 120 L108 46 C108 43 105 40 102 40 H58 C55 40 52 43 52 46 Z" fill="#BAE6F2"/>
+
+  <!-- Water Fill inside -->
+  <path d="M56 78 L61 121 C61 123 63 124 66 124 H94 C97 124 99 123 99 121 L104 78 Z" fill="#4AAFE4"/>
+
+  <!-- Left Relaxed Arm -->
+  <path d="M54 84 Q44 88 38 96" stroke="#232323" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="37" cy="97" r="4" fill="#232323"/>
+
+  <!-- Right Waving Arm -->
+  <path d="M106 82 Q120 78 126 66" stroke="#232323" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="127" cy="65" r="4" fill="#232323"/>
+
+  <!-- Smiling Face -->
+  <circle cx="73" cy="74" r="3.2" fill="#232323"/>
+  <circle cx="87" cy="74" r="3.2" fill="#232323"/>
+  <path d="M75 82 Q80 88 85 82" stroke="#232323" stroke-width="3" stroke-linecap="round" fill="none"/>
+</svg>
