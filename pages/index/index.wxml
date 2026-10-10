@@ -1,28 +1,68 @@
-<!--index.wxml-->
-<navigation-bar title="Weixin" back="{{false}}" color="black" background="#FFF"></navigation-bar>
-<scroll-view class="scrollarea" scroll-y type="list">
-  <view class="container">
-    <view class="userinfo">
-      <block wx:if="{{canIUseNicknameComp && !hasUserInfo}}">
-        <button class="avatar-wrapper" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">
-          <image class="avatar" src="{{userInfo.avatarUrl}}"></image>
-        </button>
-        <view class="nickname-wrapper">
-          <text class="nickname-label">昵称</text>
-          <input type="nickname" class="nickname-input" placeholder="请输入昵称" bind:change="onInputChange" />
+<!-- pages/index/index.wxml - Today Tab -->
+<view class="page-container {{themeClass}}">
+  <scroll-view class="content-scroll" scroll-y enable-passive>
+    <view class="page-body safe-tabbar-space">
+      
+      <!-- Top Header & Date Navigation -->
+      <view class="header-section">
+        <text class="date-label">{{dateString}}</text>
+        <text class="greeting-title">{{tGreeting}}</text>
+      </view>
+
+      <!-- Hero "Start small." Card -->
+      <view class="hero-card">
+        <view class="hero-content">
+          <text class="hero-title">{{tHeroTitle}}</text>
+          <text class="hero-sub">{{tHeroSub}}</text>
+          <view class="btn-moru btn-green hero-btn" bindtap="onGetStarted">
+            <text class="hero-btn-text">{{tGetStarted}}</text>
+          </view>
         </view>
-      </block>
-      <block wx:elif="{{!hasUserInfo}}">
-        <button wx:if="{{canIUseGetUserProfile}}" bindtap="getUserProfile"> 获取头像昵称 </button>
-        <view wx:else> 请使用2.10.4及以上版本基础库 </view>
-      </block>
-      <block wx:else>
-        <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
-        <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-      </block>
+        <view class="hero-character-wrap">
+          <habit-character name="guide" size="180" animate="{{true}}" />
+        </view>
+      </view>
+
+      <!-- Section Title: A little care, today -->
+      <view class="section-header">
+        <text class="section-title">{{tSectionTitle}}</text>
+      </view>
+
+      <!-- Today's Habits List -->
+      <view class="habit-list">
+        <view 
+          wx:for="{{todayHabits}}" 
+          wx:key="id" 
+          class="habit-card card-tint-{{item.tint}} {{item.completed ? 'card-completed' : ''}}"
+          data-id="{{item.id}}"
+          bindtap="onOpenHabit"
+        >
+          <!-- Left Character -->
+          <view class="card-character">
+            <habit-character name="{{item.character}}" size="110" />
+          </view>
+
+          <!-- Middle Info -->
+          <view class="card-info">
+            <view class="card-title-row">
+              <text class="card-title">{{item.title}}</text>
+              <view wx:if="{{item.completed}}" class="badge-done">
+                <text class="badge-done-text">✓</text>
+              </view>
+            </view>
+            <text class="card-sub">{{item.sub}}</text>
+          </view>
+
+          <!-- Right Action / Arrow -->
+          <view class="card-action">
+            <habit-icon name="arrow" size="32" color="#6B7068" />
+          </view>
+        </view>
+      </view>
+
     </view>
-    <view class="usermotto">
-      <text class="user-motto">{{motto}}</text>
-    </view>
-  </view>
-</scroll-view>
+  </scroll-view>
+
+  <!-- Bottom Floating TabBar -->
+  <custom-tabbar current="today" />
+</view>

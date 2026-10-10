@@ -1,0 +1,6 @@
+{
+  "component": true,
+  "usingComponents": {
+    "habit-icon": "/components/habit-icon/habit-icon"
+  }
+}

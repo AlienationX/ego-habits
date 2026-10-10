@@ -1,0 +1,320 @@
+/* pages/you/you.wxss */
+.content-scroll {
+  flex: 1;
+  height: 100vh;
+}
+
+.page-body {
+  padding: 40rpx 40rpx 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+.header-section {
+  padding-top: calc(70rpx + env(safe-area-inset-top));
+  margin-bottom: 32rpx;
+  display: flex;
+  flex-direction: column;
+}
+
+.tag-label {
+  font-size: 24rpx;
+  line-height: 32rpx;
+  font-weight: 600;
+  letter-spacing: 2rpx;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 8rpx;
+}
+
+.headline-title {
+  font-size: 48rpx;
+  line-height: 60rpx;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -0.5rpx;
+}
+
+/* Profile Card */
+.profile-card {
+  background-color: var(--bg-card-sage);
+  border-radius: 36rpx;
+  padding: 44rpx 36rpx 36rpx;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 40rpx;
+}
+
+.profile-top-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 28rpx;
+  margin-bottom: 32rpx;
+}
+
+.profile-avatar-wrap {
+  width: 130rpx;
+  height: 130rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-nickname {
+  font-size: 38rpx;
+  line-height: 48rpx;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 4rpx;
+}
+
+.user-handle {
+  font-size: 24rpx;
+  line-height: 32rpx;
+  color: var(--text-secondary);
+}
+
+.profile-divider {
+  height: 1rpx;
+  background-color: rgba(35, 35, 35, 0.08);
+  width: 100%;
+  margin-bottom: 28rpx;
+}
+
+.profile-stats-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  gap: 80rpx;
+  padding-left: 8rpx;
+}
+
+.stat-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-num {
+  font-size: 44rpx;
+  line-height: 52rpx;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 4rpx;
+}
+
+.stat-lbl {
+  font-size: 22rpx;
+  line-height: 30rpx;
+  color: var(--text-secondary);
+}
+
+/* Section Group */
+.section-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 36rpx;
+}
+
+.group-title {
+  font-size: 30rpx;
+  line-height: 40rpx;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 20rpx;
+}
+
+.milestone-box {
+  background-color: var(--bg-card-sage);
+  border-radius: 32rpx;
+  padding: 32rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 24rpx;
+}
+
+.milestone-badge-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.milestone-box-info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.milestone-badge-name {
+  font-size: 28rpx;
+  line-height: 36rpx;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 4rpx;
+}
+
+.milestone-badge-desc {
+  font-size: 24rpx;
+  line-height: 34rpx;
+  color: var(--text-secondary);
+}
+
+/* Settings List */
+.settings-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.setting-item {
+  background-color: var(--bg-card);
+  border-radius: 28rpx;
+  padding: 32rpx 36rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.03);
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.setting-item:active {
+  transform: scale(0.985);
+}
+
+.setting-item-left {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 20rpx;
+}
+
+.setting-name {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* Preferences Modal */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease;
+}
+
+.modal-card {
+  width: 100%;
+  max-width: 600px;
+  background-color: var(--bg-page);
+  border-top-left-radius: 40rpx;
+  border-top-right-radius: 40rpx;
+  padding: 44rpx 40rpx calc(48rpx + env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 -8rpx 32rpx rgba(0, 0, 0, 0.12);
+  animation: slideUp 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.modal-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 36rpx;
+}
+
+.modal-title {
+  font-size: 36rpx;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.modal-close {
+  font-size: 32rpx;
+  color: var(--text-muted);
+  padding: 8rpx 16rpx;
+}
+
+.pref-row {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 32rpx;
+  gap: 16rpx;
+}
+
+.pref-label {
+  font-size: 26rpx;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.pref-options {
+  display: flex;
+  flex-direction: row;
+  gap: 16rpx;
+}
+
+.pref-opt-pill {
+  flex: 1;
+  padding: 20rpx 0;
+  border-radius: 999rpx;
+  background-color: var(--bg-pill);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.pref-opt-active {
+  background-color: var(--btn-ink-bg);
+}
+
+.pref-opt-text {
+  font-size: 26rpx;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.pref-opt-active .pref-opt-text {
+  color: var(--btn-ink-text);
+}
+
+.pref-btn-reset {
+  margin-top: 24rpx;
+  padding: 24rpx 0;
+  border-radius: 999rpx;
+  background-color: var(--bg-card);
+  border: 1rpx solid var(--border-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pref-btn-reset-text {
+  font-size: 26rpx;
+  font-weight: 600;
+  color: #D34B4B;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}

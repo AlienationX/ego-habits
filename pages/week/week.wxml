@@ -1,0 +1,64 @@
+<!-- pages/week/week.wxml - Weekly Reflection -->
+<view class="page-container {{themeClass}}">
+  <scroll-view class="content-scroll" scroll-y enable-passive>
+    <view class="page-body safe-tabbar-space">
+      
+      <!-- Top Title -->
+      <view class="header-section">
+        <text class="date-label">{{tDateRange}}</text>
+        <text class="headline-title">{{tHeadline}}</text>
+      </view>
+
+      <!-- 7-Day Bar Chart Card -->
+      <view class="chart-card">
+        <view class="chart-summary">
+          <text class="chart-number">{{tCompletedNumber}}</text>
+          <text class="chart-sub-label">{{tCompletedLabel}}</text>
+        </view>
+
+        <!-- Bar Graph -->
+        <view class="bars-container">
+          <view wx:for="{{weeklyBars}}" wx:key="day" class="bar-col">
+            <text class="bar-count-label">{{item.count}}</text>
+            <view class="bar-track">
+              <view 
+                class="bar-fill {{item.active ? 'bar-fill-active' : ''}}" 
+                style="height: {{item.count * 40}}rpx;"
+              ></view>
+            </view>
+            <text class="bar-day-label">{{item.day}}</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- Milestone Card (A week of showing up.) -->
+      <view class="milestone-card">
+        <view class="milestone-info">
+          <text class="milestone-title">{{tMilestoneTitle}}</text>
+          <text class="milestone-days">{{tMilestoneDays}}</text>
+        </view>
+        <view class="milestone-character">
+          <habit-character name="medal" size="140" animate="{{true}}" />
+        </view>
+      </view>
+
+      <!-- Breakdown: What made your week -->
+      <view class="breakdown-section">
+        <text class="breakdown-title">{{tBreakdownTitle}}</text>
+        
+        <view class="breakdown-pill pill-blue">
+          <text class="breakdown-cat-name">{{tCatWater}}</text>
+          <text class="breakdown-count">{{tCatWaterCount}}</text>
+        </view>
+
+        <view class="breakdown-pill pill-sage">
+          <text class="breakdown-cat-name">{{tCatMove}}</text>
+          <text class="breakdown-count">{{tCatMoveCount}}</text>
+        </view>
+      </view>
+
+    </view>
+  </scroll-view>
+
+  <custom-tabbar current="week" />
+</view>

@@ -1,0 +1,50 @@
+<!-- pages/habit-complete/habit-complete.wxml -->
+<view class="page-container {{themeClass}}">
+  <scroll-view class="content-scroll" scroll-y enable-passive>
+    <view class="page-body safe-bottom">
+      
+      <!-- Top Title -->
+      <view class="nav-header">
+        <text class="tag-label">{{tTag}}</text>
+        <text class="headline-title">{{tHeadline}}</text>
+      </view>
+
+      <!-- Center Celebration Character -->
+      <view class="celebration-center">
+        <habit-character name="celebrate" size="260" animate="{{true}}" />
+      </view>
+
+      <!-- Metric Count & Progress Bar -->
+      <view class="metric-section">
+        <text class="metric-val">{{metricAdded}}</text>
+        <text class="metric-label">{{tMetricLabel}}</text>
+        
+        <view class="progress-track">
+          <view class="progress-bar {{barAnimated ? 'progress-bar-fill' : ''}}"></view>
+        </view>
+      </view>
+
+      <!-- Encouragement Card -->
+      <view class="encouragement-card">
+        <text class="card-title">{{tCardTitle}}</text>
+        <text class="card-sub">{{tCardSub}}</text>
+      </view>
+
+      <!-- Dual Action Buttons -->
+      <view class="actions-row">
+        <view class="btn-moru btn-ink action-btn" bindtap="onBackToToday">
+          <text class="action-btn-text">{{tBtnBack}}</text>
+        </view>
+        <view class="btn-moru btn-sage action-btn" bindtap="onViewWeek">
+          <text class="action-btn-text btn-text-dark">{{tBtnViewWeek}}</text>
+        </view>
+      </view>
+
+      <!-- Slogan Footer -->
+      <view class="footer-wrap">
+        <text class="footer-text">{{tFooterText}}</text>
+      </view>
+
+    </view>
+  </scroll-view>
+</view>

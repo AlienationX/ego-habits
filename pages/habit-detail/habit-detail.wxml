@@ -1,0 +1,97 @@
+<!-- pages/habit-detail/habit-detail.wxml -->
+<view class="page-container {{themeClass}}">
+  <scroll-view class="content-scroll" scroll-y enable-passive>
+    <view class="page-body safe-tabbar-space">
+      
+      <!-- Top Navigation & Title -->
+      <view class="nav-header">
+        <view class="back-btn" bindtap="onGoBack">
+          <habit-icon name="arrow" size="32" color="#232323" style="transform: rotate(180deg);" />
+        </view>
+        <view class="header-titles">
+          <text class="tag-label">{{tTag}}</text>
+          <text class="headline-title">{{tHeadline}}</text>
+        </view>
+      </view>
+
+      <!-- Hero Card (One glass. A small reset.) -->
+      <view class="hero-card card-tint-{{habit.tint || 'blue'}}">
+        <view class="hero-text-wrap">
+          <text class="hero-title">{{tHeroTitle}}</text>
+          <text class="hero-sub">{{tHeroSub}}</text>
+        </view>
+        <view class="hero-character-wrap">
+          <habit-character name="{{habit.character || 'water'}}" size="170" animate="{{true}}" />
+        </view>
+      </view>
+
+      <!-- 2-Column Metrics -->
+      <view class="metrics-row">
+        <view class="metric-col">
+          <text class="metric-val">{{habit.metricAmount || tMetricAmount}}</text>
+          <text class="metric-label">{{tMetricAmountLabel}}</text>
+        </view>
+        <view class="metric-col">
+          <text class="metric-val">{{habit.metricRhythm || tMetricRhythm}}</text>
+          <text class="metric-label">{{tMetricRhythmLabel}}</text>
+        </view>
+      </view>
+
+      <view class="divider-line"></view>
+
+      <!-- Guide: Keep it easy -->
+      <view class="guide-section">
+        <text class="guide-title">{{tGuideTitle}}</text>
+        
+        <view class="steps-list">
+          <!-- Step 1 -->
+          <view class="step-item">
+            <view class="step-badge">
+              <text class="step-num">1</text>
+            </view>
+            <view class="step-content">
+              <text class="step-title">{{tStep1Title}}</text>
+              <text class="step-desc">{{tStep1Desc}}</text>
+            </view>
+          </view>
+
+          <!-- Step 2 -->
+          <view class="step-item">
+            <view class="step-badge">
+              <text class="step-num">2</text>
+            </view>
+            <view class="step-content">
+              <text class="step-title">{{tStep2Title}}</text>
+              <text class="step-desc">{{tStep2Desc}}</text>
+            </view>
+          </view>
+
+          <!-- Step 3 -->
+          <view class="step-item">
+            <view class="step-badge">
+              <text class="step-num">3</text>
+            </view>
+            <view class="step-content">
+              <text class="step-title">{{tStep3Title}}</text>
+              <text class="step-desc">{{tStep3Desc}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <!-- CTA Button: Log one glass -->
+      <view class="cta-wrap">
+        <view 
+          class="btn-moru btn-ink cta-btn {{isCompleted ? 'cta-completed' : ''}}"
+          bindtap="onLogHabit"
+        >
+          <text class="cta-btn-text">{{isCompleted ? tAlreadyLogged : tLogButton}}</text>
+        </view>
+      </view>
+
+    </view>
+  </scroll-view>
+
+  <!-- Bottom Floating TabBar -->
+  <custom-tabbar current="today" />
+</view>

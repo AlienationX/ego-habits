@@ -1,0 +1,141 @@
+/* pages/habits/habits.wxss */
+.content-scroll {
+  flex: 1;
+  height: 100vh;
+}
+
+.page-body {
+  padding: 40rpx 40rpx 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+.header-section {
+  padding-top: calc(70rpx + env(safe-area-inset-top));
+  margin-bottom: 32rpx;
+  display: flex;
+  flex-direction: column;
+}
+
+.tag-label {
+  font-size: 24rpx;
+  line-height: 32rpx;
+  font-weight: 600;
+  letter-spacing: 2rpx;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 8rpx;
+}
+
+.headline-title {
+  font-size: 48rpx;
+  line-height: 60rpx;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -0.5rpx;
+}
+
+/* Filter Pills */
+.filters-row {
+  display: flex;
+  flex-direction: row;
+  gap: 16rpx;
+  margin-bottom: 40rpx;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.filter-pill {
+  padding: 14rpx 36rpx;
+  border-radius: 999rpx;
+  background-color: var(--bg-pill);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.filter-pill-active {
+  background-color: var(--btn-ink-bg);
+}
+
+.filter-pill-text {
+  font-size: 26rpx;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.filter-pill-active .filter-pill-text {
+  color: var(--btn-ink-text);
+}
+
+/* 2-Column Grid */
+.habits-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24rpx;
+}
+
+.grid-card {
+  border-radius: 36rpx;
+  padding: 36rpx 24rpx 28rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 310rpx;
+  transition: transform 0.15s ease;
+  cursor: pointer;
+}
+
+.grid-card:active {
+  transform: scale(0.97);
+}
+
+.card-tint-blue {
+  background-color: var(--bg-card-blue);
+}
+
+.card-tint-mint {
+  background-color: var(--bg-card-mint);
+}
+
+.card-tint-sage {
+  background-color: var(--bg-card-sage);
+}
+
+.card-tint-cream {
+  background-color: var(--bg-card-cream);
+}
+
+.grid-character-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20rpx;
+}
+
+.grid-card-info {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-left: 8rpx;
+}
+
+.grid-habit-name {
+  font-size: 28rpx;
+  line-height: 36rpx;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 4rpx;
+}
+
+.grid-habit-amount {
+  font-size: 22rpx;
+  line-height: 30rpx;
+  color: var(--text-secondary);
+}

@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "habit-character": "/components/habit-character/habit-character"
+  }
+}

@@ -1,0 +1,48 @@
+<!-- pages/habits/habits.wxml - Habit Library -->
+<view class="page-container {{themeClass}}">
+  <scroll-view class="content-scroll" scroll-y enable-passive>
+    <view class="page-body safe-tabbar-space">
+      
+      <!-- Top Title -->
+      <view class="header-section">
+        <text class="tag-label">{{tLibraryTitle}}</text>
+        <text class="headline-title">{{tLibraryHeadline}}</text>
+      </view>
+
+      <!-- Category Filter Pills -->
+      <view class="filters-row">
+        <view 
+          wx:for="{{categories}}" 
+          wx:key="key" 
+          class="filter-pill {{currentCategory === item.key ? 'filter-pill-active' : ''}}"
+          data-key="{{item.key}}"
+          bindtap="onSelectCategory"
+        >
+          <text class="filter-pill-text">{{item.label}}</text>
+        </view>
+      </view>
+
+      <!-- 2-Column Habit Grid -->
+      <view class="habits-grid">
+        <view 
+          wx:for="{{filteredHabits}}" 
+          wx:key="id" 
+          class="grid-card card-tint-{{item.tint}}"
+          data-id="{{item.id}}"
+          bindtap="onSelectHabit"
+        >
+          <view class="grid-character-wrap">
+            <habit-character name="{{item.character}}" size="140" animate="{{true}}" />
+          </view>
+          <view class="grid-card-info">
+            <text class="grid-habit-name">{{item.name}}</text>
+            <text class="grid-habit-amount">{{item.amount}}</text>
+          </view>
+        </view>
+      </view>
+
+    </view>
+  </scroll-view>
+
+  <custom-tabbar current="habits" />
+</view>

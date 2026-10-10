@@ -1,5 +1,7 @@
 {
   "usingComponents": {
-    "navigation-bar": "/components/navigation-bar/navigation-bar"
+    "habit-character": "/components/habit-character/habit-character",
+    "habit-icon": "/components/habit-icon/habit-icon",
+    "custom-tabbar": "/components/custom-tabbar/custom-tabbar"
   }
 }

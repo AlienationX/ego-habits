@@ -1,0 +1,143 @@
+<!-- pages/you/you.wxml - Your Space -->
+<view class="page-container {{themeClass}}">
+  <scroll-view class="content-scroll" scroll-y enable-passive>
+    <view class="page-body safe-tabbar-space">
+      
+      <!-- Top Title -->
+      <view class="header-section">
+        <text class="tag-label">{{tTag}}</text>
+        <text class="headline-title">{{tHeadline}}</text>
+      </view>
+
+      <!-- Profile Card -->
+      <view class="profile-card">
+        <view class="profile-top-row">
+          <view class="profile-avatar-wrap">
+            <habit-character name="avatar" size="130" animate="{{true}}" />
+          </view>
+          <view class="profile-user-info">
+            <text class="user-nickname">{{profile.nickname}}</text>
+            <text class="user-handle">{{profile.handle}}</text>
+          </view>
+        </view>
+
+        <view class="profile-divider"></view>
+
+        <view class="profile-stats-row">
+          <view class="stat-col">
+            <text class="stat-num">{{profile.totalCompleted}}</text>
+            <text class="stat-lbl">{{tStatCompletedLabel}}</text>
+          </view>
+          <view class="stat-col">
+            <text class="stat-num">{{profile.streakDays}}</text>
+            <text class="stat-lbl">{{tStatStreakLabel}}</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- Milestone Section -->
+      <view class="section-group">
+        <text class="group-title">{{tMilestoneSection}}</text>
+        <view class="milestone-box">
+          <view class="milestone-badge-wrap">
+            <habit-character name="medal" size="100" />
+          </view>
+          <view class="milestone-box-info">
+            <text class="milestone-badge-name">{{tBadgeTitle}}</text>
+            <text class="milestone-badge-desc">{{tBadgeDesc}}</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- Settings Section: On your own terms -->
+      <view class="section-group">
+        <text class="group-title">{{tSettingsSection}}</text>
+        
+        <view class="settings-list">
+          <view class="setting-item" bindtap="onTapReminders">
+            <view class="setting-item-left">
+              <habit-icon name="bell" size="36" color="#232323" />
+              <text class="setting-name">{{tGentleReminders}}</text>
+            </view>
+            <habit-icon name="arrow" size="28" color="#9DA39A" />
+          </view>
+
+          <view class="setting-item" bindtap="onOpenPreferences">
+            <view class="setting-item-left">
+              <habit-icon name="settings" size="36" color="#232323" />
+              <text class="setting-name">{{tPreferences}}</text>
+            </view>
+            <habit-icon name="arrow" size="28" color="#9DA39A" />
+          </view>
+        </view>
+      </view>
+
+    </view>
+  </scroll-view>
+
+  <!-- Preferences Modal -->
+  <view wx:if="{{showPrefModal}}" class="modal-overlay" bindtap="onClosePreferences">
+    <view class="modal-card" catchtap="preventProp">
+      <view class="modal-header">
+        <text class="modal-title">{{tPrefTitle}}</text>
+        <text class="modal-close" bindtap="onClosePreferences">✕</text>
+      </view>
+
+      <!-- Language Switch -->
+      <view class="pref-row">
+        <text class="pref-label">{{tLanguage}}</text>
+        <view class="pref-options">
+          <view 
+            class="pref-opt-pill {{currentLang === 'en' ? 'pref-opt-active' : ''}}"
+            bindtap="onSelectLanguage"
+            data-lang="en"
+          >
+            <text class="pref-opt-text">English</text>
+          </view>
+          <view 
+            class="pref-opt-pill {{currentLang === 'zh' ? 'pref-opt-active' : ''}}"
+            bindtap="onSelectLanguage"
+            data-lang="zh"
+          >
+            <text class="pref-opt-text">中文</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- Theme Switch -->
+      <view class="pref-row">
+        <text class="pref-label">{{tTheme}}</text>
+        <view class="pref-options">
+          <view 
+            class="pref-opt-pill {{currentTheme === 'light' ? 'pref-opt-active' : ''}}"
+            bindtap="onSelectTheme"
+            data-theme="light"
+          >
+            <text class="pref-opt-text">Light</text>
+          </view>
+          <view 
+            class="pref-opt-pill {{currentTheme === 'dark' ? 'pref-opt-active' : ''}}"
+            bindtap="onSelectTheme"
+            data-theme="dark"
+          >
+            <text class="pref-opt-text">Dark</text>
+          </view>
+          <view 
+            class="pref-opt-pill {{currentTheme === 'auto' ? 'pref-opt-active' : ''}}"
+            bindtap="onSelectTheme"
+            data-theme="auto"
+          >
+            <text class="pref-opt-text">Auto</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- Reset Demo Data -->
+      <view class="pref-btn-reset" bindtap="onResetDemo">
+        <text class="pref-btn-reset-text">{{tResetData}}</text>
+      </view>
+    </view>
+  </view>
+
+  <custom-tabbar current="you" />
+</view>

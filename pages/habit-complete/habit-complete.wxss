@@ -1,0 +1,158 @@
+/* pages/habit-complete/habit-complete.wxss */
+.content-scroll {
+  flex: 1;
+  height: 100vh;
+}
+
+.page-body {
+  padding: 40rpx 40rpx 60rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Nav Header */
+.nav-header {
+  padding-top: calc(70rpx + env(safe-area-inset-top));
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 30rpx;
+}
+
+.tag-label {
+  font-size: 24rpx;
+  line-height: 32rpx;
+  font-weight: 600;
+  letter-spacing: 2rpx;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 8rpx;
+}
+
+.headline-title {
+  font-size: 48rpx;
+  line-height: 58rpx;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -0.5rpx;
+}
+
+/* Center Celebration Character */
+.celebration-center {
+  margin: 30rpx 0 20rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Metric Section */
+.metric-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 40rpx;
+}
+
+.metric-val {
+  font-size: 56rpx;
+  line-height: 64rpx;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -1rpx;
+  margin-bottom: 6rpx;
+}
+
+.metric-label {
+  font-size: 26rpx;
+  line-height: 34rpx;
+  color: var(--text-secondary);
+  margin-bottom: 28rpx;
+}
+
+/* Progress Track & Fill */
+.progress-track {
+  width: 100%;
+  height: 12rpx;
+  background-color: var(--progress-bg);
+  border-radius: 999rpx;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-bar {
+  height: 100%;
+  width: 0%;
+  background-color: var(--progress-fill);
+  border-radius: 999rpx;
+  transition: width 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.progress-bar-fill {
+  width: 100%;
+}
+
+/* Encouragement Card */
+.encouragement-card {
+  width: 100%;
+  background-color: var(--bg-card-sage);
+  border-radius: 32rpx;
+  padding: 36rpx 36rpx;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 48rpx;
+}
+
+.card-title {
+  font-size: 30rpx;
+  line-height: 40rpx;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 8rpx;
+}
+
+.card-sub {
+  font-size: 24rpx;
+  line-height: 36rpx;
+  color: var(--text-secondary);
+  white-space: pre-line;
+}
+
+/* Dual Action Buttons */
+.actions-row {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 24rpx;
+  margin-bottom: 48rpx;
+}
+
+.action-btn {
+  flex: 1;
+  padding: 28rpx 0;
+  border-radius: 999rpx;
+}
+
+.action-btn-text {
+  font-size: 28rpx;
+  font-weight: 700;
+}
+
+.btn-text-dark {
+  color: #232323;
+}
+
+/* Footer Slogan */
+.footer-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 20rpx;
+}
+
+.footer-text {
+  font-size: 24rpx;
+  line-height: 32rpx;
+  color: var(--text-muted);
+}

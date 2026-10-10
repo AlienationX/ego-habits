@@ -1,63 +1,208 @@
-/**index.wxss**/
-page {
+/* pages/index/index.wxss */
+.content-scroll {
+  flex: 1;
   height: 100vh;
+}
+
+.page-body {
+  padding: 40rpx 40rpx 0;
   display: flex;
   flex-direction: column;
 }
 
-.scrollarea {
-  flex: 1;
-  overflow-y: hidden;
-}
-
-.userinfo {
+/* Header Section */
+.header-section {
+  padding-top: calc(70rpx + env(safe-area-inset-top));
+  margin-bottom: 32rpx;
   display: flex;
   flex-direction: column;
+}
+
+.date-label {
+  font-size: 24rpx;
+  line-height: 32rpx;
+  font-weight: 600;
+  letter-spacing: 2rpx;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 8rpx;
+}
+
+.greeting-title {
+  font-size: 52rpx;
+  line-height: 64rpx;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -1rpx;
+}
+
+/* Hero Card (Start small.) */
+.hero-card {
+  position: relative;
+  background-color: var(--bg-card-sage);
+  border-radius: 36rpx;
+  padding: 48rpx 40rpx;
+  display: flex;
+  flex-direction: row;
   align-items: center;
-  color: #aaa;
-  width: 80%;
-}
-
-.userinfo-avatar {
+  justify-content: space-between;
+  margin-bottom: 48rpx;
   overflow: hidden;
-  width: 128rpx;
-  height: 128rpx;
-  margin: 20rpx;
-  border-radius: 50%;
+  box-shadow: 0 4rpx 20rpx rgba(79, 166, 90, 0.08);
 }
 
-.usermotto {
-  margin-top: 200px;
-}
-
-.avatar-wrapper {
-  padding: 0;
-  width: 56px !important;
-  border-radius: 8px;
-  margin-top: 40px;
-  margin-bottom: 40px;
-}
-
-.avatar {
-  display: block;
-  width: 56px;
-  height: 56px;
-}
-
-.nickname-wrapper {
+.hero-content {
   display: flex;
-  width: 100%;
-  padding: 16px;
-  box-sizing: border-box;
-  border-top: .5px solid rgba(0, 0, 0, 0.1);
-  border-bottom: .5px solid rgba(0, 0, 0, 0.1);
-  color: black;
+  flex-direction: column;
+  z-index: 2;
+  max-width: 55%;
 }
 
-.nickname-label {
-  width: 105px;
+.hero-title {
+  font-size: 52rpx;
+  line-height: 58rpx;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -1rpx;
+  white-space: pre-line;
+  margin-bottom: 16rpx;
 }
 
-.nickname-input {
+.hero-sub {
+  font-size: 26rpx;
+  line-height: 38rpx;
+  color: var(--text-secondary);
+  white-space: pre-line;
+  margin-bottom: 32rpx;
+}
+
+.hero-btn {
+  align-self: flex-start;
+  padding: 20rpx 40rpx;
+  font-size: 26rpx;
+}
+
+.hero-btn-text {
+  font-weight: 600;
+  color: #FFFFFF;
+}
+
+.hero-character-wrap {
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: -10rpx;
+}
+
+/* Section Header */
+.section-header {
+  margin-bottom: 24rpx;
+}
+
+.section-title {
+  font-size: 34rpx;
+  line-height: 44rpx;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+/* Habit List */
+.habit-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.habit-card {
+  border-radius: 32rpx;
+  padding: 28rpx 32rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+  cursor: pointer;
+}
+
+.habit-card:active {
+  transform: scale(0.985);
+  opacity: 0.9;
+}
+
+/* Card Tint Backgrounds */
+.card-tint-blue {
+  background-color: var(--bg-card-blue);
+}
+
+.card-tint-mint {
+  background-color: var(--bg-card-mint);
+}
+
+.card-tint-sage {
+  background-color: var(--bg-card-sage);
+}
+
+.card-character {
+  width: 120rpx;
+  height: 120rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 24rpx;
+  flex-shrink: 0;
+}
+
+.card-info {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-title-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 6rpx;
+}
+
+.card-title {
+  font-size: 30rpx;
+  line-height: 38rpx;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-right: 12rpx;
+}
+
+.badge-done {
+  background-color: var(--green);
+  width: 32rpx;
+  height: 32rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.badge-done-text {
+  font-size: 20rpx;
+  color: #FFFFFF;
+  font-weight: 700;
+}
+
+.card-sub {
+  font-size: 24rpx;
+  line-height: 32rpx;
+  color: var(--text-secondary);
+}
+
+.card-action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 16rpx;
+  flex-shrink: 0;
+}
+
+.card-completed {
+  opacity: 0.75;
 }
