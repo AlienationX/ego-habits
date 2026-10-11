@@ -11,7 +11,7 @@
 
       <!-- Center Celebration Character -->
       <view class="celebration-center">
-        <habit-character name="celebrate" size="260" animate="{{true}}" />
+        <habit-character name="celebrate" size="420" animate="{{true}}" />
       </view>
 
       <!-- Metric Count & Progress Bar -->

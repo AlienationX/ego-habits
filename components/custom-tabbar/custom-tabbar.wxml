@@ -3,17 +3,17 @@
     <view 
       wx:for="{{tabs}}" 
       wx:key="key" 
-      class="tab-item {{current === item.key ? 'tab-item-active' : ''}}"
+      class="tab-item"
       data-key="{{item.key}}"
       data-path="{{item.path}}"
       bindtap="onTabSelect"
     >
       <habit-icon 
         name="{{item.icon}}" 
-        size="38" 
-        active="{{current === item.key}}"
+        size="44" 
+        color="#F2EFE3"
       />
-      <text class="tab-label {{current === item.key ? 'label-active' : ''}}">{{item.label}}</text>
+      <text class="tab-label">{{item.label}}</text>
     </view>
   </view>
 </view>

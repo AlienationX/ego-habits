@@ -32,7 +32,7 @@
           bindtap="onSelectHabit"
         >
           <view class="grid-character-wrap">
-            <habit-character name="{{item.character}}" size="140" animate="{{true}}" />
+            <habit-character name="{{item.character}}" size="180" animate="{{true}}" />
           </view>
           <view class="grid-card-info">
             <text class="grid-habit-name">{{item.name}}</text>

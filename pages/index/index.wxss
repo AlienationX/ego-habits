@@ -6,7 +6,7 @@
 }
 
 .page-body {
-  padding: 40rpx 40rpx 0;
+  padding: 40rpx 48rpx 0;
   display: flex;
   flex-direction: column;
 }
@@ -23,7 +23,7 @@
 .tag-label {
   font-size: 24rpx;
   line-height: 32rpx;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: 2rpx;
   text-transform: uppercase;
   color: var(--text-muted);
@@ -44,7 +44,7 @@
   position: relative;
   background-color: var(--bg-card-sage);
   border-radius: 36rpx;
-  padding: 48rpx 40rpx;
+  padding: 32rpx 48rpx;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -62,8 +62,8 @@
 }
 
 .hero-title {
-  font-size: 52rpx;
-  line-height: 58rpx;
+  font-size: 60rpx;
+  line-height: 74rpx;
   font-weight: 800;
   color: var(--text-primary);
   letter-spacing: -1rpx;
@@ -73,16 +73,16 @@
 
 .hero-sub {
   font-size: 26rpx;
-  line-height: 38rpx;
+  line-height: 40rpx;
   color: var(--text-secondary);
   white-space: pre-line;
-  margin-bottom: 32rpx;
+  margin-bottom: 24rpx;
 }
 
 .hero-btn {
   align-self: flex-start;
-  padding: 20rpx 40rpx;
-  font-size: 26rpx;
+  padding: 28rpx 46rpx;
+  font-size: 30rpx;
 }
 
 .hero-btn-text {
@@ -95,7 +95,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: -10rpx;
+  flex-shrink: 0;
 }
 
 .section-header {
@@ -112,12 +112,12 @@
 .habit-list {
   display: flex;
   flex-direction: column;
-  gap: 20rpx;
+  gap: 16rpx;
 }
 
 .habit-card {
   border-radius: 32rpx;
-  padding: 28rpx 32rpx;
+  padding: 30rpx 32rpx;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -147,9 +147,21 @@
   background-color: var(--bg-card-cream);
 }
 
+.card-tint-mint-soft {
+  background-color: var(--bg-card-mint-soft);
+}
+
+.card-tint-sage-soft {
+  background-color: var(--bg-card-sage-soft);
+}
+
+.card-tint-blue-soft {
+  background-color: var(--bg-card-blue-soft);
+}
+
 .card-character {
-  width: 120rpx;
-  height: 120rpx;
+  width: 116rpx;
+  height: 116rpx;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -249,17 +261,17 @@
 .habits-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 24rpx;
+  gap: 16rpx;
 }
 
 .grid-card {
   border-radius: 36rpx;
-  padding: 36rpx 24rpx 28rpx;
+  padding: 32rpx 24rpx;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  min-height: 310rpx;
+  min-height: 338rpx;
   transition: transform 0.15s ease;
   cursor: pointer;
 }
@@ -461,7 +473,7 @@
 
 /* ==================== TAB 4: YOU ==================== */
 .profile-card {
-  background-color: var(--bg-card-sage);
+  background-color: var(--bg-card-mint);
   border-radius: 36rpx;
   padding: 44rpx 36rpx 36rpx;
   display: flex;
@@ -595,14 +607,12 @@
 }
 
 .setting-item {
-  background-color: var(--bg-card);
   border-radius: 28rpx;
-  padding: 32rpx 36rpx;
+  padding: 32rpx 0;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.03);
   cursor: pointer;
   transition: transform 0.15s ease;
 }

@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none">
-  <!-- Clean Hexagon with center circular aperture -->
-  <path d="M12 2.5 L20 7.1 V16.9 L12 21.5 L4 16.9 V7.1 L12 2.5 Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-  <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/>
+  <!-- Octagon nut with center aperture -->
+  <path d="M8.2 3 H15.8 L21 8.2 V15.8 L15.8 21 H8.2 L3 15.8 V8.2 Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+  <circle cx="12" cy="12" r="2.8" stroke="currentColor" stroke-width="2"/>
 </svg>

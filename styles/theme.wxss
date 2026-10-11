@@ -21,6 +21,11 @@ page,
   --bg-card-sage: #DCE8BD;
   --bg-card-blue: #CCE6ED;
   --bg-card-mint: #BAD8BE;
+  /* Extended card tints (sampled from the MORU prototypes) */
+  --bg-card-cream: #EFEDE2;
+  --bg-card-mint-soft: #BFD6BA;
+  --bg-card-sage-soft: #CEDDB6;
+  --bg-card-blue-soft: #C3E2D3;
   --bg-pill: #ECEBE2;
 
   --text-primary: #232323;
@@ -39,11 +44,10 @@ page,
   --btn-sage-bg: #DCE8BD;
   --btn-sage-text: #232323;
 
-  /* Navigation / TabBar Tokens */
+  /* Navigation / TabBar Tokens (uniform cream items, no active pill — per MORU spec) */
   --tabbar-bg: #232323;
-  --tabbar-text: #8E928A;
-  --tabbar-text-active: #FFFFFF;
-  --tabbar-pill-active: #323532;
+  --tabbar-text: #F2EFE3;
+  --tabbar-text-active: #F2EFE3;
   --tabbar-shadow: 0 16rpx 48rpx rgba(35, 35, 35, 0.16);
 
   /* Chart & Accent Colors */
@@ -70,6 +74,11 @@ page,
   --bg-card-sage: #273727;
   --bg-card-blue: #1D353E;
   --bg-card-mint: #243827;
+  /* Extended card tints */
+  --bg-card-cream: #262724;
+  --bg-card-mint-soft: #2B3F2E;
+  --bg-card-sage-soft: #2E3D2A;
+  --bg-card-blue-soft: #24392F;
   --bg-pill: #262B26;
 
   --text-primary: #EDEFEA;
@@ -90,9 +99,8 @@ page,
 
   /* Navigation / TabBar Tokens */
   --tabbar-bg: #222722;
-  --tabbar-text: #7A8177;
+  --tabbar-text: #EDEFEA;
   --tabbar-text-active: #EDEFEA;
-  --tabbar-pill-active: #2F362F;
   --tabbar-shadow: 0 16rpx 48rpx rgba(0, 0, 0, 0.36);
 
   /* Chart & Accent Colors */
@@ -119,6 +127,10 @@ page,
     --bg-card-sage: #273727;
     --bg-card-blue: #1D353E;
     --bg-card-mint: #243827;
+    --bg-card-cream: #262724;
+    --bg-card-mint-soft: #2B3F2E;
+    --bg-card-sage-soft: #2E3D2A;
+    --bg-card-blue-soft: #24392F;
     --bg-pill: #262B26;
 
     --text-primary: #EDEFEA;
@@ -137,9 +149,8 @@ page,
     --btn-sage-text: #EDEFEA;
 
     --tabbar-bg: #222722;
-    --tabbar-text: #7A8177;
+    --tabbar-text: #EDEFEA;
     --tabbar-text-active: #EDEFEA;
-    --tabbar-pill-active: #2F362F;
     --tabbar-shadow: 0 16rpx 48rpx rgba(0, 0, 0, 0.36);
 
     --chart-bar-bg: #354837;

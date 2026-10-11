@@ -31,7 +31,7 @@ const DEFAULT_HABITS = [
     cardSubKey: 'habits.outside.cardSub',
     category: 'move',
     character: 'shoe',
-    tint: 'sage',
+    tint: 'mint',
     metricAmount: '10 min',
     metricRhythm: 'Daily',
     isPrimary: true
@@ -44,7 +44,7 @@ const DEFAULT_HABITS = [
     cardSubKey: 'habits.read.cardSub',
     category: 'focus',
     character: 'book',
-    tint: 'mint',
+    tint: 'sage',
     metricAmount: '5 pages',
     metricRhythm: 'Daily',
     isPrimary: true
@@ -57,7 +57,7 @@ const DEFAULT_HABITS = [
     cardSubKey: 'habits.eyes.cardSub',
     category: 'rest',
     character: 'pillow',
-    tint: 'mint',
+    tint: 'mint-soft',
     metricAmount: '2 min',
     metricRhythm: 'Daily',
     isPrimary: false
@@ -70,7 +70,7 @@ const DEFAULT_HABITS = [
     cardSubKey: 'habits.task.cardSub',
     category: 'focus',
     character: 'hourglass',
-    tint: 'sage',
+    tint: 'sage-soft',
     metricAmount: '15 min',
     metricRhythm: 'Daily',
     isPrimary: false
@@ -83,7 +83,7 @@ const DEFAULT_HABITS = [
     cardSubKey: 'habits.breathe.cardSub',
     category: 'rest',
     character: 'cloud',
-    tint: 'blue',
+    tint: 'blue-soft',
     metricAmount: '1 min',
     metricRhythm: 'Daily',
     isPrimary: false

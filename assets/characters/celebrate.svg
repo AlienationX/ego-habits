@@ -1,23 +1,33 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" width="160" height="160" fill="none">
+  <!-- Left Arm (raised high in celebration) -->
+  <path d="M55 76 C47 66 39 54 34 44" stroke="#232323" stroke-width="4.5" stroke-linecap="round"/>
+  <!-- Left Waving Hand (3 fingers) -->
+  <path d="M35 45 C38 42 41 38 39 35 C37 33 34 35 33 38 C32 33 29 31 26 32 C23 33 24 37 26 40 C23 38 20 40 21 43 C22 46 27 48 33 47 Z" fill="#232323"/>
+
+  <!-- Right Arm (raised high in celebration) -->
+  <path d="M105 76 C113 66 121 54 126 44" stroke="#232323" stroke-width="4.5" stroke-linecap="round"/>
+  <!-- Right Waving Hand (3 fingers) -->
+  <path d="M125 45 C122 42 119 38 121 35 C123 33 126 35 127 38 C128 33 131 31 134 32 C137 33 136 37 134 40 C137 38 140 40 139 43 C138 46 133 48 127 47 Z" fill="#232323"/>
+
   <!-- Legs & Feet -->
-  <path d="M68 122 L68 136 M92 122 L92 136" stroke="#232323" stroke-width="4.5" stroke-linecap="round"/>
-  <ellipse cx="64" cy="138" rx="8" ry="4" fill="#232323"/>
-  <ellipse cx="96" cy="138" rx="8" ry="4" fill="#232323"/>
+  <!-- Left Leg & Foot -->
+  <path d="M70 117 V135" stroke="#232323" stroke-width="5" stroke-linecap="round"/>
+  <rect x="52" y="132" width="21" height="8.5" rx="4.25" fill="#232323"/>
 
-  <!-- Tapered Glass Body -->
-  <path d="M50 44 L59 120 C59 123 62 125 65 125 H95 C98 125 101 123 101 120 L110 44 C110 41 107 38 104 38 H56 C53 38 50 41 50 44 Z" fill="#BAE6F2"/>
+  <!-- Right Leg & Foot -->
+  <path d="M90 117 V135" stroke="#232323" stroke-width="5" stroke-linecap="round"/>
+  <rect x="87" y="132" width="21" height="8.5" rx="4.25" fill="#232323"/>
 
-  <!-- Water Fill inside -->
-  <path d="M54 74 L59 121 C59 123 62 124 65 124 H95 C98 124 100 123 100 121 L106 74 Z" fill="#4AAFE4"/>
+  <!-- Glass Tumbler Body (Clean Light Sky Blue) -->
+  <path d="M53 46 Q53 44 56 44 H104 Q107 44 107 46 L101 114 Q100 117 96 117 H64 Q60 117 59 114 Z" fill="#BEE3F2"/>
 
-  <!-- Both Arms Raised Celebrating -->
-  <path d="M52 70 Q38 58 30 46" stroke="#232323" stroke-width="4" stroke-linecap="round"/>
-  <circle cx="29" cy="45" r="4.5" fill="#232323"/>
-  <path d="M108 70 Q122 58 130 46" stroke="#232323" stroke-width="4" stroke-linecap="round"/>
-  <circle cx="131" cy="45" r="4.5" fill="#232323"/>
+  <!-- Water Fill (Rich Sky Blue in Lower 40%) -->
+  <path d="M56.5 86 H103.5 L101 114 Q100 117 96 117 H64 Q60 117 59 114 Z" fill="#44ADE5"/>
 
-  <!-- Happy Closed Arc Eyes (^^) & Open Smile -->
-  <path d="M70 66 Q74 61 78 66" stroke="#232323" stroke-width="3.2" stroke-linecap="round" fill="none"/>
-  <path d="M82 66 Q86 61 90 66" stroke="#232323" stroke-width="3.2" stroke-linecap="round" fill="none"/>
-  <path d="M74 74 Q80 82 86 74 Z" fill="#232323"/>
+  <!-- Happy Closed Arc Eyes (^ ^) -->
+  <path d="M68 64 Q73 58 78 64" stroke="#232323" stroke-width="3.2" stroke-linecap="round" fill="none"/>
+  <path d="M82 64 Q87 58 92 64" stroke="#232323" stroke-width="3.2" stroke-linecap="round" fill="none"/>
+
+  <!-- Big Sweet Smile -->
+  <path d="M75 72 Q80 77 85 72" stroke="#232323" stroke-width="3.2" stroke-linecap="round" fill="none"/>
 </svg>

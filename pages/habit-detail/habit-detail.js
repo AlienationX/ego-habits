@@ -86,14 +86,6 @@ Page({
     });
   },
 
-  onGoBack() {
-    wx.navigateBack({
-      fail: () => {
-        wx.reLaunch({ url: '/pages/index/index' });
-      }
-    });
-  },
-
   onLogHabit() {
     storage.logHabit(this.data.habitId);
     this.setData({ isCompleted: true });

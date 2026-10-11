@@ -15,28 +15,7 @@
   padding-top: calc(64rpx + env(safe-area-inset-top));
   margin-bottom: 36rpx;
   display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-}
-
-.back-btn {
-  width: 72rpx;
-  height: 72rpx;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: 16rpx;
-  margin-top: 6rpx;
-  background-color: var(--bg-card);
-  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.05);
-  cursor: pointer;
-}
-
-.header-titles {
-  display: flex;
   flex-direction: column;
-  flex: 1;
 }
 
 .tag-label {
@@ -60,7 +39,7 @@
 /* Hero Card */
 .hero-card {
   border-radius: 36rpx;
-  padding: 48rpx 40rpx;
+  padding: 48rpx;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -79,6 +58,22 @@
 
 .card-tint-sage {
   background-color: var(--bg-card-sage);
+}
+
+.card-tint-cream {
+  background-color: var(--bg-card-cream);
+}
+
+.card-tint-mint-soft {
+  background-color: var(--bg-card-mint-soft);
+}
+
+.card-tint-sage-soft {
+  background-color: var(--bg-card-sage-soft);
+}
+
+.card-tint-blue-soft {
+  background-color: var(--bg-card-blue-soft);
 }
 
 .hero-text-wrap {

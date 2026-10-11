@@ -5,7 +5,7 @@
 }
 
 .page-body {
-  padding: 40rpx 40rpx 0;
+  padding: 40rpx 48rpx 0;
   display: flex;
   flex-direction: column;
 }
@@ -38,7 +38,7 @@
 
 /* Profile Card */
 .profile-card {
-  background-color: var(--bg-card-sage);
+  background-color: var(--bg-card-mint);
   border-radius: 36rpx;
   padding: 44rpx 36rpx 36rpx;
   display: flex;
@@ -174,14 +174,12 @@
 }
 
 .setting-item {
-  background-color: var(--bg-card);
   border-radius: 28rpx;
-  padding: 32rpx 36rpx;
+  padding: 32rpx 0;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.03);
   cursor: pointer;
   transition: transform 0.15s ease;
 }

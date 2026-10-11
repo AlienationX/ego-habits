@@ -21,7 +21,7 @@
           </view>
         </view>
         <view class="hero-character-wrap">
-          <habit-character name="guide" size="180" animate="{{true}}" />
+          <habit-character name="guide" size="216" animate="{{true}}" />
         </view>
       </view>
 
@@ -93,7 +93,7 @@
           bindtap="onOpenHabit"
         >
           <view class="grid-character-wrap">
-            <habit-character name="{{item.character}}" size="136" animate="{{true}}" />
+            <habit-character name="{{item.character}}" size="180" animate="{{true}}" />
           </view>
           <view class="grid-card-info">
             <text class="grid-habit-name">{{item.name}}</text>
@@ -144,7 +144,7 @@
           <text class="milestone-days">{{tMilestoneDays}}</text>
         </view>
         <view class="milestone-character">
-          <habit-character name="medal" size="140" animate="{{true}}" />
+          <habit-character name="medal" size="172" animate="{{true}}" />
         </view>
       </view>
 
@@ -207,7 +207,7 @@
         <text class="group-title">{{tMilestoneSection}}</text>
         <view class="milestone-box">
           <view class="milestone-badge-wrap">
-            <habit-character name="medal" size="104" />
+            <habit-character name="medal" size="172" />
           </view>
           <view class="milestone-box-info">
             <text class="milestone-badge-name">{{tBadgeTitle}}</text>

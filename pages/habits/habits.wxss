@@ -75,17 +75,17 @@
 .habits-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 24rpx;
+  gap: 16rpx;
 }
 
 .grid-card {
   border-radius: 36rpx;
-  padding: 36rpx 24rpx 28rpx;
+  padding: 32rpx 24rpx;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  min-height: 310rpx;
+  min-height: 338rpx;
   transition: transform 0.15s ease;
   cursor: pointer;
 }
@@ -108,6 +108,18 @@
 
 .card-tint-cream {
   background-color: var(--bg-card-cream);
+}
+
+.card-tint-mint-soft {
+  background-color: var(--bg-card-mint-soft);
+}
+
+.card-tint-sage-soft {
+  background-color: var(--bg-card-sage-soft);
+}
+
+.card-tint-blue-soft {
+  background-color: var(--bg-card-blue-soft);
 }
 
 .grid-character-wrap {
