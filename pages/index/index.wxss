@@ -1,4 +1,5 @@
-/* pages/index/index.wxss */
+/* pages/index/index.wxss - EgoHabits Unified Cached Container Styles */
+
 .content-scroll {
   flex: 1;
   height: 100vh;
@@ -10,7 +11,7 @@
   flex-direction: column;
 }
 
-/* Header Section */
+/* ==================== COMMON HEADER ==================== */
 .header-section {
   padding-top: calc(70rpx + env(safe-area-inset-top));
   margin-bottom: 32rpx;
@@ -18,7 +19,8 @@
   flex-direction: column;
 }
 
-.date-label {
+.date-label,
+.tag-label {
   font-size: 24rpx;
   line-height: 32rpx;
   font-weight: 600;
@@ -28,15 +30,16 @@
   margin-bottom: 8rpx;
 }
 
-.greeting-title {
-  font-size: 52rpx;
-  line-height: 64rpx;
+.greeting-title,
+.headline-title {
+  font-size: 50rpx;
+  line-height: 62rpx;
   font-weight: 800;
   color: var(--text-primary);
-  letter-spacing: -1rpx;
+  letter-spacing: -0.5rpx;
 }
 
-/* Hero Card (Start small.) */
+/* ==================== TAB 1: TODAY ==================== */
 .hero-card {
   position: relative;
   background-color: var(--bg-card-sage);
@@ -95,7 +98,6 @@
   margin-right: -10rpx;
 }
 
-/* Section Header */
 .section-header {
   margin-bottom: 24rpx;
 }
@@ -107,7 +109,6 @@
   color: var(--text-primary);
 }
 
-/* Habit List */
 .habit-list {
   display: flex;
   flex-direction: column;
@@ -130,7 +131,6 @@
   opacity: 0.9;
 }
 
-/* Card Tint Backgrounds */
 .card-tint-blue {
   background-color: var(--bg-card-blue);
 }
@@ -141,6 +141,10 @@
 
 .card-tint-sage {
   background-color: var(--bg-card-sage);
+}
+
+.card-tint-cream {
+  background-color: var(--bg-card-cream);
 }
 
 .card-character {
@@ -205,4 +209,533 @@
 
 .card-completed {
   opacity: 0.75;
+}
+
+/* ==================== TAB 2: HABITS ==================== */
+.filters-row {
+  display: flex;
+  flex-direction: row;
+  gap: 16rpx;
+  margin-bottom: 36rpx;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.filter-pill {
+  padding: 14rpx 36rpx;
+  border-radius: 999rpx;
+  background-color: var(--bg-pill);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.filter-pill-active {
+  background-color: var(--btn-ink-bg);
+}
+
+.filter-pill-text {
+  font-size: 26rpx;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.filter-pill-active .filter-pill-text {
+  color: var(--btn-ink-text);
+}
+
+.habits-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24rpx;
+}
+
+.grid-card {
+  border-radius: 36rpx;
+  padding: 36rpx 24rpx 28rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 310rpx;
+  transition: transform 0.15s ease;
+  cursor: pointer;
+}
+
+.grid-card:active {
+  transform: scale(0.97);
+}
+
+.grid-character-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20rpx;
+}
+
+.grid-card-info {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-left: 8rpx;
+}
+
+.grid-habit-name {
+  font-size: 28rpx;
+  line-height: 36rpx;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 4rpx;
+}
+
+.grid-habit-amount {
+  font-size: 22rpx;
+  line-height: 30rpx;
+  color: var(--text-secondary);
+}
+
+/* ==================== TAB 3: WEEK ==================== */
+.chart-card {
+  background-color: var(--bg-card-sage);
+  border-radius: 36rpx;
+  padding: 44rpx 36rpx;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 32rpx;
+}
+
+.chart-summary {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  gap: 16rpx;
+  margin-bottom: 40rpx;
+}
+
+.chart-number {
+  font-size: 56rpx;
+  line-height: 60rpx;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.chart-sub-label {
+  font-size: 24rpx;
+  line-height: 32rpx;
+  color: var(--text-secondary);
+}
+
+.bars-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+  height: 200rpx;
+  padding: 0 10rpx;
+}
+
+.bar-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8rpx;
+}
+
+.bar-count-label {
+  font-size: 20rpx;
+  font-weight: 600;
+  color: var(--text-secondary);
+  height: 24rpx;
+}
+
+.bar-track {
+  width: 48rpx;
+  height: 140rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.bar-fill {
+  width: 100%;
+  background-color: var(--chart-bar-bg);
+  border-radius: 999rpx;
+  transition: height 0.3s ease;
+}
+
+.bar-fill-active {
+  background-color: var(--chart-bar-active);
+}
+
+.bar-day-label {
+  font-size: 22rpx;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-top: 6rpx;
+}
+
+.milestone-card {
+  background-color: var(--bg-card-mint);
+  border-radius: 36rpx;
+  padding: 40rpx 36rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 36rpx;
+}
+
+.milestone-info {
+  display: flex;
+  flex-direction: column;
+  max-width: 60%;
+}
+
+.milestone-title {
+  font-size: 34rpx;
+  line-height: 44rpx;
+  font-weight: 800;
+  color: var(--text-primary);
+  white-space: pre-line;
+  margin-bottom: 12rpx;
+}
+
+.milestone-days {
+  font-size: 24rpx;
+  line-height: 34rpx;
+  color: var(--text-secondary);
+  white-space: pre-line;
+}
+
+.milestone-character {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.breakdown-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.breakdown-title {
+  font-size: 30rpx;
+  line-height: 40rpx;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 8rpx;
+}
+
+.breakdown-pill {
+  border-radius: 999rpx;
+  padding: 24rpx 36rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pill-blue {
+  background-color: var(--bg-card-blue);
+}
+
+.pill-sage {
+  background-color: var(--bg-card-sage);
+}
+
+.breakdown-cat-name {
+  font-size: 26rpx;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.breakdown-count {
+  font-size: 24rpx;
+  color: var(--text-secondary);
+}
+
+/* ==================== TAB 4: YOU ==================== */
+.profile-card {
+  background-color: var(--bg-card-sage);
+  border-radius: 36rpx;
+  padding: 44rpx 36rpx 36rpx;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 40rpx;
+}
+
+.profile-top-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 28rpx;
+  margin-bottom: 32rpx;
+}
+
+.profile-avatar-wrap {
+  width: 130rpx;
+  height: 130rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-nickname {
+  font-size: 38rpx;
+  line-height: 48rpx;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 4rpx;
+}
+
+.user-handle {
+  font-size: 24rpx;
+  line-height: 32rpx;
+  color: var(--text-secondary);
+}
+
+.profile-divider {
+  height: 1rpx;
+  background-color: rgba(35, 35, 35, 0.08);
+  width: 100%;
+  margin-bottom: 28rpx;
+}
+
+.profile-stats-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  gap: 80rpx;
+  padding-left: 8rpx;
+}
+
+.stat-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-num {
+  font-size: 44rpx;
+  line-height: 52rpx;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 4rpx;
+}
+
+.stat-lbl {
+  font-size: 22rpx;
+  line-height: 30rpx;
+  color: var(--text-secondary);
+}
+
+.section-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 36rpx;
+}
+
+.group-title {
+  font-size: 30rpx;
+  line-height: 40rpx;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 20rpx;
+}
+
+.milestone-box {
+  background-color: var(--bg-card-sage);
+  border-radius: 32rpx;
+  padding: 32rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 24rpx;
+}
+
+.milestone-badge-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.milestone-box-info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.milestone-badge-name {
+  font-size: 28rpx;
+  line-height: 36rpx;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 4rpx;
+}
+
+.milestone-badge-desc {
+  font-size: 24rpx;
+  line-height: 34rpx;
+  color: var(--text-secondary);
+}
+
+.settings-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.setting-item {
+  background-color: var(--bg-card);
+  border-radius: 28rpx;
+  padding: 32rpx 36rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.03);
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.setting-item:active {
+  transform: scale(0.985);
+}
+
+.setting-item-left {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 20rpx;
+}
+
+.setting-name {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease;
+}
+
+.modal-card {
+  width: 100%;
+  max-width: 600px;
+  background-color: var(--bg-page);
+  border-top-left-radius: 40rpx;
+  border-top-right-radius: 40rpx;
+  padding: 44rpx 40rpx calc(48rpx + env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 -8rpx 32rpx rgba(0, 0, 0, 0.12);
+  animation: slideUp 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.modal-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 36rpx;
+}
+
+.modal-title {
+  font-size: 36rpx;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.modal-close {
+  font-size: 32rpx;
+  color: var(--text-muted);
+  padding: 8rpx 16rpx;
+}
+
+.pref-row {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 32rpx;
+  gap: 16rpx;
+}
+
+.pref-label {
+  font-size: 26rpx;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.pref-options {
+  display: flex;
+  flex-direction: row;
+  gap: 16rpx;
+}
+
+.pref-opt-pill {
+  flex: 1;
+  padding: 20rpx 0;
+  border-radius: 999rpx;
+  background-color: var(--bg-pill);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.pref-opt-active {
+  background-color: var(--btn-ink-bg);
+}
+
+.pref-opt-text {
+  font-size: 26rpx;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.pref-opt-active .pref-opt-text {
+  color: var(--btn-ink-text);
+}
+
+.pref-btn-reset {
+  margin-top: 24rpx;
+  padding: 24rpx 0;
+  border-radius: 999rpx;
+  background-color: var(--bg-card);
+  border: 1rpx solid var(--border-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pref-btn-reset-text {
+  font-size: 26rpx;
+  font-weight: 600;
+  color: #D34B4B;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
 }

@@ -23,8 +23,11 @@ App({
   },
 
   applyTheme(pref, systemTheme) {
-    const sys = systemTheme || (wx.getSystemInfoSync ? wx.getSystemInfoSync().theme : 'light');
-    const resolvedTheme = pref === 'auto' ? (sys === 'dark' ? 'dark' : 'light') : pref;
+    let sysTheme = systemTheme;
+    if (!sysTheme && wx.getAppBaseInfo) {
+      sysTheme = wx.getAppBaseInfo().theme;
+    }
+    const resolvedTheme = pref === 'auto' ? (sysTheme === 'dark' ? 'dark' : 'light') : pref;
     this.globalData.theme = resolvedTheme;
     this.globalData.themePreference = pref;
   },

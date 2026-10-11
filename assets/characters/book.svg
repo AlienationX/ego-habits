@@ -7,8 +7,8 @@
   <!-- Book Spine (Dark Green) -->
   <path d="M50 42 C46 42 44 46 44 50 V114 C44 118 46 122 50 122 H58 V42 H50 Z" fill="#4FA65A"/>
 
-  <!-- Book Cover (Pastel Mint Green) -->
-  <rect x="56" y="42" width="56" height="80" rx="4" fill="#D2E8CD"/>
+  <!-- Book Cover (Ivory Light Green) -->
+  <rect x="56" y="42" width="56" height="80" rx="4" fill="#EEF6EB" stroke="#C4DEC0" stroke-width="2"/>
 
   <!-- White Bookmark Ribbon peeking from top -->
   <path d="M66 38 V48 L71 44 L76 48 V38 Z" fill="#FFFFFF"/>

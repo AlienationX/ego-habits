@@ -119,3 +119,24 @@ ego-habits/
 | `avatar` | Apple/bean avatar with leaf | `#6BC47B`, `#232323` |
 
 Always preserve this design system when extending features.
+
+---
+
+## 6. WeChat Modern API Conventions (Strictly Avoid Deprecated APIs)
+
+- **Strictly Prohibit `wx.getSystemInfo` and `wx.getSystemInfoSync`**:
+  WeChat Base Library 2.20.1+ has deprecated both APIs. Never use or reintroduce them.
+- **Mandatory Discrete API Mapping**:
+  | Purpose | Modern API | Example |
+  | :--- | :--- | :--- |
+  | System Theme & Language | `wx.getAppBaseInfo()` | `wx.getAppBaseInfo().theme`, `wx.getAppBaseInfo().language` |
+  | Window & Safe Area | `wx.getWindowInfo()` | `wx.getWindowInfo().windowWidth`, `wx.getWindowInfo().safeArea` |
+  | Device & Platform | `wx.getDeviceInfo()` | `wx.getDeviceInfo().platform` (`'android'`, `'ios'`, `'devtools'`) |
+  | Device System Settings | `wx.getSystemSetting()` | `wx.getSystemSetting().bluetoothEnabled` |
+  | App Permissions | `wx.getAppAuthorizeSetting()` | `wx.getAppAuthorizeSetting().albumAuthorized` |
+- **Safety Fallback Pattern**: Always use optional chaining / existence checks, e.g.:
+  ```javascript
+  const appBase = wx.getAppBaseInfo ? wx.getAppBaseInfo() : {};
+  const currentTheme = appBase.theme || 'light';
+  ```
+

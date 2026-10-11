@@ -59,18 +59,19 @@ Component({
   },
   lifetimes: {
     attached() {
-      const rect = wx.getMenuButtonBoundingClientRect()
-      wx.getSystemInfo({
-        success: (res) => {
-          const isAndroid = res.platform === 'android'
-          const isDevtools = res.platform === 'devtools'
-          this.setData({
-            ios: !isAndroid,
-            innerPaddingRight: `padding-right: ${res.windowWidth - rect.left}px`,
-            leftWidth: `width: ${res.windowWidth - rect.left }px`,
-            safeAreaTop: isDevtools || isAndroid ? `height: calc(var(--height) + ${res.safeArea.top}px); padding-top: ${res.safeArea.top}px` : ``
-          })
-        }
+      const rect = wx.getMenuButtonBoundingClientRect ? wx.getMenuButtonBoundingClientRect() : { left: 0 }
+      const windowInfo = wx.getWindowInfo ? wx.getWindowInfo() : {}
+      const deviceInfo = wx.getDeviceInfo ? wx.getDeviceInfo() : {}
+      const isAndroid = deviceInfo.platform === 'android'
+      const isDevtools = deviceInfo.platform === 'devtools'
+      const windowWidth = windowInfo.windowWidth || 375
+      const safeAreaTop = (windowInfo.safeArea && windowInfo.safeArea.top) || 0
+
+      this.setData({
+        ios: !isAndroid,
+        innerPaddingRight: `padding-right: ${windowWidth - rect.left}px`,
+        leftWidth: `width: ${windowWidth - rect.left}px`,
+        safeAreaTop: isDevtools || isAndroid ? `height: calc(var(--height) + ${safeAreaTop}px); padding-top: ${safeAreaTop}px` : ``
       })
     },
   },

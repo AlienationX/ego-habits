@@ -31,7 +31,7 @@ const DEFAULT_HABITS = [
     cardSubKey: 'habits.outside.cardSub',
     category: 'move',
     character: 'shoe',
-    tint: 'mint',
+    tint: 'sage',
     metricAmount: '10 min',
     metricRhythm: 'Daily',
     isPrimary: true
@@ -44,7 +44,7 @@ const DEFAULT_HABITS = [
     cardSubKey: 'habits.read.cardSub',
     category: 'focus',
     character: 'book',
-    tint: 'sage',
+    tint: 'mint',
     metricAmount: '5 pages',
     metricRhythm: 'Daily',
     isPrimary: true
@@ -57,7 +57,7 @@ const DEFAULT_HABITS = [
     cardSubKey: 'habits.eyes.cardSub',
     category: 'rest',
     character: 'pillow',
-    tint: 'cream',
+    tint: 'mint',
     metricAmount: '2 min',
     metricRhythm: 'Daily',
     isPrimary: false
@@ -83,7 +83,7 @@ const DEFAULT_HABITS = [
     cardSubKey: 'habits.breathe.cardSub',
     category: 'rest',
     character: 'cloud',
-    tint: 'mint',
+    tint: 'blue',
     metricAmount: '1 min',
     metricRhythm: 'Daily',
     isPrimary: false
@@ -198,13 +198,13 @@ function toggleHabit(habitId) {
 function getWeeklyData() {
   // Returns 7 days data for the chart [Mon..Sun] matching Image 06
   return [
-    { day: 'M', count: 1, active: false },
-    { day: 'T', count: 2, active: false },
-    { day: 'W', count: 1, active: false },
-    { day: 'T', count: 2, active: false },
-    { day: 'F', count: 2, active: false },
-    { day: 'S', count: 3, active: true }, // Highest highlighted Saturday
-    { day: 'S', count: 1, active: false }
+    { id: 'mon', day: 'M', count: 1, active: false },
+    { id: 'tue', day: 'T', count: 2, active: false },
+    { id: 'wed', day: 'W', count: 1, active: false },
+    { id: 'thu', day: 'T', count: 2, active: false },
+    { id: 'fri', day: 'F', count: 2, active: false },
+    { id: 'sat', day: 'S', count: 3, active: true }, // Highest highlighted Saturday
+    { id: 'sun', day: 'S', count: 1, active: false }
   ];
 }
 

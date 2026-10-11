@@ -15,8 +15,11 @@ try {
     currentLang = saved;
   } else {
     // Check system language
-    const sys = wx.getSystemInfoSync();
-    if (sys.language && sys.language.startsWith('zh')) {
+    let lang = '';
+    if (wx.getAppBaseInfo) {
+      lang = wx.getAppBaseInfo().language || '';
+    }
+    if (lang.startsWith('zh')) {
       currentLang = 'zh';
     }
   }

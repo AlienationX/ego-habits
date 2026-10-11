@@ -44,13 +44,17 @@ Component({
       const app = getApp();
       if (app) app.globalData.currentTab = key;
 
-      // Navigate
-      wx.reLaunch({
-        url: path,
-        fail: () => {
-          wx.navigateTo({ url: path });
-        }
-      });
+      // Always trigger tabchange event for container page (0ms switch, zero white screen)
+      this.triggerEvent('tabchange', { key, path });
+
+      // If called from a sub-page, navigate back to index with tab param
+      const pages = getCurrentPages();
+      const currentPage = pages[pages.length - 1];
+      if (currentPage && currentPage.route !== 'pages/index/index') {
+        wx.reLaunch({
+          url: `/pages/index/index?tab=${key}`
+        });
+      }
     }
   }
 });

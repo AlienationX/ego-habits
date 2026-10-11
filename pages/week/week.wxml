@@ -18,12 +18,12 @@
 
         <!-- Bar Graph -->
         <view class="bars-container">
-          <view wx:for="{{weeklyBars}}" wx:key="day" class="bar-col">
+          <view wx:for="{{weeklyBars}}" wx:key="id" class="bar-col">
             <text class="bar-count-label">{{item.count}}</text>
             <view class="bar-track">
               <view 
                 class="bar-fill {{item.active ? 'bar-fill-active' : ''}}" 
-                style="height: {{item.count * 40}}rpx;"
+                style="height: {{item.count * 48}}rpx;"
               ></view>
             </view>
             <text class="bar-day-label">{{item.day}}</text>

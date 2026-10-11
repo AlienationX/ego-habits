@@ -1,9 +1,11 @@
-<!-- pages/index/index.wxml - Today Tab -->
+<!-- pages/index/index.wxml - EgoHabits Main Container (Cached Zero-Flicker Tabs) -->
 <view class="page-container {{themeClass}}">
-  <scroll-view class="content-scroll" scroll-y enable-passive>
+  
+  <!-- ==================== TAB 1: TODAY ==================== -->
+  <scroll-view class="content-scroll" scroll-y enable-passive hidden="{{currentTab !== 'today'}}">
     <view class="page-body safe-tabbar-space">
       
-      <!-- Top Header & Date Navigation -->
+      <!-- Top Header & Date -->
       <view class="header-section">
         <text class="date-label">{{dateString}}</text>
         <text class="greeting-title">{{tGreeting}}</text>
@@ -37,12 +39,9 @@
           data-id="{{item.id}}"
           bindtap="onOpenHabit"
         >
-          <!-- Left Character -->
           <view class="card-character">
-            <habit-character name="{{item.character}}" size="110" />
+            <habit-character name="{{item.character}}" size="116" />
           </view>
-
-          <!-- Middle Info -->
           <view class="card-info">
             <view class="card-title-row">
               <text class="card-title">{{item.title}}</text>
@@ -52,8 +51,6 @@
             </view>
             <text class="card-sub">{{item.sub}}</text>
           </view>
-
-          <!-- Right Action / Arrow -->
           <view class="card-action">
             <habit-icon name="arrow" size="32" color="#6B7068" />
           </view>
@@ -63,6 +60,253 @@
     </view>
   </scroll-view>
 
-  <!-- Bottom Floating TabBar -->
-  <custom-tabbar current="today" />
+  <!-- ==================== TAB 2: HABITS (Habit Library) ==================== -->
+  <scroll-view class="content-scroll" scroll-y enable-passive hidden="{{currentTab !== 'habits'}}">
+    <view class="page-body safe-tabbar-space">
+      
+      <!-- Top Header -->
+      <view class="header-section">
+        <text class="tag-label">{{tLibraryTitle}}</text>
+        <text class="headline-title">{{tLibraryHeadline}}</text>
+      </view>
+
+      <!-- Category Filter Pills -->
+      <view class="filters-row">
+        <view 
+          wx:for="{{categories}}" 
+          wx:key="key" 
+          class="filter-pill {{currentCategory === item.key ? 'filter-pill-active' : ''}}"
+          data-key="{{item.key}}"
+          bindtap="onSelectCategory"
+        >
+          <text class="filter-pill-text">{{item.label}}</text>
+        </view>
+      </view>
+
+      <!-- 2-Column Habit Grid -->
+      <view class="habits-grid">
+        <view 
+          wx:for="{{filteredHabits}}" 
+          wx:key="id" 
+          class="grid-card card-tint-{{item.tint}}"
+          data-id="{{item.id}}"
+          bindtap="onOpenHabit"
+        >
+          <view class="grid-character-wrap">
+            <habit-character name="{{item.character}}" size="136" animate="{{true}}" />
+          </view>
+          <view class="grid-card-info">
+            <text class="grid-habit-name">{{item.name}}</text>
+            <text class="grid-habit-amount">{{item.amount}}</text>
+          </view>
+        </view>
+      </view>
+
+    </view>
+  </scroll-view>
+
+  <!-- ==================== TAB 3: WEEK (Weekly Reflection) ==================== -->
+  <scroll-view class="content-scroll" scroll-y enable-passive hidden="{{currentTab !== 'week'}}">
+    <view class="page-body safe-tabbar-space">
+      
+      <!-- Top Title -->
+      <view class="header-section">
+        <text class="date-label">{{tDateRange}}</text>
+        <text class="headline-title">{{tHeadline}}</text>
+      </view>
+
+      <!-- 7-Day Bar Chart Card -->
+      <view class="chart-card">
+        <view class="chart-summary">
+          <text class="chart-number">{{tCompletedNumber}}</text>
+          <text class="chart-sub-label">{{tCompletedLabel}}</text>
+        </view>
+
+        <!-- Bar Graph with unique key 'id' -->
+        <view class="bars-container">
+          <view wx:for="{{weeklyBars}}" wx:key="id" class="bar-col">
+            <text class="bar-count-label">{{item.count}}</text>
+            <view class="bar-track">
+              <view 
+                class="bar-fill {{item.active ? 'bar-fill-active' : ''}}" 
+                style="height: {{item.count * 46}}rpx;"
+              ></view>
+            </view>
+            <text class="bar-day-label">{{item.day}}</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- Milestone Card (A week of showing up.) -->
+      <view class="milestone-card">
+        <view class="milestone-info">
+          <text class="milestone-title">{{tMilestoneTitle}}</text>
+          <text class="milestone-days">{{tMilestoneDays}}</text>
+        </view>
+        <view class="milestone-character">
+          <habit-character name="medal" size="140" animate="{{true}}" />
+        </view>
+      </view>
+
+      <!-- Breakdown: What made your week -->
+      <view class="breakdown-section">
+        <text class="breakdown-title">{{tBreakdownTitle}}</text>
+        
+        <view class="breakdown-pill pill-blue">
+          <text class="breakdown-cat-name">{{tCatWater}}</text>
+          <text class="breakdown-count">{{tCatWaterCount}}</text>
+        </view>
+
+        <view class="breakdown-pill pill-sage">
+          <text class="breakdown-cat-name">{{tCatMove}}</text>
+          <text class="breakdown-count">{{tCatMoveCount}}</text>
+        </view>
+      </view>
+
+    </view>
+  </scroll-view>
+
+  <!-- ==================== TAB 4: YOU (Your Space) ==================== -->
+  <scroll-view class="content-scroll" scroll-y enable-passive hidden="{{currentTab !== 'you'}}">
+    <view class="page-body safe-tabbar-space">
+      
+      <!-- Top Title -->
+      <view class="header-section">
+        <text class="tag-label">{{tTag}}</text>
+        <text class="headline-title">{{tYouHeadline}}</text>
+      </view>
+
+      <!-- Profile Card -->
+      <view class="profile-card">
+        <view class="profile-top-row">
+          <view class="profile-avatar-wrap">
+            <habit-character name="avatar" size="130" animate="{{true}}" />
+          </view>
+          <view class="profile-user-info">
+            <text class="user-nickname">{{profile.nickname}}</text>
+            <text class="user-handle">{{profile.handle}}</text>
+          </view>
+        </view>
+
+        <view class="profile-divider"></view>
+
+        <view class="profile-stats-row">
+          <view class="stat-col">
+            <text class="stat-num">{{profile.totalCompleted}}</text>
+            <text class="stat-lbl">{{tStatCompletedLabel}}</text>
+          </view>
+          <view class="stat-col">
+            <text class="stat-num">{{profile.streakDays}}</text>
+            <text class="stat-lbl">{{tStatStreakLabel}}</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- Milestone Section -->
+      <view class="section-group">
+        <text class="group-title">{{tMilestoneSection}}</text>
+        <view class="milestone-box">
+          <view class="milestone-badge-wrap">
+            <habit-character name="medal" size="104" />
+          </view>
+          <view class="milestone-box-info">
+            <text class="milestone-badge-name">{{tBadgeTitle}}</text>
+            <text class="milestone-badge-desc">{{tBadgeDesc}}</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- Settings Section -->
+      <view class="section-group">
+        <text class="group-title">{{tSettingsSection}}</text>
+        
+        <view class="settings-list">
+          <view class="setting-item" bindtap="onTapReminders">
+            <view class="setting-item-left">
+              <habit-icon name="bell" size="36" color="#232323" />
+              <text class="setting-name">{{tGentleReminders}}</text>
+            </view>
+            <habit-icon name="arrow" size="28" color="#9DA39A" />
+          </view>
+
+          <view class="setting-item" bindtap="onOpenPreferences">
+            <view class="setting-item-left">
+              <habit-icon name="settings" size="36" color="#232323" />
+              <text class="setting-name">{{tPreferences}}</text>
+            </view>
+            <habit-icon name="arrow" size="28" color="#9DA39A" />
+          </view>
+        </view>
+      </view>
+
+    </view>
+  </scroll-view>
+
+  <!-- Preferences Modal -->
+  <view wx:if="{{showPrefModal}}" class="modal-overlay" bindtap="onClosePreferences">
+    <view class="modal-card" catchtap="preventProp">
+      <view class="modal-header">
+        <text class="modal-title">{{tPrefTitle}}</text>
+        <text class="modal-close" bindtap="onClosePreferences">✕</text>
+      </view>
+
+      <!-- Language Switch -->
+      <view class="pref-row">
+        <text class="pref-label">{{tLanguage}}</text>
+        <view class="pref-options">
+          <view 
+            class="pref-opt-pill {{currentLang === 'en' ? 'pref-opt-active' : ''}}"
+            bindtap="onSelectLanguage"
+            data-lang="en"
+          >
+            <text class="pref-opt-text">English</text>
+          </view>
+          <view 
+            class="pref-opt-pill {{currentLang === 'zh' ? 'pref-opt-active' : ''}}"
+            bindtap="onSelectLanguage"
+            data-lang="zh"
+          >
+            <text class="pref-opt-text">中文</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- Theme Switch -->
+      <view class="pref-row">
+        <text class="pref-label">{{tTheme}}</text>
+        <view class="pref-options">
+          <view 
+            class="pref-opt-pill {{currentTheme === 'light' ? 'pref-opt-active' : ''}}"
+            bindtap="onSelectTheme"
+            data-theme="light"
+          >
+            <text class="pref-opt-text">Light</text>
+          </view>
+          <view 
+            class="pref-opt-pill {{currentTheme === 'dark' ? 'pref-opt-active' : ''}}"
+            bindtap="onSelectTheme"
+            data-theme="dark"
+          >
+            <text class="pref-opt-text">Dark</text>
+          </view>
+          <view 
+            class="pref-opt-pill {{currentTheme === 'auto' ? 'pref-opt-active' : ''}}"
+            bindtap="onSelectTheme"
+            data-theme="auto"
+          >
+            <text class="pref-opt-text">Auto</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- Reset Demo Data -->
+      <view class="pref-btn-reset" bindtap="onResetDemo">
+        <text class="pref-btn-reset-text">{{tResetData}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- Bottom Floating TabBar (Shared & Always Cached) -->
+  <custom-tabbar current="{{currentTab}}" bind:tabchange="onSwitchTab" />
+
 </view>

@@ -4,19 +4,19 @@
   <ellipse cx="64" cy="138" rx="8" ry="4" fill="#232323"/>
   <ellipse cx="96" cy="138" rx="8" ry="4" fill="#232323"/>
 
-  <!-- Puffy Pillow Body (Cream White with indented soft corners) -->
-  <path d="M46 54 C46 48 54 46 62 48 C70 50 90 50 98 48 C106 46 114 48 114 54 C112 62 112 78 114 86 C114 92 106 94 98 92 C90 90 70 90 62 92 C54 94 46 92 46 86 C48 78 48 62 46 54 Z" transform="scale(1.05) translate(-4, 12)" fill="#F5F5EA"/>
+  <!-- Puffy Pillow Body (Soft White with subtle warm outline) -->
+  <path d="M48 56 C46 50 54 48 64 50 C74 52 86 52 96 50 C106 48 114 50 112 56 C110 66 110 84 112 94 C114 100 106 102 96 100 C86 98 74 98 64 100 C54 102 46 100 48 94 C50 84 50 66 48 56 Z" fill="#FFFFFF" stroke="#D8D4C2" stroke-width="2.5" stroke-linejoin="round"/>
 
   <!-- Left Resting Arm -->
-  <path d="M44 86 Q34 90 30 98" stroke="#232323" stroke-width="4" stroke-linecap="round"/>
-  <circle cx="29" cy="99" r="4" fill="#232323"/>
+  <path d="M46 80 Q36 84 32 92" stroke="#232323" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="31" cy="93" r="4" fill="#232323"/>
 
   <!-- Right Waving Arm -->
-  <path d="M116 82 Q128 76 134 64" stroke="#232323" stroke-width="4" stroke-linecap="round"/>
-  <circle cx="135" cy="63" r="4" fill="#232323"/>
+  <path d="M114 78 Q126 72 132 60" stroke="#232323" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="133" cy="59" r="4" fill="#232323"/>
 
   <!-- Peaceful Closed Eyes (Down-arcs) & Sweet Smile -->
-  <path d="M68 76 Q72 80 76 76" stroke="#232323" stroke-width="3" stroke-linecap="round" fill="none"/>
-  <path d="M84 76 Q88 80 92 76" stroke="#232323" stroke-width="3" stroke-linecap="round" fill="none"/>
-  <path d="M76 84 Q80 88 84 84" stroke="#232323" stroke-width="2.8" stroke-linecap="round" fill="none"/>
+  <path d="M68 74 Q72 78 76 74" stroke="#232323" stroke-width="3" stroke-linecap="round" fill="none"/>
+  <path d="M84 74 Q88 78 92 74" stroke="#232323" stroke-width="3" stroke-linecap="round" fill="none"/>
+  <path d="M76 82 Q80 86 84 82" stroke="#232323" stroke-width="2.8" stroke-linecap="round" fill="none"/>
 </svg>
