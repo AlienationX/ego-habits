@@ -126,11 +126,28 @@
   font-weight: 800;
   color: var(--text-primary);
   margin-bottom: 4rpx;
+  white-space: nowrap;
 }
 
 .metric-label {
   font-size: 24rpx;
   line-height: 32rpx;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+/* Edit-default toggle row (shows the amount/note editor) */
+.edit-default-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28rpx;
+}
+
+.edit-default-label {
+  font-size: 26rpx;
+  line-height: 36rpx;
   color: var(--text-secondary);
 }
 
@@ -139,6 +156,137 @@
   background-color: var(--border-light);
   width: 100%;
   margin-bottom: 36rpx;
+}
+
+/* Edit-default popup */
+.editor-mask {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(35, 35, 35, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.editor-card {
+  width: 80%;
+  max-width: 600rpx;
+  background-color: var(--bg-card);
+  border-radius: 36rpx;
+  padding: 40rpx;
+  display: flex;
+  flex-direction: column;
+}
+
+.editor-title {
+  font-size: 32rpx;
+  line-height: 42rpx;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 32rpx;
+}
+
+.editor-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28rpx;
+}
+
+.editor-note-row {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 12rpx;
+}
+
+.editor-actions {
+  display: flex;
+  flex-direction: row;
+  gap: 24rpx;
+  margin-top: 8rpx;
+}
+
+.editor-btn {
+  flex: 1;
+  padding: 24rpx 0;
+  border-radius: 999rpx;
+}
+
+.editor-btn-text {
+  font-size: 28rpx;
+  font-weight: 700;
+}
+
+.checkin-label {
+  font-size: 26rpx;
+  line-height: 34rpx;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.stepper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 16rpx;
+}
+
+.stepper-btn {
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: 50%;
+  background-color: var(--bg-pill);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stepper-sign {
+  font-size: 40rpx;
+  line-height: 40rpx;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.stepper-value-wrap {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  gap: 8rpx;
+  min-width: 140rpx;
+  justify-content: center;
+}
+
+.stepper-value {
+  font-size: 36rpx;
+  line-height: 44rpx;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.stepper-unit {
+  font-size: 24rpx;
+  line-height: 32rpx;
+  color: var(--text-secondary);
+}
+
+.note-input {
+  width: 100%;
+  height: 72rpx;
+  padding: 0 24rpx;
+  border-radius: 20rpx;
+  background-color: var(--bg-pill);
+  font-size: 28rpx;
+  color: var(--text-primary);
+}
+
+.note-placeholder {
+  color: var(--text-muted);
 }
 
 /* Module entry (breathing / timer) */

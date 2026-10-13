@@ -35,6 +35,7 @@ Page({
     rounds: 0,
 
     tTag: '',
+    tStart: '',
     tRemaining: '',
     tRounds: '',
     tEnd: '',
@@ -45,7 +46,12 @@ Page({
   onLoad(options) {
     this.modeId = options.mode || 'box';
     const mode = breath.getMode(this.modeId);
-    const freeConfig = { inhale: options.in, hold: options.hold, exhale: options.out };
+    const freeConfig = {
+      inhale: options.in,
+      hold: options.hold,
+      exhale: options.out,
+      holdOut: options.holdOut
+    };
     this.timeline = breath.buildTimeline(mode, freeConfig);
     this.timer = null;
     this.stepIndex = 0;
@@ -54,6 +60,13 @@ Page({
 
     this.updateTheme();
     this.refreshLabels();
+
+    // Free mode: use the duration configured in the sheet.
+    const dur = Number(options.dur);
+    if (isFinite(dur) && dur >= 30) {
+      this.setData({ selectedDuration: Math.round(dur) });
+    }
+
     this.resetSession();
 
     this.unsubI18n = i18n.onLanguageChange(() => {
@@ -90,6 +103,7 @@ Page({
       tint: mode.tint,
       durations: DURATIONS.map(d => ({ secs: d.secs, label: i18n.t(d.key) })),
       tTag: i18n.t('breath.tag'),
+      tStart: i18n.t('breath.start'),
       tRemaining: i18n.t('breath.player.remaining'),
       tRounds: i18n.t('breath.player.rounds'),
       tEnd: i18n.t('breath.player.end'),
@@ -188,9 +202,9 @@ Page({
   },
 
   onEnd() {
+    // Early stop: do NOT record or celebrate — only a full session counts.
     this.stopTimer();
     this.setData({ running: false });
-    storage.logHabit('breathe');
-    wx.redirectTo({ url: '/pages/habit-complete/habit-complete?id=breathe' });
+    wx.navigateBack({ fail: () => wx.switchTab({ url: '/pages/index/index' }) });
   }
 });

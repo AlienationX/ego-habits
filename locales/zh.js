@@ -11,6 +11,12 @@ module.exports = {
     cancel: "取消",
     save: "保存"
   },
+  units: {
+    ml: "毫升",
+    min: "分钟",
+    pages: "页",
+    steps: "步"
+  },
   tabs: {
     today: "今日",
     habits: "习惯库",
@@ -78,6 +84,10 @@ module.exports = {
       metricAmountLabel: "数量",
       metricRhythmLabel: "你的生活节奏",
       rhythmDaily: "每日",
+      amountLabel: "今日数量",
+      editDefaultLabel: "修改默认值",
+      noteLabel: "备注（可选）",
+      notePlaceholder: "例如：一点小感想、书名…",
       logButton: "打卡这个习惯",
       alreadyLogged: "今日已达成",
       heroTitle: "一小步，\n只为你自己。",
@@ -124,6 +134,39 @@ module.exports = {
       step2Desc: "没有截止时间，只有故事。",
       step3Title: "夹好书签歇一歇",
       step3Desc: "读完了，轻轻合上。"
+    },
+    eyes: {
+      headline: "让眼睛歇一歇。",
+      heroTitle: "闭上眼睛。\n歇一小会儿。",
+      heroSub: "两分钟的安静时光，\n轻轻放松下来。",
+      step1Title: "舒服地靠坐下来",
+      step1Desc: "安静的地方就可以。",
+      step2Title: "轻轻闭上眼睛",
+      step2Desc: "不用用力，放松就好。",
+      step3Title: "呼吸，慢慢放空",
+      step3Desc: "准备好了，再慢慢睁开。"
+    },
+    task: {
+      headline: "一件小事，温柔完成。",
+      heroTitle: "一件小事。\n温柔的专注。",
+      heroSub: "十五分钟，\n刚刚好。",
+      step1Title: "挑一件小事",
+      step1Desc: "就一件，轻轻松松。",
+      step2Title: "专注一小会儿",
+      step2Desc: "其他的事，先放一放。",
+      step3Title: "停下来，看一看",
+      step3Desc: "一点点推进，都算数。"
+    },
+    breathe: {
+      headline: "一分钟的平静。",
+      heroTitle: "慢慢吸气。\n慢慢呼气。",
+      heroSub: "温柔的一分钟，\n回到此刻。",
+      step1Title: "找个舒服的角落",
+      step1Desc: "坐着躺着都可以。",
+      step2Title: "跟着节奏呼吸",
+      step2Desc: "吸气，呼气，慢慢来。",
+      step3Title: "温柔地回来",
+      step3Desc: "把这份平静带在身上。"
     },
     module: {
       breathing: "开始呼吸练习",
@@ -193,7 +236,16 @@ module.exports = {
       wimhof: { name: "Wim Hof", desc: "焕发活力的呼吸轮次。", pattern: "30 次 × 3 轮" },
       free: { name: "自由呼吸", desc: "按你自己的节奏。", pattern: "自定义" }
     },
-    disclaimer: "若感到头晕请停止，轻柔呼吸。"
+    disclaimer: "若感到头晕请停止，轻柔呼吸。",
+    freeSheet: {
+      title: "自定义呼吸节奏",
+      hint: "拖动滑块设置每个阶段的秒数，屏息可设为 0 跳过",
+      holdIn: "屏息（吸气后）",
+      holdOut: "屏息（呼气后）",
+      duration: "锻炼时长",
+      saveStart: "保存并开始练习",
+      secUnit: "秒"
+    }
   },
   session: {
     start: "开始",
@@ -205,7 +257,12 @@ module.exports = {
     task: { name: "安静小专注", hint: "专注于一件小事。" }
   },
   week: {
+    tag: "EGOHABITS / 周统计",
     headline: "这一周，悄悄成长。",
+    backToThisWeek: "回到本周",
+    viewChart: "图表",
+    viewCalendar: "日历",
+    noRecord: "这一天还没有记录。",
     completedLabel: "个已完成的微习惯",
     milestoneTitle: "坚持在场\n的一周。",
     milestoneDays: "七天时光。\n你独有的平稳节奏。",

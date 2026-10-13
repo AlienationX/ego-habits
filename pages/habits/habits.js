@@ -56,11 +56,18 @@ Page({
     ];
 
     const rawList = storage.getHabits();
-    const allHabits = rawList.map(h => ({
-      ...h,
-      name: i18n.t(h.nameKey),
-      amount: i18n.t(h.amountKey)
-    }));
+    const allHabits = rawList.map(h => {
+      // Show the configured default amount (last check-in value) when set;
+      // otherwise keep the original static copy (e.g. "1 杯").
+      const last = storage.getLastCheckin(h.id);
+      let amount = i18n.t(h.amountKey);
+      if (last && last.amount) {
+        const parsed = storage.parseAmount(last.amount);
+        const unitLabel = parsed.unit ? i18n.t(`units.${parsed.unit}`, parsed.unit) : '';
+        amount = parsed.unit ? `${parsed.value} ${unitLabel}` : last.amount;
+      }
+      return { ...h, name: i18n.t(h.nameKey), amount };
+    });
 
     this.setData({
       tLibraryTitle: i18n.t('habits.libraryTitle'),

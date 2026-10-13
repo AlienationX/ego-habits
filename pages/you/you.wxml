@@ -6,7 +6,7 @@
       <!-- Top Title -->
       <view class="header-section">
         <text class="tag-label">{{tTag}}</text>
-        <text class="headline-title">{{tHeadline}}</text>
+        <text class="headline-title">{{tYouHeadline}}</text>
       </view>
 
       <!-- Profile Card -->

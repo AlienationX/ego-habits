@@ -14,15 +14,31 @@
         <text class="headline-title">{{tHeadline}}</text>
       </view>
 
-      <!-- Center Celebration Character -->
-      <view class="celebration-center">
-        <habit-character name="celebrate" size="420" animate="{{true}}" />
+      <!-- Center Celebration: green check badge + confetti (water keeps its character) -->
+      <view class="celebration-center {{useBadge ? 'celebration-badge' : ''}}">
+        <block wx:if="{{useBadge}}">
+          <view class="confetti-layer">
+            <view
+              wx:for="{{confetti}}"
+              wx:key="index"
+              class="confetti {{item.shape}}"
+              style="left: {{item.x}}%; top: {{item.y}}%; width: {{item.w}}rpx; height: {{item.h}}rpx; background-color: {{item.color}}; animation-delay: {{item.d}}s;"
+            ></view>
+          </view>
+          <view class="award-badge">
+            <view class="check-mark"></view>
+          </view>
+        </block>
+        <view wx:else class="char-bounce">
+          <habit-character name="celebrate" size="420" animate="{{true}}" />
+        </view>
       </view>
 
       <!-- Metric Count & Progress Bar -->
       <view class="metric-section">
         <text class="metric-val">{{metricAdded}}</text>
         <text class="metric-label">{{tMetricLabel}}</text>
+        <text wx:if="{{note}}" class="metric-note">{{note}}</text>
         
         <view class="progress-track">
           <view class="progress-bar {{barAnimated ? 'progress-bar-fill' : ''}}"></view>

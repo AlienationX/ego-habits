@@ -1,7 +1,7 @@
 <!-- pages/habit-detail/habit-detail.wxml -->
 <view class="page-container {{themeClass}}">
   <scroll-view class="content-scroll" scroll-y enable-passive>
-    <view class="page-body safe-tabbar-space">
+    <view class="page-body">
 
       <!-- Top Bar (back button) -->
       <view class="topbar">
@@ -28,7 +28,7 @@
       <!-- 2-Column Metrics -->
       <view class="metrics-row">
         <view class="metric-col">
-          <text class="metric-val">{{habit.metricAmount}}</text>
+          <text class="metric-val">{{displayAmount}}</text>
           <text class="metric-label">{{tMetricAmountLabel}}</text>
         </view>
         <view class="metric-col">
@@ -37,13 +37,13 @@
         </view>
       </view>
 
-      <view class="divider-line"></view>
-
-      <!-- Module entry (breathing / timer) -->
-      <view wx:if="{{habit.module}}" class="module-entry card-tint-mint" hover-class="press-soft" hover-stay-time="120" bindtap="onOpenModule">
-        <text class="module-entry-title">{{moduleLabel}}</text>
-        <habit-icon name="arrow" size="32" color="var(--text-secondary)" />
+      <!-- Edit default (opens a popup, no layout shift) -->
+      <view class="edit-default-row" hover-class="press-soft" hover-stay-time="120" bindtap="onOpenEditor">
+        <text class="edit-default-label">{{tEditDefault}}</text>
+        <habit-icon name="arrow" size="28" color="var(--text-muted)" />
       </view>
+
+      <view class="divider-line"></view>
 
       <!-- Guide: Keep it easy -->
       <view class="guide-section">
@@ -70,10 +70,54 @@
           hover-stay-time="120"
           bindtap="onLogHabit"
         >
-          <text class="cta-btn-text">{{isCompleted ? tAlreadyLogged : tLogButton}}</text>
+          <text class="cta-btn-text">{{isCompleted && !habit.module ? tAlreadyLogged : tLogButton}}</text>
         </view>
       </view>
 
     </view>
   </scroll-view>
+
+  <!-- Edit default popup -->
+  <view wx:if="{{showEditor}}" class="editor-mask" bindtap="onCloseEditor">
+    <view class="editor-card" catchtap="noop">
+      <text class="editor-title">{{tEditDefault}}</text>
+
+      <view class="editor-row">
+        <text class="checkin-label">{{tAmountLabel}}</text>
+        <view class="stepper">
+          <view class="stepper-btn" hover-class="press-soft" hover-stay-time="100" bindtap="onDecreaseAmount">
+            <text class="stepper-sign">−</text>
+          </view>
+          <view class="stepper-value-wrap">
+            <text class="stepper-value">{{amountValue}}</text>
+            <text class="stepper-unit">{{amountUnitLabel}}</text>
+          </view>
+          <view class="stepper-btn" hover-class="press-soft" hover-stay-time="100" bindtap="onIncreaseAmount">
+            <text class="stepper-sign">+</text>
+          </view>
+        </view>
+      </view>
+
+      <view class="editor-row editor-note-row">
+        <text class="checkin-label">{{tNoteLabel}}</text>
+        <input
+          class="note-input"
+          value="{{noteValue}}"
+          placeholder="{{tNotePlaceholder}}"
+          placeholder-class="note-placeholder"
+          maxlength="60"
+          bindinput="onNoteInput"
+        />
+      </view>
+
+      <view class="editor-actions">
+        <view class="btn-moru btn-sage editor-btn" hover-class="press" hover-stay-time="120" bindtap="onCloseEditor">
+          <text class="editor-btn-text">{{tCancel}}</text>
+        </view>
+        <view class="btn-moru btn-ink editor-btn" hover-class="press" hover-stay-time="120" bindtap="onConfirmEditor">
+          <text class="editor-btn-text">{{tSave}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
 </view>

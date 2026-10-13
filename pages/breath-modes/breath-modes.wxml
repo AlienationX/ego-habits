@@ -37,43 +37,65 @@
         </view>
       </view>
 
-      <!-- Free breathing controls -->
-      <view wx:if="{{showFree}}" class="free-panel">
-        <view class="free-row">
-          <text class="free-label">{{tInhale}}</text>
-          <view class="stepper">
-            <view class="step-btn" hover-class="press-deep" hover-stay-time="120" data-field="freeIn" data-delta="-1" bindtap="onFreeChange"><text class="step-btn-text">−</text></view>
-            <text class="step-val">{{freeIn}}s</text>
-            <view class="step-btn" hover-class="press-deep" hover-stay-time="120" data-field="freeIn" data-delta="1" bindtap="onFreeChange"><text class="step-btn-text">+</text></view>
-          </view>
-        </view>
-        <view class="free-row">
-          <text class="free-label">{{tHold}}</text>
-          <view class="stepper">
-            <view class="step-btn" hover-class="press-deep" hover-stay-time="120" data-field="freeHold" data-delta="-1" bindtap="onFreeChange"><text class="step-btn-text">−</text></view>
-            <text class="step-val">{{freeHold}}s</text>
-            <view class="step-btn" hover-class="press-deep" hover-stay-time="120" data-field="freeHold" data-delta="1" bindtap="onFreeChange"><text class="step-btn-text">+</text></view>
-          </view>
-        </view>
-        <view class="free-row">
-          <text class="free-label">{{tExhale}}</text>
-          <view class="stepper">
-            <view class="step-btn" hover-class="press-deep" hover-stay-time="120" data-field="freeOut" data-delta="-1" bindtap="onFreeChange"><text class="step-btn-text">−</text></view>
-            <text class="step-val">{{freeOut}}s</text>
-            <view class="step-btn" hover-class="press-deep" hover-stay-time="120" data-field="freeOut" data-delta="1" bindtap="onFreeChange"><text class="step-btn-text">+</text></view>
-          </view>
-        </view>
-      </view>
-
       <text class="disclaimer">{{tDisclaimer}}</text>
-
-      <!-- Start CTA -->
-      <view class="start-wrap">
-        <view class="btn-moru btn-ink start-btn" hover-class="press" hover-stay-time="120" bindtap="onStart">
-          <text class="start-text">{{tStart}}</text>
-        </view>
-      </view>
 
     </view>
   </scroll-view>
+
+  <!-- Free breathing config sheet -->
+  <view wx:if="{{showFreeSheet}}" class="sheet-mask" bindtap="onCloseFreeSheet">
+    <view class="sheet-card" catchtap="noop">
+      <text class="sheet-title">{{tFreeTitle}}</text>
+      <text class="sheet-hint">{{tFreeHint}}</text>
+
+      <view class="slider-row">
+        <view class="slider-head">
+          <text class="slider-label">{{tInhale}}</text>
+          <text class="slider-val">{{freeIn}}{{tSecUnit}}</text>
+        </view>
+        <slider min="1" max="10" step="1" value="{{freeIn}}" activeColor="{{sliderColor}}" backgroundColor="var(--bg-pill)" block-size="24" data-field="freeIn" bindchanging="onFreeSlider" bindchange="onFreeSlider" />
+      </view>
+
+      <view class="slider-row">
+        <view class="slider-head">
+          <text class="slider-label">{{tFreeHoldIn}}</text>
+          <text class="slider-val">{{freeHold}}{{tSecUnit}}</text>
+        </view>
+        <slider min="0" max="10" step="1" value="{{freeHold}}" activeColor="{{sliderColor}}" backgroundColor="var(--bg-pill)" block-size="24" data-field="freeHold" bindchanging="onFreeSlider" bindchange="onFreeSlider" />
+      </view>
+
+      <view class="slider-row">
+        <view class="slider-head">
+          <text class="slider-label">{{tExhale}}</text>
+          <text class="slider-val">{{freeOut}}{{tSecUnit}}</text>
+        </view>
+        <slider min="1" max="10" step="1" value="{{freeOut}}" activeColor="{{sliderColor}}" backgroundColor="var(--bg-pill)" block-size="24" data-field="freeOut" bindchanging="onFreeSlider" bindchange="onFreeSlider" />
+      </view>
+
+      <view class="slider-row">
+        <view class="slider-head">
+          <text class="slider-label">{{tFreeHoldOut}}</text>
+          <text class="slider-val">{{freeHoldOut}}{{tSecUnit}}</text>
+        </view>
+        <slider min="0" max="10" step="1" value="{{freeHoldOut}}" activeColor="{{sliderColor}}" backgroundColor="var(--bg-pill)" block-size="24" data-field="freeHoldOut" bindchanging="onFreeSlider" bindchange="onFreeSlider" />
+      </view>
+
+      <view class="slider-row">
+        <view class="slider-head">
+          <text class="slider-label">{{tFreeDuration}}</text>
+          <text class="slider-val">{{freeDurMin}} {{tMinUnit}}</text>
+        </view>
+        <slider min="1" max="10" step="1" value="{{freeDurMin}}" activeColor="{{sliderColor}}" backgroundColor="var(--bg-pill)" block-size="24" data-field="freeDurMin" bindchanging="onFreeSlider" bindchange="onFreeSlider" />
+      </view>
+
+      <view class="free-summary">
+        <text class="free-summary-seq">{{freeSummarySeq}}</text>
+        <text class="free-summary-sub">{{freeSummarySub}}</text>
+      </view>
+
+      <view class="btn-moru btn-ink sheet-btn" hover-class="press" hover-stay-time="120" bindtap="onStartFree">
+        <text class="sheet-btn-text">{{tFreeSave}}</text>
+      </view>
+    </view>
+  </view>
 </view>

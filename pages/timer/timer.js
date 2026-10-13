@@ -29,7 +29,14 @@ Page({
     this.habitId = options.id || 'eyes';
     const all = storage.getHabits();
     const habit = all.find(h => h.id === this.habitId) || all[0];
-    this.durationSec = habit.durationSec || 120;
+
+    // Countdown follows the configured default amount ("15 分钟" -> 15 min),
+    // falling back to the habit's durationSec when nothing is parsable.
+    const last = storage.getLastCheckin(habit.id);
+    const amountStr = (last && last.amount) || habit.metricAmount || '';
+    const parsed = storage.parseAmount(amountStr);
+    const minutes = parsed.value > 0 ? parsed.value : 0;
+    this.durationSec = minutes > 0 ? Math.round(minutes * 60) : (habit.durationSec || 120);
     this.left = this.durationSec;
     this.timer = null;
 
@@ -121,9 +128,9 @@ Page({
   },
 
   onEnd() {
+    // Early stop: do NOT record or celebrate — only a full session counts.
     this.stopTimer();
     this.setData({ status: 'idle' });
-    storage.logHabit(this.habitId);
-    wx.redirectTo({ url: `/pages/habit-complete/habit-complete?id=${this.habitId}` });
+    wx.navigateBack({ fail: () => wx.switchTab({ url: '/pages/index/index' }) });
   }
 });

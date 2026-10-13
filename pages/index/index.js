@@ -87,14 +87,30 @@ Page({
   loadTodayHabits() {
     const allHabits = storage.getHabits();
     const primary = allHabits.slice(0, 3);
-    const todayHabits = primary.map(h => ({
-      id: h.id,
-      title: i18n.t(h.cardTitleKey),
-      sub: i18n.t(h.cardSubKey),
-      character: h.character,
-      tint: h.tint,
-      completed: storage.isHabitCompletedToday(h.id)
-    }));
+    const todayHabits = primary.map(h => {
+      // Use the remembered default amount (last check-in value) instead of the
+      // static card copy's amount, keeping the rest of the copy unchanged.
+      const last = storage.getLastCheckin(h.id);
+      const amountStr = (last && last.amount) || h.metricAmount || '';
+      const parsed = storage.parseAmount(amountStr);
+      const unitLabel = parsed.unit ? i18n.t(`units.${parsed.unit}`, parsed.unit) : '';
+      const amountText = parsed.unit ? `${parsed.value} ${unitLabel}` : amountStr;
+
+      const cardSub = i18n.t(h.cardSubKey) || '';
+      const sepIndex = cardSub.indexOf(' · ');
+      const sub = sepIndex > -1
+        ? `${amountText} · ${cardSub.slice(sepIndex + 3)}`
+        : (amountText || cardSub);
+
+      return {
+        id: h.id,
+        title: i18n.t(h.cardTitleKey),
+        sub,
+        character: h.character,
+        tint: h.tint,
+        completed: storage.isHabitCompletedToday(h.id)
+      };
+    });
     this.setData({ todayHabits });
   },
 

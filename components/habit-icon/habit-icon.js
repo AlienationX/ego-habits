@@ -12,9 +12,14 @@ const ICONS = {
   settings: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"><path d="M8.2 3 H15.8 L21 8.2 V15.8 L15.8 21 H8.2 L3 15.8 V8.2 Z" stroke="#000000" stroke-width="2" stroke-linejoin="round"/><circle cx="12" cy="12" r="2.8" stroke="#000000" stroke-width="2"/></svg>'
 };
 
+const iconCache = {};
+
 function buildIconUrl(name) {
+  if (iconCache[name]) return iconCache[name];
   const svg = ICONS[name] || ICONS.home;
-  return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
+  const url = 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
+  iconCache[name] = url;
+  return url;
 }
 
 Component({

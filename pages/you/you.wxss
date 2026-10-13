@@ -5,7 +5,9 @@
 }
 
 .page-body {
-  padding: 40rpx 48rpx 0;
+  padding-top: 40rpx;
+  padding-left: 48rpx;
+  padding-right: 48rpx;
   display: flex;
   flex-direction: column;
 }

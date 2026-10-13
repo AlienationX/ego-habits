@@ -1,7 +1,10 @@
 /* pages/breath-player/breath-player.wxss */
 .page-body {
   min-height: 100vh;
-  padding: 40rpx 40rpx calc(40rpx + env(safe-area-inset-bottom));
+  padding-top: 40rpx;
+  padding-left: 40rpx;
+  padding-right: 40rpx;
+  padding-bottom: calc(48rpx + env(safe-area-inset-bottom));
   display: flex;
   flex-direction: column;
 }
@@ -41,20 +44,42 @@
   margin-bottom: 12rpx;
 }
 
+.ball-glow {
+  position: absolute;
+  width: 360rpx;
+  height: 360rpx;
+  border-radius: 50%;
+  background-color: var(--bg-pill);
+  opacity: 0.55;
+}
+
 .ball-ring {
   position: absolute;
   width: 300rpx;
   height: 300rpx;
   border-radius: 50%;
   border: 2rpx solid var(--border-light);
-  opacity: 0.5;
+  opacity: 0.6;
 }
 
 .breath-ball {
+  position: relative;
   width: 220rpx;
   height: 220rpx;
   border-radius: 50%;
-  box-shadow: 0 16rpx 40rpx rgba(35, 35, 35, 0.14);
+  overflow: hidden;
+  background-image: linear-gradient(145deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0) 60%);
+  box-shadow: 0 16rpx 40rpx rgba(35, 35, 35, 0.16), 0 4rpx 12rpx rgba(35, 35, 35, 0.08);
+}
+
+.ball-highlight {
+  position: absolute;
+  top: 26rpx;
+  left: 34rpx;
+  width: 76rpx;
+  height: 48rpx;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.65);
 }
 
 /* Card tints */

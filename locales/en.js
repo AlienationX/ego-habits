@@ -11,6 +11,12 @@ module.exports = {
     cancel: "Cancel",
     save: "Save"
   },
+  units: {
+    ml: "ml",
+    min: "min",
+    pages: "pages",
+    steps: "steps"
+  },
   tabs: {
     today: "Today",
     habits: "Habits",
@@ -78,6 +84,10 @@ module.exports = {
       metricAmountLabel: "Amount",
       metricRhythmLabel: "Your rhythm",
       rhythmDaily: "Daily",
+      amountLabel: "Today's amount",
+      editDefaultLabel: "Edit default",
+      noteLabel: "Note (optional)",
+      notePlaceholder: "e.g. a small thought, a book title…",
       logButton: "Log this habit",
       alreadyLogged: "Completed for today",
       heroTitle: "One small step.\nJust for you.",
@@ -124,6 +134,39 @@ module.exports = {
       step2Desc: "No deadlines, just the story.",
       step3Title: "Bookmark and rest",
       step3Desc: "Close it gently when you are done."
+    },
+    eyes: {
+      headline: "A pause for your eyes.",
+      heroTitle: "Close your eyes.\nRest a moment.",
+      heroSub: "Two quiet minutes\njust to unwind.",
+      step1Title: "Sit back comfortably",
+      step1Desc: "Any quiet spot will do.",
+      step2Title: "Let your eyes close",
+      step2Desc: "No effort, just soften.",
+      step3Title: "Breathe and rest",
+      step3Desc: "Open them when you are ready."
+    },
+    task: {
+      headline: "One thing, gently done.",
+      heroTitle: "One small task.\nGentle focus.",
+      heroSub: "Fifteen minutes\nis plenty.",
+      step1Title: "Pick one small thing",
+      step1Desc: "Just one, keep it light.",
+      step2Title: "Focus for a while",
+      step2Desc: "Let everything else wait.",
+      step3Title: "Stop and notice",
+      step3Desc: "A little progress counts."
+    },
+    breathe: {
+      headline: "A minute of calm.",
+      heroTitle: "Inhale slowly.\nExhale slowly.",
+      heroSub: "One gentle minute\nto come back to now.",
+      step1Title: "Find a cozy spot",
+      step1Desc: "Sitting or lying, both are fine.",
+      step2Title: "Follow the rhythm",
+      step2Desc: "In, then out, nice and slow.",
+      step3Title: "Return gently",
+      step3Desc: "Carry the calm with you."
     },
     module: {
       breathing: "Start breathing practice",
@@ -193,7 +236,16 @@ module.exports = {
       wimhof: { name: "Wim Hof", desc: "Energizing breathing rounds.", pattern: "30 breaths x 3" },
       free: { name: "Free breathing", desc: "Your own rhythm.", pattern: "Custom" }
     },
-    disclaimer: "Stop if you feel lightheaded, and breathe gently."
+    disclaimer: "Stop if you feel lightheaded, and breathe gently.",
+    freeSheet: {
+      title: "Custom breathing rhythm",
+      hint: "Slide to set the seconds of each phase. Set a hold to 0 to skip it.",
+      holdIn: "Hold (after in)",
+      holdOut: "Hold (after out)",
+      duration: "Duration",
+      saveStart: "Save & start",
+      secUnit: "s"
+    }
   },
   session: {
     start: "Start",
@@ -205,7 +257,12 @@ module.exports = {
     task: { name: "One quiet task", hint: "Focus on one small thing." }
   },
   week: {
+    tag: "EGOHABITS / WEEKLY",
     headline: "Your week, growing.",
+    backToThisWeek: "Back to this week",
+    viewChart: "Chart",
+    viewCalendar: "Calendar",
+    noRecord: "No records this day.",
     completedLabel: "small habits completed",
     milestoneTitle: "A week of\nshowing up.",
     milestoneDays: "Seven days.\nYour own steady rhythm.",

@@ -2,15 +2,40 @@
 <view class="page-container {{themeClass}}">
   <scroll-view class="content-scroll" scroll-y enable-passive>
     <view class="page-body safe-tabbar-space">
-      
+
       <!-- Top Title -->
       <view class="header-section">
-        <text class="date-label">{{tDateRange}}</text>
+        <text class="tag-label">{{tTag}}</text>
         <text class="headline-title">{{tHeadline}}</text>
       </view>
 
-      <!-- 7-Day Bar Chart Card -->
-      <view class="chart-card">
+      <!-- View Toggle: chart / calendar (+ quick back to this week) -->
+      <view class="view-toggle">
+        <view class="view-pill {{viewMode === 'chart' ? 'view-pill-active' : ''}}" hover-class="press-soft" hover-stay-time="100" data-mode="chart" bindtap="onSwitchView">
+          <text class="view-pill-text {{viewMode === 'chart' ? 'view-pill-text-active' : ''}}">{{tViewChart}}</text>
+        </view>
+        <view class="view-pill {{viewMode === 'calendar' ? 'view-pill-active' : ''}}" hover-class="press-soft" hover-stay-time="100" data-mode="calendar" bindtap="onSwitchView">
+          <text class="view-pill-text {{viewMode === 'calendar' ? 'view-pill-text-active' : ''}}">{{tViewCalendar}}</text>
+        </view>
+
+        <view wx:if="{{weekOffset < 0}}" class="back-this-week-pill" hover-class="press-soft" hover-stay-time="100" bindtap="onBackToThisWeek">
+          <text class="back-this-week-text">{{tBackToThisWeek}}</text>
+        </view>
+      </view>
+
+      <!-- Week history nav (chart mode only; calendar has its own month nav) -->
+      <view wx:if="{{viewMode === 'chart'}}" class="week-nav">
+        <view class="week-nav-btn" hover-class="press-soft" hover-stay-time="100" bindtap="onPrevWeek">
+          <habit-icon name="back" size="30" color="var(--text-primary)" />
+        </view>
+        <text class="week-nav-range">{{tDateRange}}</text>
+        <view class="week-nav-btn {{canGoNext ? '' : 'week-nav-btn-disabled'}}" hover-class="press-soft" hover-stay-time="100" bindtap="onNextWeek">
+          <habit-icon name="arrow" size="30" color="{{canGoNext ? 'var(--text-primary)' : 'var(--text-muted)'}}" />
+        </view>
+      </view>
+
+      <!-- Chart View -->
+      <view wx:if="{{viewMode === 'chart'}}" class="chart-card">
         <view class="chart-summary">
           <text class="chart-number">{{tCompletedNumber}}</text>
           <text class="chart-sub-label">{{tCompletedLabel}}</text>
@@ -31,6 +56,52 @@
         </view>
       </view>
 
+      <!-- Calendar View -->
+      <view wx:if="{{viewMode === 'calendar'}}" class="calendar-card">
+        <view class="cal-nav">
+          <view class="week-nav-btn" hover-class="press-soft" hover-stay-time="100" bindtap="onPrevMonth">
+            <habit-icon name="back" size="28" color="var(--text-primary)" />
+          </view>
+          <text class="cal-title">{{calTitle}}</text>
+          <view class="week-nav-btn {{canNextMonth ? '' : 'week-nav-btn-disabled'}}" hover-class="press-soft" hover-stay-time="100" bindtap="onNextMonth">
+            <habit-icon name="arrow" size="28" color="{{canNextMonth ? 'var(--text-primary)' : 'var(--text-muted)'}}" />
+          </view>
+        </view>
+
+        <view class="cal-head-row">
+          <text wx:for="{{calHead}}" wx:key="k" class="cal-head-cell">{{item.l}}</text>
+        </view>
+
+        <view class="cal-grid">
+          <view wx:for="{{calWeeks}}" wx:for-item="week" wx:key="key" class="cal-row">
+            <view
+              wx:for="{{week.days}}"
+              wx:for-item="cell"
+              wx:key="key"
+              class="cal-cell {{cell.inMonth ? '' : 'cal-cell-out'}} {{cell.future ? 'cal-cell-future' : ''}}"
+              data-key="{{cell.key}}"
+              bindtap="onDayTap"
+            >
+              <view class="cal-day-badge {{cell.isToday ? 'cal-day-today' : ''}} {{selectedKey === cell.key ? 'cal-day-selected' : ''}}">
+                <text class="cal-day-num {{cell.isToday || selectedKey === cell.key ? 'cal-day-num-strong' : ''}} {{selectedKey === cell.key ? 'cal-day-num-inv' : ''}}">{{cell.day}}</text>
+              </view>
+              <text class="cal-count">{{cell.count > 0 ? cell.count : ''}}</text>
+            </view>
+          </view>
+        </view>
+
+        <view wx:if="{{selectedKey}}" class="cal-detail">
+          <text class="cal-detail-date">{{selectedLabel}}</text>
+          <block wx:if="{{selectedHabits.length > 0}}">
+            <view wx:for="{{selectedHabits}}" wx:key="*this" class="cal-detail-item">
+              <text class="cal-detail-check">✓</text>
+              <text class="cal-detail-name">{{item}}</text>
+            </view>
+          </block>
+          <text wx:else class="cal-detail-empty">{{tNoRecord}}</text>
+        </view>
+      </view>
+
       <!-- Milestone Card (A week of showing up.) -->
       <view class="milestone-card">
         <view class="milestone-info">
@@ -45,7 +116,7 @@
       <!-- Breakdown: What made your week -->
       <view class="breakdown-section">
         <text class="breakdown-title">{{tBreakdownTitle}}</text>
-        
+
         <view class="breakdown-pill pill-blue">
           <text class="breakdown-cat-name">{{tCatWater}}</text>
           <text class="breakdown-count">{{tCatWaterCount}}</text>

@@ -101,18 +101,25 @@ function buildWimhofTimeline() {
 function buildFreeTimeline(cfg) {
   const c = cfg || {};
   const inSecs = num(c.inhale, 4);
-  const holdSecs = num(c.hold, 4);
+  const holdIn = num0(c.hold, 4);
   const outSecs = num(c.exhale, 4);
-  return [
-    { key: 'inhale', secs: inSecs, scale: 1.35 },
-    { key: 'hold', secs: holdSecs, scale: 1.35 },
-    { key: 'exhale', secs: outSecs, scale: 1.0 }
-  ];
+  const holdOut = num0(c.holdOut, 0);
+  const steps = [{ key: 'inhale', secs: inSecs, scale: 1.35 }];
+  if (holdIn > 0) steps.push({ key: 'hold', secs: holdIn, scale: 1.35 });
+  steps.push({ key: 'exhale', secs: outSecs, scale: 1.0 });
+  if (holdOut > 0) steps.push({ key: 'hold', secs: holdOut, scale: 1.0 });
+  return steps;
 }
 
 function num(v, def) {
   const n = Number(v);
   return isFinite(n) && n > 0 ? n : def;
+}
+
+// Like num() but allows 0 (used for skippable hold phases).
+function num0(v, def) {
+  const n = Number(v);
+  return isFinite(n) && n >= 0 ? n : def;
 }
 
 // Resolve a mode into its looping timeline (one cycle)
@@ -139,7 +146,7 @@ function getFreeConfig() {
     const c = wx.getStorageSync(STORAGE_FREE);
     if (c && typeof c === 'object') return c;
   } catch (e) {}
-  return { inhale: 4, hold: 4, exhale: 4 };
+  return { inhale: 4, hold: 4, exhale: 4, holdOut: 0, durationMin: 3 };
 }
 
 function saveFreeConfig(cfg) {

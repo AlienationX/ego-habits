@@ -28,7 +28,21 @@ Page({
     steps: [],
     tLogButton: '',
     tAlreadyLogged: '',
-    moduleLabel: ''
+
+    // Check-in input (amount + generic note)
+    showEditor: false,
+    displayAmount: '',
+    amountValue: 0,
+    amountUnit: '',
+    amountUnitLabel: '',
+    amountStep: 1,
+    noteValue: '',
+    tAmountLabel: '',
+    tEditDefault: '',
+    tNoteLabel: '',
+    tNotePlaceholder: '',
+    tCancel: '',
+    tSave: ''
   },
 
   onLoad(options) {
@@ -75,6 +89,14 @@ Page({
       desc: detailText(id, `step${i}Desc`)
     }));
 
+    // Remembered last check-in amount becomes the new default (seamless).
+    const last = storage.getLastCheckin(id);
+    const amountStr = (last && last.amount) || habit.metricAmount || '';
+    const parsed = storage.parseAmount(amountStr);
+    // Units are stored canonically ("5 pages"); display them localized.
+    const unitLabel = parsed.unit ? i18n.t(`units.${parsed.unit}`, parsed.unit) : '';
+    const displayText = parsed.unit ? `${parsed.value} ${unitLabel}` : amountStr;
+
     this.setData({
       habit,
       isCompleted: storage.isHabitCompletedToday(habit.id),
@@ -87,9 +109,22 @@ Page({
       tMetricRhythmLabel: detailText(id, 'metricRhythmLabel'),
       tGuideTitle: detailText(id, 'guideTitle'),
       steps,
-      tLogButton: detailText(id, 'logButton'),
+      tLogButton: habit.module
+        ? i18n.t(`detail.module.${habit.module}`)
+        : detailText(id, 'logButton'),
       tAlreadyLogged: detailText(id, 'alreadyLogged'),
-      moduleLabel: habit.module ? i18n.t(`detail.module.${habit.module}`, '') : ''
+      displayAmount: displayText,
+      amountValue: parsed.value,
+      amountUnit: parsed.unit,
+      amountUnitLabel: unitLabel,
+      amountStep: habit.step || 1,
+      noteValue: (last && last.note) || '',
+      tAmountLabel: detailText(id, 'amountLabel'),
+      tEditDefault: detailText(id, 'editDefaultLabel'),
+      tNoteLabel: detailText(id, 'noteLabel'),
+      tNotePlaceholder: detailText(id, 'notePlaceholder'),
+      tCancel: i18n.t('common.cancel'),
+      tSave: i18n.t('common.save')
     });
   },
 
@@ -103,8 +138,57 @@ Page({
     }
   },
 
+  onDecreaseAmount() {
+    const step = this.data.amountStep;
+    const next = Math.max(step, this.data.amountValue - step);
+    this.setData({ amountValue: next });
+  },
+
+  onIncreaseAmount() {
+    this.setData({ amountValue: this.data.amountValue + this.data.amountStep });
+  },
+
+  onNoteInput(e) {
+    this.setData({ noteValue: e.detail.value });
+  },
+
+  noop() {},
+
+  onOpenEditor() {
+    this.setData({ showEditor: true });
+  },
+
+  onCloseEditor() {
+    // Discard edits: restore values from storage.
+    this.loadHabitData();
+    this.setData({ showEditor: false });
+  },
+
+  onConfirmEditor() {
+    storage.setLastCheckin(this.data.habitId, {
+      amount: this.buildAmountString(),
+      note: (this.data.noteValue || '').trim()
+    });
+    this.loadHabitData();
+    this.setData({ showEditor: false });
+  },
+
+  buildAmountString() {
+    const v = this.data.amountValue;
+    const u = this.data.amountUnit;
+    return u ? `${v} ${u}` : String(v);
+  },
+
   onLogHabit() {
-    storage.logHabit(this.data.habitId);
+    // Module habits (timer / breathing): the CTA starts the practice directly.
+    if (this.data.habit.module) {
+      this.onOpenModule();
+      return;
+    }
+
+    const amount = this.buildAmountString();
+    const note = (this.data.noteValue || '').trim();
+    storage.logHabit(this.data.habitId, amount, note);
     this.setData({ isCompleted: true });
 
     // Haptic feedback

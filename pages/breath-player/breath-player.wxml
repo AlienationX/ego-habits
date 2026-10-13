@@ -13,11 +13,14 @@
 
     <!-- Breathing ball -->
     <view class="ball-stage">
+      <view class="ball-glow"></view>
       <view class="ball-ring"></view>
       <view
         class="breath-ball card-tint-{{tint}}"
         style="transform: scale({{scale}}); transition: transform {{phaseSecs}}s cubic-bezier(0.45, 0, 0.55, 1);"
-      ></view>
+      >
+        <view class="ball-highlight"></view>
+      </view>
     </view>
 
     <!-- Idle: ready + duration + start -->
