@@ -48,6 +48,8 @@ page,
   --tabbar-bg: #232323;
   --tabbar-text: #F2EFE3;
   --tabbar-text-active: #F2EFE3;
+  --tabbar-active-bg: #F2EFE3;
+  --tabbar-active-text: #232323;
   --tabbar-shadow: 0 16rpx 48rpx rgba(35, 35, 35, 0.16);
 
   /* Chart & Accent Colors */
@@ -101,6 +103,8 @@ page,
   --tabbar-bg: #222722;
   --tabbar-text: #EDEFEA;
   --tabbar-text-active: #EDEFEA;
+  --tabbar-active-bg: #EDEFEA;
+  --tabbar-active-text: #171917;
   --tabbar-shadow: 0 16rpx 48rpx rgba(0, 0, 0, 0.36);
 
   /* Chart & Accent Colors */
@@ -151,6 +155,8 @@ page,
     --tabbar-bg: #222722;
     --tabbar-text: #EDEFEA;
     --tabbar-text-active: #EDEFEA;
+    --tabbar-active-bg: #EDEFEA;
+    --tabbar-active-text: #171917;
     --tabbar-shadow: 0 16rpx 48rpx rgba(0, 0, 0, 0.36);
 
     --chart-bar-bg: #354837;

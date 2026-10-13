@@ -11,10 +11,12 @@
 
       <!-- Category Filter Pills -->
       <view class="filters-row">
-        <view 
-          wx:for="{{categories}}" 
-          wx:key="key" 
+        <view
+          wx:for="{{categories}}"
+          wx:key="key"
           class="filter-pill {{currentCategory === item.key ? 'filter-pill-active' : ''}}"
+          hover-class="press-soft"
+          hover-stay-time="120"
           data-key="{{item.key}}"
           bindtap="onSelectCategory"
         >
@@ -24,10 +26,12 @@
 
       <!-- 2-Column Habit Grid -->
       <view class="habits-grid">
-        <view 
-          wx:for="{{filteredHabits}}" 
-          wx:key="id" 
+        <view
+          wx:for="{{filteredHabits}}"
+          wx:key="id"
           class="grid-card card-tint-{{item.tint}}"
+          hover-class="press"
+          hover-stay-time="120"
           data-id="{{item.id}}"
           bindtap="onSelectHabit"
         >
@@ -43,6 +47,4 @@
 
     </view>
   </scroll-view>
-
-  <custom-tabbar current="habits" />
 </view>

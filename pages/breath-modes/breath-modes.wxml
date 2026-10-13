@@ -1,0 +1,79 @@
+<!-- pages/breath-modes/breath-modes.wxml -->
+<view class="page-container {{themeClass}}">
+  <scroll-view class="content-scroll" scroll-y enable-passive>
+    <view class="page-body safe-bottom">
+
+      <view class="topbar">
+        <nav-back />
+      </view>
+
+      <view class="nav-header">
+        <text class="tag-label">{{tTag}}</text>
+        <text class="headline-title">{{tHeadline}}</text>
+      </view>
+
+      <!-- Mode cards -->
+      <view class="mode-list">
+        <view
+          wx:for="{{modes}}"
+          wx:key="id"
+          class="mode-card card-tint-{{item.tint}} {{selected === item.id ? 'mode-card-active' : ''}}"
+          hover-class="press-soft"
+          hover-stay-time="120"
+          data-id="{{item.id}}"
+          bindtap="onSelectMode"
+        >
+          <view class="mode-info">
+            <view class="mode-name-row">
+              <text class="mode-name">{{item.name}}</text>
+              <view wx:if="{{item.inUse}}" class="in-use-badge">
+                <text class="in-use-text">{{tCurrent}}</text>
+              </view>
+            </view>
+            <text class="mode-pattern">{{item.pattern}}</text>
+            <text class="mode-desc">{{item.desc}}</text>
+          </view>
+          <view class="mode-dot"></view>
+        </view>
+      </view>
+
+      <!-- Free breathing controls -->
+      <view wx:if="{{showFree}}" class="free-panel">
+        <view class="free-row">
+          <text class="free-label">{{tInhale}}</text>
+          <view class="stepper">
+            <view class="step-btn" hover-class="press-deep" hover-stay-time="120" data-field="freeIn" data-delta="-1" bindtap="onFreeChange"><text class="step-btn-text">−</text></view>
+            <text class="step-val">{{freeIn}}s</text>
+            <view class="step-btn" hover-class="press-deep" hover-stay-time="120" data-field="freeIn" data-delta="1" bindtap="onFreeChange"><text class="step-btn-text">+</text></view>
+          </view>
+        </view>
+        <view class="free-row">
+          <text class="free-label">{{tHold}}</text>
+          <view class="stepper">
+            <view class="step-btn" hover-class="press-deep" hover-stay-time="120" data-field="freeHold" data-delta="-1" bindtap="onFreeChange"><text class="step-btn-text">−</text></view>
+            <text class="step-val">{{freeHold}}s</text>
+            <view class="step-btn" hover-class="press-deep" hover-stay-time="120" data-field="freeHold" data-delta="1" bindtap="onFreeChange"><text class="step-btn-text">+</text></view>
+          </view>
+        </view>
+        <view class="free-row">
+          <text class="free-label">{{tExhale}}</text>
+          <view class="stepper">
+            <view class="step-btn" hover-class="press-deep" hover-stay-time="120" data-field="freeOut" data-delta="-1" bindtap="onFreeChange"><text class="step-btn-text">−</text></view>
+            <text class="step-val">{{freeOut}}s</text>
+            <view class="step-btn" hover-class="press-deep" hover-stay-time="120" data-field="freeOut" data-delta="1" bindtap="onFreeChange"><text class="step-btn-text">+</text></view>
+          </view>
+        </view>
+      </view>
+
+      <text class="disclaimer">{{tDisclaimer}}</text>
+
+      <!-- Start CTA -->
+      <view class="start-wrap">
+        <view class="btn-moru btn-ink start-btn" hover-class="press" hover-stay-time="120" bindtap="onStart">
+          <text class="start-text">{{tStart}}</text>
+        </view>
+      </view>
+
+    </view>
+  </scroll-view>
+</view>

@@ -10,6 +10,7 @@ page {
   color: var(--text-primary);
   font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
   -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -20,6 +21,7 @@ page {
 
 view, text, image, button, input, scroll-view {
   box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
 }
 
 /* Base Responsive Container for Multi-Platform (Phone, iPad, PC) */
@@ -100,9 +102,35 @@ view, text, image, button, input, scroll-view {
   color: var(--btn-sage-text);
 }
 
+/* ===== Press feedback (attach via hover-class) ===== */
+.press {
+  transform: scale(0.96);
+  opacity: 0.85;
+}
+
+.press-soft {
+  transform: scale(0.98);
+  opacity: 0.9;
+}
+
+.press-deep {
+  transform: scale(0.9);
+  opacity: 0.8;
+}
+
 /* Safe Area Inset Helpers */
 .safe-bottom {
   padding-bottom: calc(20rpx + env(safe-area-inset-bottom));
+}
+
+/* Sub-page top bar (holds the nav-back button above the title) */
+.topbar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  padding-top: calc(48rpx + env(safe-area-inset-top));
+  margin-bottom: 24rpx;
 }
 
 .safe-tabbar-space {

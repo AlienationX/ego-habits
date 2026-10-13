@@ -11,9 +11,9 @@
   align-items: center;
 }
 
-/* Nav Header */
+/* Nav Header (safe-area handled by .topbar above) */
 .nav-header {
-  padding-top: calc(70rpx + env(safe-area-inset-top));
+  padding-top: 0;
   width: 100%;
   display: flex;
   flex-direction: column;

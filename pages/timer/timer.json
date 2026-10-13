@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "habit-character": "/components/habit-character/habit-character",
+    "nav-back": "/components/nav-back/nav-back"
+  }
+}

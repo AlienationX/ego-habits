@@ -31,8 +31,8 @@ function getDictionary() {
   return currentLang === 'zh' ? zh : en;
 }
 
-function t(path, fallback = '') {
-  if (!path) return fallback;
+function t(path, fallback) {
+  if (!path) return fallback !== undefined ? fallback : path;
   const dict = getDictionary();
   const keys = path.split('.');
   let curr = dict;
@@ -40,7 +40,9 @@ function t(path, fallback = '') {
     if (curr && typeof curr === 'object' && k in curr) {
       curr = curr[k];
     } else {
-      return fallback || path;
+      // Explicit '' fallback means "missing -> empty"; otherwise echo the
+      // path so missing keys stay visible during development.
+      return fallback !== undefined ? fallback : path;
     }
   }
   return curr;

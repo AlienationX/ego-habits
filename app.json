@@ -3,15 +3,32 @@
     "pages/index/index",
     "pages/habit-detail/habit-detail",
     "pages/habit-complete/habit-complete",
+    "pages/breath-modes/breath-modes",
+    "pages/breath-player/breath-player",
+    "pages/timer/timer",
     "pages/habits/habits",
     "pages/week/week",
     "pages/you/you"
   ],
   "window": {
-    "navigationBarTextStyle": "black",
+    "navigationBarTextStyle": "@navTxtStyle",
     "navigationStyle": "custom",
-    "backgroundColor": "#F6F5EE"
+    "backgroundColor": "@bgColor"
   },
+  "tabBar": {
+    "custom": true,
+    "color": "#6B7068",
+    "selectedColor": "#232323",
+    "backgroundColor": "#232323",
+    "list": [
+      { "pagePath": "pages/index/index", "text": "今日" },
+      { "pagePath": "pages/habits/habits", "text": "习惯库" },
+      { "pagePath": "pages/week/week", "text": "周统计" },
+      { "pagePath": "pages/you/you", "text": "我的" }
+    ]
+  },
+  "darkmode": true,
+  "themeLocation": "theme.json",
   "style": "v2",
   "componentFramework": "glass-easel",
   "sitemapLocation": "sitemap.json",

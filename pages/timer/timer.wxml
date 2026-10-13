@@ -1,0 +1,35 @@
+<!-- pages/timer/timer.wxml - Reusable timed session -->
+<view class="page-container {{themeClass}}">
+  <view class="page-body">
+
+    <view class="topbar">
+      <nav-back />
+    </view>
+
+    <view class="nav-header">
+      <text class="headline-title">{{tName}}</text>
+    </view>
+
+    <!-- Character -->
+    <view class="character-stage">
+      <habit-character name="{{habit.character || 'pillow'}}" size="220" animate="{{true}}" />
+    </view>
+
+    <!-- Countdown -->
+    <view class="countdown-wrap">
+      <text class="countdown">{{leftText}}</text>
+      <text class="hint">{{tHint}}</text>
+    </view>
+
+    <!-- Controls -->
+    <view class="controls">
+      <view class="btn-moru btn-ink primary-btn" hover-class="press" hover-stay-time="120" bindtap="onPrimary">
+        <text class="primary-btn-text">{{status === 'running' ? tPause : (status === 'paused' ? tResume : tStart)}}</text>
+      </view>
+      <view wx:if="{{status !== 'idle'}}" class="btn-moru btn-sage end-btn" hover-class="press" hover-stay-time="120" bindtap="onEnd">
+        <text class="end-btn-text">{{tEnd}}</text>
+      </view>
+    </view>
+
+  </view>
+</view>

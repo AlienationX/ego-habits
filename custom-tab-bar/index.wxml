@@ -1,0 +1,22 @@
+<!-- custom-tab-bar/index.wxml - Floating Pill Dock -->
+<view class="tabbar-container theme-{{theme}}" wx:if="{{!hidden}}">
+  <view class="tabbar-dock">
+    <view
+      wx:for="{{tabs}}"
+      wx:key="key"
+      class="tab-item {{selected === index ? 'tab-item-active' : ''}}"
+      hover-class="press-deep"
+      hover-stay-time="120"
+      data-index="{{index}}"
+      data-path="{{item.path}}"
+      bindtap="onTabSelect"
+    >
+      <habit-icon
+        name="{{item.icon}}"
+        size="40"
+        color="{{selected === index ? 'var(--tabbar-active-text)' : 'var(--tabbar-text)'}}"
+      />
+      <text class="tab-label {{selected === index ? 'tab-label-active' : ''}}">{{item.label}}</text>
+    </view>
+  </view>
+</view>

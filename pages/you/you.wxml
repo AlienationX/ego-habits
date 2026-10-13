@@ -54,20 +54,20 @@
         <text class="group-title">{{tSettingsSection}}</text>
         
         <view class="settings-list">
-          <view class="setting-item" bindtap="onTapReminders">
+          <view class="setting-item" hover-class="press-soft" hover-stay-time="120" bindtap="onTapReminders">
             <view class="setting-item-left">
-              <habit-icon name="bell" size="36" color="#232323" />
+              <habit-icon name="bell" size="36" color="var(--text-primary)" />
               <text class="setting-name">{{tGentleReminders}}</text>
             </view>
-            <habit-icon name="arrow" size="28" color="#9DA39A" />
+            <habit-icon name="arrow" size="28" color="var(--text-muted)" />
           </view>
 
-          <view class="setting-item" bindtap="onOpenPreferences">
+          <view class="setting-item" hover-class="press-soft" hover-stay-time="120" bindtap="onOpenPreferences">
             <view class="setting-item-left">
-              <habit-icon name="settings" size="36" color="#232323" />
+              <habit-icon name="settings" size="36" color="var(--text-primary)" />
               <text class="setting-name">{{tPreferences}}</text>
             </view>
-            <habit-icon name="arrow" size="28" color="#9DA39A" />
+            <habit-icon name="arrow" size="28" color="var(--text-muted)" />
           </view>
         </view>
       </view>
@@ -80,7 +80,7 @@
     <view class="modal-card" catchtap="preventProp">
       <view class="modal-header">
         <text class="modal-title">{{tPrefTitle}}</text>
-        <text class="modal-close" bindtap="onClosePreferences">✕</text>
+        <text class="modal-close" hover-class="press-deep" hover-stay-time="120" bindtap="onClosePreferences">✕</text>
       </view>
 
       <!-- Language Switch -->
@@ -88,14 +88,14 @@
         <text class="pref-label">{{tLanguage}}</text>
         <view class="pref-options">
           <view 
-            class="pref-opt-pill {{currentLang === 'en' ? 'pref-opt-active' : ''}}"
+            hover-class="press-soft" hover-stay-time="120" class="pref-opt-pill {{currentLang === 'en' ? 'pref-opt-active' : ''}}"
             bindtap="onSelectLanguage"
             data-lang="en"
           >
             <text class="pref-opt-text">English</text>
           </view>
           <view 
-            class="pref-opt-pill {{currentLang === 'zh' ? 'pref-opt-active' : ''}}"
+            hover-class="press-soft" hover-stay-time="120" class="pref-opt-pill {{currentLang === 'zh' ? 'pref-opt-active' : ''}}"
             bindtap="onSelectLanguage"
             data-lang="zh"
           >
@@ -109,21 +109,21 @@
         <text class="pref-label">{{tTheme}}</text>
         <view class="pref-options">
           <view 
-            class="pref-opt-pill {{currentTheme === 'light' ? 'pref-opt-active' : ''}}"
+            hover-class="press-soft" hover-stay-time="120" class="pref-opt-pill {{currentTheme === 'light' ? 'pref-opt-active' : ''}}"
             bindtap="onSelectTheme"
             data-theme="light"
           >
             <text class="pref-opt-text">Light</text>
           </view>
           <view 
-            class="pref-opt-pill {{currentTheme === 'dark' ? 'pref-opt-active' : ''}}"
+            hover-class="press-soft" hover-stay-time="120" class="pref-opt-pill {{currentTheme === 'dark' ? 'pref-opt-active' : ''}}"
             bindtap="onSelectTheme"
             data-theme="dark"
           >
             <text class="pref-opt-text">Dark</text>
           </view>
           <view 
-            class="pref-opt-pill {{currentTheme === 'auto' ? 'pref-opt-active' : ''}}"
+            hover-class="press-soft" hover-stay-time="120" class="pref-opt-pill {{currentTheme === 'auto' ? 'pref-opt-active' : ''}}"
             bindtap="onSelectTheme"
             data-theme="auto"
           >
@@ -132,12 +132,10 @@
         </view>
       </view>
 
-      <!-- Reset Demo Data -->
-      <view class="pref-btn-reset" bindtap="onResetDemo">
-        <text class="pref-btn-reset-text">{{tResetData}}</text>
+      <!-- Clear All Local Data -->
+      <view class="pref-btn-clear" hover-class="press" hover-stay-time="120" bindtap="onClearCache">
+        <text class="pref-btn-clear-text">{{tClearData}}</text>
       </view>
     </view>
   </view>
-
-  <custom-tabbar current="you" />
 </view>

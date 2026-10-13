@@ -3,6 +3,11 @@
   <scroll-view class="content-scroll" scroll-y enable-passive>
     <view class="page-body safe-bottom">
       
+      <!-- Top Bar (back button) -->
+      <view class="topbar">
+        <nav-back />
+      </view>
+
       <!-- Top Title -->
       <view class="nav-header">
         <text class="tag-label">{{tTag}}</text>
@@ -32,10 +37,10 @@
 
       <!-- Dual Action Buttons -->
       <view class="actions-row">
-        <view class="btn-moru btn-ink action-btn" bindtap="onBackToToday">
+        <view class="btn-moru btn-ink action-btn" hover-class="press" hover-stay-time="120" bindtap="onBackToToday">
           <text class="action-btn-text">{{tBtnBack}}</text>
         </view>
-        <view class="btn-moru btn-sage action-btn" bindtap="onViewWeek">
+        <view class="btn-moru btn-sage action-btn" hover-class="press" hover-stay-time="120" bindtap="onViewWeek">
           <text class="action-btn-text btn-text-dark">{{tBtnViewWeek}}</text>
         </view>
       </view>

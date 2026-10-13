@@ -72,47 +72,147 @@ module.exports = {
     }
   },
   detail: {
-    tag: "HABIT DETAILS",
-    headline: "A little water break.",
-    heroTitle: "One glass.\nA small reset.",
-    heroSub: "Pause for a sip,\nthen carry on.",
-    metricAmount: "250 ml",
-    metricAmountLabel: "One glass",
-    metricRhythm: "Daily",
-    metricRhythmLabel: "Your rhythm",
-    guideTitle: "Keep it easy",
-    step1Title: "Fill your favorite glass",
-    step1Desc: "Keep it close while you work.",
-    step2Title: "Take a moment to pause",
-    step2Desc: "Sip at a pace that feels good.",
-    step3Title: "Mark this little habit",
-    step3Desc: "One small action, remembered.",
-    logButton: "Log one glass",
-    alreadyLogged: "Completed for today"
+    common: {
+      tag: "HABIT DETAILS",
+      guideTitle: "Keep it easy",
+      metricAmountLabel: "Amount",
+      metricRhythmLabel: "Your rhythm",
+      rhythmDaily: "Daily",
+      logButton: "Log this habit",
+      alreadyLogged: "Completed for today",
+      heroTitle: "One small step.\nJust for you.",
+      heroSub: "Take a gentle pause,\nand begin.",
+      step1Title: "Find a quiet moment",
+      step1Desc: "Choose a time that feels calm.",
+      step2Title: "Do a little, gently",
+      step2Desc: "No need to overdo it.",
+      step3Title: "Mark it done",
+      step3Desc: "A small action, remembered."
+    },
+    water: {
+      headline: "A little water break.",
+      heroTitle: "One glass.\nA small reset.",
+      heroSub: "Pause for a sip,\nthen carry on.",
+      logButton: "Log one glass",
+      step1Title: "Fill your favorite glass",
+      step1Desc: "Keep it close while you work.",
+      step2Title: "Take a moment to pause",
+      step2Desc: "Sip at a pace that feels good.",
+      step3Title: "Mark this little habit",
+      step3Desc: "One small action, remembered."
+    },
+    outside: {
+      headline: "Fresh air, easy steps.",
+      heroTitle: "Step out.\nBreathe in.",
+      heroSub: "Ten minutes outside,\nto clear your head.",
+      logButton: "Log my walk",
+      step1Title: "Put on your shoes",
+      step1Desc: "No special gear needed.",
+      step2Title: "Walk at your own pace",
+      step2Desc: "Around the block is enough.",
+      step3Title: "Notice the air",
+      step3Desc: "One deep breath, then done."
+    },
+    read: {
+      headline: "A few quiet pages.",
+      heroTitle: "Open a book.\nDrift a little.",
+      heroSub: "Five pages is plenty,\na small escape.",
+      logButton: "Log my pages",
+      step1Title: "Pick your book",
+      step1Desc: "Any book, any page to start.",
+      step2Title: "Read without rush",
+      step2Desc: "No deadlines, just the story.",
+      step3Title: "Bookmark and rest",
+      step3Desc: "Close it gently when you are done."
+    },
+    module: {
+      breathing: "Start breathing practice",
+      timer: "Start the session"
+    }
   },
   complete: {
-    tag: "WATER BREAK / COMPLETE",
-    headline: "One small sip, done.",
-    metricAdded: "+250 ml",
-    metricLabel: "A little care, counted.",
-    cardTitle: "That was your first habit.",
-    cardSub: "Two more small moments are waiting.\nThere is no rush to do them all.",
-    btnBack: "Back to today",
-    btnViewWeek: "View my week",
-    footerText: "Small habits. Room to grow."
+    common: {
+      tag: "HABIT COMPLETE",
+      headline: "One small step, done.",
+      metricLabel: "A little care, counted.",
+      cardTitle: "Nicely done.",
+      cardSub: "Another gentle moment, remembered.",
+      btnBack: "Back to today",
+      btnViewWeek: "View my week",
+      footerText: "Small habits. Room to grow."
+    },
+    water: {
+      tag: "WATER BREAK / COMPLETE",
+      headline: "One small sip, done.",
+      cardTitle: "That was your first habit.",
+      cardSub: "Two more small moments are waiting.\nThere is no rush to do them all."
+    },
+    outside: {
+      tag: "STEP OUT / COMPLETE",
+      headline: "A breath of fresh air, done.",
+      cardTitle: "You moved, gently.",
+      cardSub: "A little walk can change the whole day."
+    },
+    read: {
+      tag: "READ / COMPLETE",
+      headline: "A few pages, done.",
+      cardTitle: "You made time for a story.",
+      cardSub: "Little by little, the pages add up."
+    }
+  },
+  breath: {
+    tag: "BREATHING",
+    headline: "Choose your rhythm.",
+    current: "In use",
+    start: "Start practice",
+    phases: {
+      inhale: "Breathe in",
+      inhaleAgain: "Breathe in again",
+      hold: "Hold",
+      exhale: "Breathe out"
+    },
+    player: {
+      remaining: "remaining",
+      rounds: "rounds",
+      end: "End practice",
+      ready: "Get comfortable, then start.",
+      duration: "Duration"
+    },
+    durations: {
+      s30: "30 sec",
+      m1: "1 min",
+      m3: "3 min",
+      m5: "5 min",
+      m10: "10 min"
+    },
+    mode: {
+      box: { name: "Box breathing", desc: "Steady and grounding.", pattern: "4 - 4 - 4 - 4" },
+      relax: { name: "Relax breathing", desc: "Calm the nervous system.", pattern: "4 - 7 - 8" },
+      resonance: { name: "Resonance", desc: "An even, coherent rhythm.", pattern: "5.5 - 5.5" },
+      sigh: { name: "Physiological sigh", desc: "A long, slow release.", pattern: "in - in - out" },
+      wimhof: { name: "Wim Hof", desc: "Energizing breathing rounds.", pattern: "30 breaths x 3" },
+      free: { name: "Free breathing", desc: "Your own rhythm.", pattern: "Custom" }
+    },
+    disclaimer: "Stop if you feel lightheaded, and breathe gently."
+  },
+  session: {
+    start: "Start",
+    pause: "Pause",
+    resume: "Resume",
+    end: "End session",
+    complete: "Session complete",
+    eyes: { name: "Rest your eyes", hint: "Close your eyes and let go." },
+    task: { name: "One quiet task", hint: "Focus on one small thing." }
   },
   week: {
-    dateRange: "AUGUST 31 - SEPTEMBER 06",
     headline: "Your week, growing.",
-    completedNumber: "12",
     completedLabel: "small habits completed",
     milestoneTitle: "A week of\nshowing up.",
     milestoneDays: "Seven days.\nYour own steady rhythm.",
     breakdownTitle: "What made your week",
     catWater: "Water breaks",
-    catWaterCount: "5 habits",
     catMove: "Move + focus",
-    catMoveCount: "7 habits"
+    unitTimes: "habits"
   },
   you: {
     tag: "MAKE A LITTLE ROOM FOR YOU",
@@ -139,7 +239,8 @@ module.exports = {
     themeAuto: "Follow system",
     themeLight: "Light (Cream)",
     themeDark: "Dark (Olive)",
-    resetData: "Reset demo data",
-    resetDone: "Demo data reset successfully"
+    clearData: "Clear all data",
+    clearConfirmContent: "All local data will be deleted (check-ins, preferences and module settings). This cannot be undone.",
+    clearDone: "All data cleared"
   }
 };

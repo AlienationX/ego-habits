@@ -1,0 +1,79 @@
+<!-- pages/breath-player/breath-player.wxml -->
+<view class="page-container {{themeClass}}">
+  <view class="page-body">
+
+    <view class="topbar">
+      <nav-back />
+    </view>
+
+    <view class="nav-header">
+      <text class="tag-label">{{tTag}}</text>
+      <text class="headline-title">{{modeName}}</text>
+    </view>
+
+    <!-- Breathing ball -->
+    <view class="ball-stage">
+      <view class="ball-ring"></view>
+      <view
+        class="breath-ball card-tint-{{tint}}"
+        style="transform: scale({{scale}}); transition: transform {{phaseSecs}}s cubic-bezier(0.45, 0, 0.55, 1);"
+      ></view>
+    </view>
+
+    <!-- Idle: ready + duration + start -->
+    <block wx:if="{{!running}}">
+      <view class="center-section">
+        <text class="ready-text">{{tReady}}</text>
+      </view>
+
+      <view class="duration-section">
+        <text class="duration-label">{{tDuration}}</text>
+        <view class="duration-pills">
+          <view
+            wx:for="{{durations}}"
+            wx:key="secs"
+            class="duration-pill {{selectedDuration === item.secs ? 'duration-pill-active' : ''}}"
+            hover-class="press-soft"
+            hover-stay-time="120"
+            data-secs="{{item.secs}}"
+            bindtap="onSelectDuration"
+          >
+            <text class="duration-pill-text">{{item.label}}</text>
+          </view>
+        </view>
+      </view>
+
+      <view class="start-wrap">
+        <view class="btn-moru btn-ink start-btn" hover-class="press" hover-stay-time="120" bindtap="onStart">
+          <text class="start-text">{{tStart}}</text>
+        </view>
+      </view>
+    </block>
+
+    <!-- Running: phase + remaining + rounds + end -->
+    <block wx:else>
+      <view class="center-section">
+        <text class="phase-label">{{phaseLabel}}</text>
+        <text class="phase-count">{{phaseCountdown}}</text>
+      </view>
+
+      <view class="stats-row">
+        <view class="stat-chip">
+          <text class="stat-chip-label">{{tRemaining}}</text>
+          <text class="stat-chip-val">{{remainingText}}</text>
+        </view>
+        <view class="stat-chip">
+          <text class="stat-chip-label">{{tRounds}}</text>
+          <text class="stat-chip-val">{{rounds}}</text>
+        </view>
+      </view>
+
+      <view class="start-wrap">
+        <view class="btn-moru btn-ink start-btn" hover-class="press" hover-stay-time="120" bindtap="onEnd">
+          <text class="start-text">{{tEnd}}</text>
+        </view>
+      </view>
+    </block>
+
+  </view>
+</view>

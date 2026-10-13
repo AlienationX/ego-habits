@@ -20,7 +20,6 @@ const DEFAULT_HABITS = [
     character: 'water',
     tint: 'blue',
     metricAmount: '250 ml',
-    metricRhythm: 'Daily',
     isPrimary: true
   },
   {
@@ -33,7 +32,6 @@ const DEFAULT_HABITS = [
     character: 'shoe',
     tint: 'mint',
     metricAmount: '10 min',
-    metricRhythm: 'Daily',
     isPrimary: true
   },
   {
@@ -46,7 +44,6 @@ const DEFAULT_HABITS = [
     character: 'book',
     tint: 'sage',
     metricAmount: '5 pages',
-    metricRhythm: 'Daily',
     isPrimary: true
   },
   {
@@ -59,7 +56,8 @@ const DEFAULT_HABITS = [
     character: 'pillow',
     tint: 'mint-soft',
     metricAmount: '2 min',
-    metricRhythm: 'Daily',
+    module: 'timer',
+    durationSec: 120,
     isPrimary: false
   },
   {
@@ -72,7 +70,8 @@ const DEFAULT_HABITS = [
     character: 'hourglass',
     tint: 'sage-soft',
     metricAmount: '15 min',
-    metricRhythm: 'Daily',
+    module: 'timer',
+    durationSec: 900,
     isPrimary: false
   },
   {
@@ -85,7 +84,7 @@ const DEFAULT_HABITS = [
     character: 'cloud',
     tint: 'blue-soft',
     metricAmount: '1 min',
-    metricRhythm: 'Daily',
+    module: 'breathing',
     isPrimary: false
   }
 ];
@@ -94,16 +93,19 @@ const DEFAULT_PROFILE = {
   nickname: 'Avery Lane',
   handle: '@averytakesitsteady',
   avatar: 'avatar',
-  totalCompleted: 28,
-  streakDays: 7
+  totalCompleted: 0,
+  streakDays: 0
 };
 
-function getTodayString() {
-  const d = new Date();
+function formatDateKey(d) {
   const year = d.getFullYear();
   const month = String(d.getMonth() + 1).padStart(2, '0');
   const day = String(d.getDate()).padStart(2, '0');
   return `${year}-${month}-${day}`;
+}
+
+function getTodayString() {
+  return formatDateKey(new Date());
 }
 
 const habitListeners = [];
@@ -122,30 +124,40 @@ function onHabitChange(fn) {
 }
 
 function getHabits() {
+  let stored = null;
   try {
-    const stored = wx.getStorageSync(STORAGE_KEYS.HABITS);
-    if (stored && Array.isArray(stored) && stored.length > 0) {
-      return stored;
-    }
+    const data = wx.getStorageSync(STORAGE_KEYS.HABITS);
+    if (data && Array.isArray(data) && data.length > 0) stored = data;
   } catch (e) {}
-  return DEFAULT_HABITS;
+
+  if (!stored) return DEFAULT_HABITS;
+
+  // Migration: habits saved by older versions lack fields added later
+  // (module, durationSec…). Merge stored values over the defaults so new
+  // fields always exist, then keep any custom habits.
+  const storedById = {};
+  stored.forEach(h => {
+    if (h && h.id) storedById[h.id] = h;
+  });
+
+  const merged = DEFAULT_HABITS.map(def => (
+    storedById[def.id] ? { ...def, ...storedById[def.id] } : { ...def }
+  ));
+
+  const defIds = new Set(DEFAULT_HABITS.map(d => d.id));
+  stored.forEach(h => {
+    if (h && h.id && !defIds.has(h.id)) merged.push(h);
+  });
+
+  return merged;
 }
 
 function getCheckins() {
   try {
     const data = wx.getStorageSync(STORAGE_KEYS.CHECKINS);
-    if (data && typeof data === 'object') return data;
+    if (data && typeof data === 'object' && !Array.isArray(data)) return data;
   } catch (e) {}
-  // Default sample history matching 12 habits in Week 06 view
-  return {
-    '2026-08-31': ['water'],
-    '2026-09-01': ['water', 'outside'],
-    '2026-09-02': ['read'],
-    '2026-09-03': ['water', 'outside'],
-    '2026-09-04': ['read', 'outside'],
-    '2026-09-05': ['water', 'outside', 'task'],
-    '2026-09-06': ['water']
-  };
+  return {};
 }
 
 function isHabitCompletedToday(habitId) {
@@ -161,16 +173,10 @@ function logHabit(habitId) {
   if (!checkins[today]) checkins[today] = [];
   if (!checkins[today].includes(habitId)) {
     checkins[today].push(habitId);
+    try {
+      wx.setStorageSync(STORAGE_KEYS.CHECKINS, checkins);
+    } catch (e) {}
   }
-  try {
-    wx.setStorageSync(STORAGE_KEYS.CHECKINS, checkins);
-  } catch (e) {}
-
-  // Update profile count
-  const profile = getProfile();
-  profile.totalCompleted = (profile.totalCompleted || 28) + 1;
-  saveProfile(profile);
-
   notifyHabitChange();
   return true;
 }
@@ -195,17 +201,80 @@ function toggleHabit(habitId) {
   return completed;
 }
 
-function getWeeklyData() {
-  // Returns 7 days data for the chart [Mon..Sun] matching Image 06
-  return [
-    { id: 'mon', day: 'M', count: 1, active: false },
-    { id: 'tue', day: 'T', count: 2, active: false },
-    { id: 'wed', day: 'W', count: 1, active: false },
-    { id: 'thu', day: 'T', count: 2, active: false },
-    { id: 'fri', day: 'F', count: 2, active: false },
-    { id: 'sat', day: 'S', count: 3, active: true }, // Highest highlighted Saturday
-    { id: 'sun', day: 'S', count: 1, active: false }
-  ];
+// Real profile stats computed from check-in records (no demo seed)
+function getStats() {
+  const checkins = getCheckins();
+  let total = 0;
+  Object.keys(checkins).forEach(key => {
+    const list = checkins[key];
+    if (Array.isArray(list)) total += list.length;
+  });
+
+  const dayMs = 86400000;
+  const hasCheckin = (date) => {
+    const list = checkins[formatDateKey(date)];
+    return Array.isArray(list) && list.length > 0;
+  };
+
+  let cursor = new Date();
+  cursor.setHours(0, 0, 0, 0);
+  // A streak survives if today is not logged yet but yesterday was
+  if (!hasCheckin(cursor)) cursor = new Date(cursor.getTime() - dayMs);
+
+  let streak = 0;
+  while (hasCheckin(cursor)) {
+    streak++;
+    cursor = new Date(cursor.getTime() - dayMs);
+  }
+
+  return { total, streak };
+}
+
+// Current week (Mon..Sun) summary computed from real check-ins
+function getWeekSummary() {
+  const checkins = getCheckins();
+  const catById = {};
+  getHabits().forEach(h => { catById[h.id] = h.category; });
+
+  const now = new Date();
+  const dow = now.getDay(); // 0 = Sunday
+  const monOffset = dow === 0 ? -6 : 1 - dow;
+  const monday = new Date(now);
+  monday.setHours(0, 0, 0, 0);
+  monday.setDate(now.getDate() + monOffset);
+
+  const dayMs = 86400000;
+  const dayLetters = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+  const bars = [];
+  let total = 0;
+  let restCount = 0;
+  let moveCount = 0;
+
+  for (let i = 0; i < 7; i++) {
+    const d = new Date(monday.getTime() + i * dayMs);
+    const key = formatDateKey(d);
+    const list = Array.isArray(checkins[key]) ? checkins[key] : [];
+    list.forEach(id => {
+      const cat = catById[id];
+      if (cat === 'move' || cat === 'focus') moveCount++;
+      else restCount++;
+    });
+    total += list.length;
+    bars.push({ id: key, day: dayLetters[i], count: list.length, active: false });
+  }
+
+  // Highlight the strongest day of the week
+  let maxIdx = -1;
+  let maxCount = 0;
+  bars.forEach((b, i) => {
+    if (b.count > maxCount) {
+      maxCount = b.count;
+      maxIdx = i;
+    }
+  });
+  if (maxIdx > -1) bars[maxIdx].active = true;
+
+  return { bars, total, restCount, moveCount };
 }
 
 function getProfile() {
@@ -236,11 +305,19 @@ function setTheme(theme) {
   } catch (e) {}
 }
 
-function resetDemoData() {
+// Full local wipe: habits + check-ins + preferences + module settings.
+// Language preference is kept (it is a user setting, not cache).
+function clearAllData() {
+  const keys = [
+    STORAGE_KEYS.HABITS,
+    STORAGE_KEYS.CHECKINS,
+    STORAGE_KEYS.PROFILE,
+    STORAGE_KEYS.THEME,
+    'egohabits_breath_mode',
+    'egohabits_breath_free'
+  ];
   try {
-    wx.removeStorageSync(STORAGE_KEYS.HABITS);
-    wx.removeStorageSync(STORAGE_KEYS.CHECKINS);
-    wx.removeStorageSync(STORAGE_KEYS.PROFILE);
+    keys.forEach(k => wx.removeStorageSync(k));
   } catch (e) {}
   notifyHabitChange();
 }
@@ -251,12 +328,13 @@ module.exports = {
   isHabitCompletedToday,
   logHabit,
   toggleHabit,
-  getWeeklyData,
+  getStats,
+  getWeekSummary,
   getProfile,
   saveProfile,
   getTheme,
   setTheme,
-  resetDemoData,
+  clearAllData,
   onHabitChange,
   getTodayString
 };

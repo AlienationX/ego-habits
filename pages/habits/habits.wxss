@@ -86,12 +86,8 @@
   align-items: center;
   justify-content: space-between;
   min-height: 338rpx;
-  transition: transform 0.15s ease;
+  transition: transform 0.15s ease, opacity 0.15s ease;
   cursor: pointer;
-}
-
-.grid-card:active {
-  transform: scale(0.97);
 }
 
 .card-tint-blue {

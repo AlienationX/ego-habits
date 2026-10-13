@@ -1,7 +1,6 @@
 {
   "usingComponents": {
     "habit-character": "/components/habit-character/habit-character",
-    "habit-icon": "/components/habit-icon/habit-icon",
-    "custom-tabbar": "/components/custom-tabbar/custom-tabbar"
+    "habit-icon": "/components/habit-icon/habit-icon"
   }
 }

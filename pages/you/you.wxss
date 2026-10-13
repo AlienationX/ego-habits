@@ -181,11 +181,7 @@
   align-items: center;
   justify-content: space-between;
   cursor: pointer;
-  transition: transform 0.15s ease;
-}
-
-.setting-item:active {
-  transform: scale(0.985);
+  transition: transform 0.15s ease, opacity 0.15s ease;
 }
 
 .setting-item-left {
@@ -302,6 +298,24 @@
 }
 
 .pref-btn-reset-text {
+  font-size: 26rpx;
+  font-weight: 600;
+  color: #D34B4B;
+}
+
+.pref-btn-clear {
+  margin-top: 16rpx;
+  padding: 24rpx 0;
+  border-radius: 999rpx;
+  background-color: var(--bg-card);
+  border: 1rpx solid var(--border-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.pref-btn-clear-text {
   font-size: 26rpx;
   font-weight: 600;
   color: #D34B4B;

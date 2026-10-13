@@ -2,6 +2,14 @@
 const i18n = require('../../utils/i18n.js');
 const storage = require('../../utils/storage.js');
 
+// Resolve per-habit copy with a common fallback chain:
+// detail.<id>.<key> -> detail.common.<key> -> ''
+function detailText(id, key) {
+  const specific = i18n.t(`detail.${id}.${key}`, '');
+  if (specific) return specific;
+  return i18n.t(`detail.common.${key}`, '');
+}
+
 Page({
   data: {
     themeClass: '',
@@ -13,19 +21,14 @@ Page({
     tHeadline: '',
     tHeroTitle: '',
     tHeroSub: '',
-    tMetricAmount: '',
     tMetricAmountLabel: '',
     tMetricRhythm: '',
     tMetricRhythmLabel: '',
     tGuideTitle: '',
-    tStep1Title: '',
-    tStep1Desc: '',
-    tStep2Title: '',
-    tStep2Desc: '',
-    tStep3Title: '',
-    tStep3Desc: '',
+    steps: [],
     tLogButton: '',
-    tAlreadyLogged: ''
+    tAlreadyLogged: '',
+    moduleLabel: ''
   },
 
   onLoad(options) {
@@ -48,9 +51,11 @@ Page({
     if (this.unsubI18n) this.unsubI18n();
   },
 
-  updateTheme() {
-    const app = getApp();
-    const theme = (app && app.globalData.theme) || 'light';
+  updateTheme(theme) {
+    if (!theme) {
+      const app = getApp();
+      theme = (app && app.globalData.theme) || 'light';
+    }
     this.setData({ themeClass: `theme-${theme}` });
   },
 
@@ -62,28 +67,40 @@ Page({
   loadHabitData() {
     const allHabits = storage.getHabits();
     const habit = allHabits.find(h => h.id === this.data.habitId) || allHabits[0];
+    const id = habit.id;
+
+    const steps = [1, 2, 3].map(i => ({
+      num: i,
+      title: detailText(id, `step${i}Title`),
+      desc: detailText(id, `step${i}Desc`)
+    }));
 
     this.setData({
       habit,
       isCompleted: storage.isHabitCompletedToday(habit.id),
-      tTag: i18n.t('detail.tag'),
-      tHeadline: habit.id === 'water' ? i18n.t('detail.headline') : i18n.t(habit.cardTitleKey),
-      tHeroTitle: i18n.t('detail.heroTitle'),
-      tHeroSub: i18n.t('detail.heroSub'),
-      tMetricAmount: habit.metricAmount || i18n.t('detail.metricAmount'),
-      tMetricAmountLabel: i18n.t('detail.metricAmountLabel'),
-      tMetricRhythm: habit.metricRhythm || i18n.t('detail.metricRhythm'),
-      tMetricRhythmLabel: i18n.t('detail.metricRhythmLabel'),
-      tGuideTitle: i18n.t('detail.guideTitle'),
-      tStep1Title: i18n.t('detail.step1Title'),
-      tStep1Desc: i18n.t('detail.step1Desc'),
-      tStep2Title: i18n.t('detail.step2Title'),
-      tStep2Desc: i18n.t('detail.step2Desc'),
-      tStep3Title: i18n.t('detail.step3Title'),
-      tStep3Desc: i18n.t('detail.step3Desc'),
-      tLogButton: i18n.t('detail.logButton'),
-      tAlreadyLogged: i18n.t('detail.alreadyLogged')
+      tTag: detailText(id, 'tag'),
+      tHeadline: detailText(id, 'headline') || i18n.t(habit.cardTitleKey),
+      tHeroTitle: detailText(id, 'heroTitle'),
+      tHeroSub: detailText(id, 'heroSub'),
+      tMetricAmountLabel: detailText(id, 'metricAmountLabel'),
+      tMetricRhythm: detailText(id, 'rhythmDaily'),
+      tMetricRhythmLabel: detailText(id, 'metricRhythmLabel'),
+      tGuideTitle: detailText(id, 'guideTitle'),
+      steps,
+      tLogButton: detailText(id, 'logButton'),
+      tAlreadyLogged: detailText(id, 'alreadyLogged'),
+      moduleLabel: habit.module ? i18n.t(`detail.module.${habit.module}`, '') : ''
     });
+  },
+
+  onOpenModule() {
+    const habit = this.data.habit;
+    if (!habit.module) return;
+    if (habit.module === 'breathing') {
+      wx.navigateTo({ url: '/pages/breath-modes/breath-modes' });
+    } else if (habit.module === 'timer') {
+      wx.navigateTo({ url: `/pages/timer/timer?id=${habit.id}` });
+    }
   },
 
   onLogHabit() {

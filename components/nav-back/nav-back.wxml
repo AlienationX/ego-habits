@@ -1,0 +1,4 @@
+<!-- components/nav-back/nav-back.wxml -->
+<view class="nav-back" hover-class="nav-press" hover-stay-time="120" bindtap="onBack" aria-role="button" aria-label="Back">
+  <habit-icon name="back" size="36" color="var(--text-primary)" />
+</view>

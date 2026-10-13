@@ -21,9 +21,9 @@
           <view wx:for="{{weeklyBars}}" wx:key="id" class="bar-col">
             <text class="bar-count-label">{{item.count}}</text>
             <view class="bar-track">
-              <view 
-                class="bar-fill {{item.active ? 'bar-fill-active' : ''}}" 
-                style="height: {{item.count * 46}}rpx;"
+              <view
+                class="bar-fill {{item.active ? 'bar-fill-active' : ''}}"
+                style="height: {{item.count > 0 ? item.count * 46 : 10}}rpx;"
               ></view>
             </view>
             <text class="bar-day-label">{{item.day}}</text>
@@ -59,6 +59,4 @@
 
     </view>
   </scroll-view>
-
-  <custom-tabbar current="week" />
 </view>
