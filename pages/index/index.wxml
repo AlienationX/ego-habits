@@ -26,6 +26,10 @@
       <!-- Section Title: A little care, today -->
       <view class="section-header">
         <text class="section-title">{{tSectionTitle}}</text>
+        <view class="section-action" hover-class="press-soft" hover-stay-time="100" bindtap="onManageHabits">
+          <text class="section-action-text">{{tManage}}</text>
+          <habit-icon name="arrow" size="24" color="var(--text-muted)" />
+        </view>
       </view>
 
       <!-- Today's Habits List -->
@@ -59,4 +63,83 @@
 
     </view>
   </scroll-view>
+
+  <!-- Manage Today Habits Bottom Sheet Modal -->
+  <view wx:if="{{showManageModal}}" class="modal-overlay" bindtap="onCloseManageModal">
+    <view class="modal-card" catchtap="preventProp">
+      <view class="modal-header">
+        <view class="modal-title-col">
+          <text class="modal-title">{{tManageModalTitle}}</text>
+          <text class="modal-sub">{{tManageModalSub}} ({{todayHabits.length}}/4)</text>
+        </view>
+        <text class="modal-close" hover-class="press-deep" hover-stay-time="120" bindtap="onCloseManageModal">✕</text>
+      </view>
+
+      <scroll-view class="modal-body-scroll" scroll-y enable-passive show-scrollbar="{{false}}" enhanced="{{true}}">
+        <!-- Current Pinned Today Habits Section -->
+        <view class="manage-section-title-wrap">
+          <text class="manage-section-title">{{tPinnedSectionTitle}}</text>
+          <text class="manage-count-badge">{{todayHabits.length}}/4</text>
+        </view>
+
+        <view class="manage-list">
+          <view wx:for="{{todayHabits}}" wx:key="id" class="manage-habit-item card-tint-{{item.tint}}">
+            <view class="manage-item-left">
+              <view class="manage-item-char">
+                <habit-character name="{{item.character}}" size="76" />
+              </view>
+              <view class="manage-item-text">
+                <text class="manage-item-title">{{item.title}}</text>
+                <text class="manage-item-sub">{{item.sub}}</text>
+              </view>
+            </view>
+            <view
+              class="manage-action-pill pill-remove"
+              hover-class="press-deep"
+              hover-stay-time="100"
+              data-id="{{item.id}}"
+              bindtap="onTogglePinFromModal"
+            >
+              <text class="manage-action-text text-remove">{{tUnpin}}</text>
+            </view>
+          </view>
+        </view>
+
+        <!-- Other Available Habits from Library -->
+        <view wx:if="{{availableHabits.length > 0}}" class="manage-section-title-wrap mt-28">
+          <text class="manage-section-title">{{tAvailableSectionTitle}}</text>
+        </view>
+
+        <view wx:if="{{availableHabits.length > 0}}" class="manage-list">
+          <view wx:for="{{availableHabits}}" wx:key="id" class="manage-habit-item card-tint-{{item.tint}}">
+            <view class="manage-item-left">
+              <view class="manage-item-char">
+                <habit-character name="{{item.character}}" size="76" />
+              </view>
+              <view class="manage-item-text">
+                <text class="manage-item-title">{{item.title}}</text>
+                <text class="manage-item-sub">{{item.sub}}</text>
+              </view>
+            </view>
+            <view
+              class="manage-action-pill pill-add"
+              hover-class="press-deep"
+              hover-stay-time="100"
+              data-id="{{item.id}}"
+              bindtap="onTogglePinFromModal"
+            >
+              <text class="manage-action-text text-add">{{tPin}}</text>
+            </view>
+          </view>
+        </view>
+      </scroll-view>
+
+      <!-- Bottom Confirm Button -->
+      <view class="modal-footer-wrap">
+        <view class="btn-moru btn-ink manage-done-btn" hover-class="press" hover-stay-time="120" bindtap="onCloseManageModal">
+          <text class="manage-done-text">{{tDone}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
 </view>

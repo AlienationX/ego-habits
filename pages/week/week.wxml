@@ -9,17 +9,25 @@
         <text class="headline-title">{{tHeadline}}</text>
       </view>
 
-      <!-- View Toggle: chart / calendar (+ quick back to this week) -->
+      <!-- View Toggle: chart / calendar + Share Report Pill in Red Box Location -->
       <view class="view-toggle">
-        <view class="view-pill {{viewMode === 'chart' ? 'view-pill-active' : ''}}" hover-class="press-soft" hover-stay-time="100" data-mode="chart" bindtap="onSwitchView">
-          <text class="view-pill-text {{viewMode === 'chart' ? 'view-pill-text-active' : ''}}">{{tViewChart}}</text>
-        </view>
-        <view class="view-pill {{viewMode === 'calendar' ? 'view-pill-active' : ''}}" hover-class="press-soft" hover-stay-time="100" data-mode="calendar" bindtap="onSwitchView">
-          <text class="view-pill-text {{viewMode === 'calendar' ? 'view-pill-text-active' : ''}}">{{tViewCalendar}}</text>
+        <view class="view-toggle-left">
+          <view class="view-pill {{viewMode === 'chart' ? 'view-pill-active' : ''}}" hover-class="press-soft" hover-stay-time="100" data-mode="chart" bindtap="onSwitchView">
+            <text class="view-pill-text {{viewMode === 'chart' ? 'view-pill-text-active' : ''}}">{{tViewChart}}</text>
+          </view>
+          <view class="view-pill {{viewMode === 'calendar' ? 'view-pill-active' : ''}}" hover-class="press-soft" hover-stay-time="100" data-mode="calendar" bindtap="onSwitchView">
+            <text class="view-pill-text {{viewMode === 'calendar' ? 'view-pill-text-active' : ''}}">{{tViewCalendar}}</text>
+          </view>
+
+          <view wx:if="{{weekOffset < 0}}" class="back-this-week-pill" hover-class="press-soft" hover-stay-time="100" bindtap="onBackToThisWeek">
+            <text class="back-this-week-text">{{tBackToThisWeek}}</text>
+          </view>
         </view>
 
-        <view wx:if="{{weekOffset < 0}}" class="back-this-week-pill" hover-class="press-soft" hover-stay-time="100" bindtap="onBackToThisWeek">
-          <text class="back-this-week-text">{{tBackToThisWeek}}</text>
+        <!-- Right: Share Report Pill (in user red box location) -->
+        <view class="view-share-pill" hover-class="press-soft" hover-stay-time="100" bindtap="onOpenPosterModal">
+          <habit-icon name="share" size="24" color="var(--text-secondary)" />
+          <text class="view-share-text">{{tShareWeekly}}</text>
         </view>
       </view>
 
@@ -90,12 +98,20 @@
           </view>
         </view>
 
+        <!-- Selected Day Details (Read-only) -->
         <view wx:if="{{selectedKey}}" class="cal-detail">
-          <text class="cal-detail-date">{{selectedLabel}}</text>
+          <view class="cal-detail-header">
+            <text class="cal-detail-date">{{selectedLabel}}</text>
+          </view>
+
           <block wx:if="{{selectedHabits.length > 0}}">
-            <view wx:for="{{selectedHabits}}" wx:key="*this" class="cal-detail-item">
+            <view
+              wx:for="{{selectedHabits}}"
+              wx:key="id"
+              class="cal-detail-item"
+            >
               <text class="cal-detail-check">✓</text>
-              <text class="cal-detail-name">{{item}}</text>
+              <text class="cal-detail-name">{{item.name}}</text>
             </view>
           </block>
           <text wx:else class="cal-detail-empty">{{tNoRecord}}</text>
@@ -130,4 +146,56 @@
 
     </view>
   </scroll-view>
+
+  <!-- Share Poster Modal -->
+  <view wx:if="{{showPosterModal}}" class="modal-overlay" bindtap="onClosePosterModal">
+    <view class="poster-modal-card" catchtap="preventProp">
+      <view class="modal-header">
+        <text class="modal-title">{{tSharePosterBtn}}</text>
+        <text class="modal-close" hover-class="press-deep" hover-stay-time="120" bindtap="onClosePosterModal">✕</text>
+      </view>
+
+      <!-- Poster Preview -->
+      <view class="poster-preview-box">
+        <image
+          wx:if="{{posterImageUrl}}"
+          class="poster-preview-img"
+          src="{{posterImageUrl}}"
+          mode="aspectFit"
+          show-menu-by-longpress="{{true}}"
+        />
+        <view wx:else class="poster-loading-box">
+          <view class="poster-spinner"></view>
+          <text class="poster-loading-text">{{tSavingPoster}}</text>
+        </view>
+      </view>
+
+      <!-- Actions Dock -->
+      <view class="poster-actions-dock">
+        <view class="btn-moru btn-green save-album-btn {{posterLoading ? 'btn-disabled' : ''}}" hover-class="press" hover-stay-time="120" bindtap="onSavePosterToAlbum">
+          <text class="save-album-text">{{posterSaving ? '...' : tSaveImage}}</text>
+        </view>
+
+        <view class="poster-secondary-row">
+          <!-- Native Share to WeChat Friends -->
+          <button class="action-dock-btn" open-type="share" hover-class="press-soft" hover-stay-time="120">
+            <text class="action-dock-text">{{tShareToFriend}}</text>
+          </button>
+
+          <!-- Copy Weekly Report Text for Moments / Chat -->
+          <view class="action-dock-btn" hover-class="press-soft" hover-stay-time="120" bindtap="onCopyShareText">
+            <text class="action-dock-text">{{tCopyShareText}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- Offscreen Canvas for Poster Generation -->
+  <canvas
+    type="2d"
+    id="weekShareCanvas"
+    class="poster-canvas-offscreen"
+    style="width: 360px; height: 560px;"
+  ></canvas>
 </view>

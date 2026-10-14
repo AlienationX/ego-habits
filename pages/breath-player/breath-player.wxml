@@ -46,6 +46,24 @@
         </view>
       </view>
 
+      <!-- Ambient Soundscape Selector -->
+      <view class="soundscape-section">
+        <text class="duration-label">{{tSoundscape}}</text>
+        <view class="soundscape-pills">
+          <view
+            wx:for="{{soundList}}"
+            wx:key="id"
+            class="soundscape-pill {{selectedSound === item.id ? 'soundscape-pill-active' : ''}}"
+            hover-class="press-soft"
+            hover-stay-time="120"
+            data-id="{{item.id}}"
+            bindtap="onSelectSound"
+          >
+            <text class="soundscape-pill-text">{{item.label}}</text>
+          </view>
+        </view>
+      </view>
+
       <view class="start-wrap">
         <view class="btn-moru btn-ink start-btn" hover-class="press" hover-stay-time="120" bindtap="onStart">
           <text class="start-text">{{tStart}}</text>
@@ -68,6 +86,21 @@
         <view class="stat-chip">
           <text class="stat-chip-label">{{tRounds}}</text>
           <text class="stat-chip-val">{{rounds}}</text>
+        </view>
+      </view>
+
+      <!-- Soundscape Quick Toggle in Session -->
+      <view class="soundscape-mini-bar">
+        <view
+          wx:for="{{soundList}}"
+          wx:key="id"
+          class="soundscape-mini-pill {{selectedSound === item.id ? 'soundscape-mini-active' : ''}}"
+          hover-class="press-soft"
+          hover-stay-time="120"
+          data-id="{{item.id}}"
+          bindtap="onSelectSound"
+        >
+          <text class="soundscape-mini-text">{{item.label}}</text>
         </view>
       </view>
 

@@ -1,6 +1,7 @@
 // pages/week/week.js - Weekly Reflection Tab (native tabBar page #2)
 const i18n = require('../../utils/i18n.js');
 const storage = require('../../utils/storage.js');
+const poster = require('../../utils/poster.js');
 
 const TAB_INDEX = 2;
 
@@ -54,14 +55,36 @@ Page({
     canNextMonth: false,
     selectedKey: '',
     selectedLabel: '',
-    selectedHabits: []
+    selectedHabits: [],
+
+    // Poster Modal
+    showPosterModal: false,
+    posterImageUrl: '',
+    posterLoading: false,
+    posterSaving: false,
+    tSharePosterBtn: '',
+    tSaveImage: '',
+    tSavingPoster: '',
+    tShareToFriend: '',
+    tCopyShareText: ''
   },
 
   onLoad() {
     this.updateTheme();
     this.loadWeekData();
 
+    if (wx.showShareMenu) {
+      wx.showShareMenu({
+        withShareTicket: true,
+        menus: ['shareAppMessage', 'shareTimeline']
+      });
+    }
+
     this.unsubI18n = i18n.onLanguageChange(() => {
+      this.loadWeekData();
+    });
+
+    this.unsubHabits = storage.onHabitChange(() => {
       this.loadWeekData();
     });
   },
@@ -72,8 +95,16 @@ Page({
     this.loadWeekData();
   },
 
+  onHide() {
+    const tabbar = this.getTabBar && this.getTabBar();
+    if (tabbar && tabbar.setHidden) tabbar.setHidden(false);
+  },
+
   onUnload() {
+    const tabbar = this.getTabBar && this.getTabBar();
+    if (tabbar && tabbar.setHidden) tabbar.setHidden(false);
     if (this.unsubI18n) this.unsubI18n();
+    if (this.unsubHabits) this.unsubHabits();
   },
 
   syncTabBar() {
@@ -133,6 +164,12 @@ Page({
       tViewChart: i18n.t('week.viewChart'),
       tViewCalendar: i18n.t('week.viewCalendar'),
       tNoRecord: i18n.t('week.noRecord'),
+      tShareWeekly: i18n.t('share.shareWeekly', '分享周报'),
+      tSharePosterBtn: i18n.t('share.posterBtn', 'Share Poster'),
+      tSaveImage: i18n.t('share.saveImage', 'Save to Album'),
+      tSavingPoster: i18n.t('share.saving', 'Creating poster...'),
+      tShareToFriend: i18n.t('share.shareToFriend', '分享给好友'),
+      tCopyShareText: i18n.t('share.copyShareText', '复制分享文案'),
       weeklyBars: summary.bars,
       canGoNext: offset < 0
     });
@@ -157,7 +194,6 @@ Page({
   },
 
   // ---- View toggle ----
-
   onSwitchView(e) {
     const mode = e.currentTarget.dataset.mode;
     if (mode !== 'chart' && mode !== 'calendar') return;
@@ -166,7 +202,6 @@ Page({
   },
 
   // ---- Calendar view ----
-
   loadCalendarData() {
     const offset = this.data.calOffset;
     const lang = i18n.getLanguage();
@@ -180,9 +215,8 @@ Page({
       ? `${year}年${monthIdx + 1}月`
       : `${EN_MONTHS[monthIdx]} ${year}`;
 
-    // Grid starts on the Monday of the week containing the 1st.
     const first = new Date(year, monthIdx, 1);
-    const dow = first.getDay(); // 0 = Sunday
+    const dow = first.getDay();
     const monOffset = dow === 0 ? -6 : 1 - dow;
 
     const checkins = storage.getCheckins();
@@ -213,6 +247,10 @@ Page({
       calWeeks: weeks,
       canNextMonth: offset < 0
     });
+
+    if (this.data.selectedKey) {
+      this.refreshSelectedDay(this.data.selectedKey);
+    }
   },
 
   onPrevMonth() {
@@ -229,10 +267,21 @@ Page({
   onDayTap(e) {
     const key = e.currentTarget.dataset.key;
     if (!key) return;
+    this.refreshSelectedDay(key);
+  },
+
+  refreshSelectedDay(key) {
     const checkins = storage.getCheckins();
     const list = checkins[key] || [];
-    const nameById = {};
-    storage.getHabits().forEach(h => { nameById[h.id] = i18n.t(h.nameKey); });
+    const allHabits = storage.getHabits();
+    const habitMap = {};
+    allHabits.forEach(h => {
+      habitMap[h.id] = {
+        id: h.id,
+        name: h.nameKey ? i18n.t(h.nameKey) : (h.name || h.cardTitle),
+        character: h.character || 'medal'
+      };
+    });
 
     const parts = key.split('-');
     const monthIdx = parseInt(parts[1], 10) - 1;
@@ -240,10 +289,193 @@ Page({
     const lang = i18n.getLanguage();
     const label = lang === 'zh' ? `${monthIdx + 1}月${day}日` : `${EN_MONTHS[monthIdx]} ${day}`;
 
+    const selectedHabits = list.map(id => habitMap[id] || { id, name: id, character: 'medal' });
+
     this.setData({
       selectedKey: key,
       selectedLabel: label,
-      selectedHabits: list.map(id => nameById[id] || id)
+      selectedHabits
     });
-  }
+  },
+
+  onOpenPosterModal() {
+    const tabbar = this.getTabBar && this.getTabBar();
+    if (tabbar && tabbar.setHidden) tabbar.setHidden(true);
+    this.setData({
+      showPosterModal: true,
+      posterImageUrl: '',
+      posterLoading: true
+    });
+    setTimeout(() => {
+      this.drawWeekPoster();
+    }, 100);
+  },
+
+  onClosePosterModal() {
+    const tabbar = this.getTabBar && this.getTabBar();
+    if (tabbar && tabbar.setHidden) tabbar.setHidden(false);
+    this.setData({ showPosterModal: false });
+  },
+
+  drawWeekPoster() {
+    const profile = storage.getProfile();
+    const summary = storage.getWeekSummary(this.data.weekOffset);
+    const allHabits = storage.getHabits();
+    const habitMap = {};
+    allHabits.forEach(h => { habitMap[h.id] = h; });
+
+    const lang = i18n.getLanguage();
+    const dayLabelsZh = ['一', '二', '三', '四', '五', '六', '日'];
+    const dayLabelsEn = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+    const dayLabels = lang === 'zh' ? dayLabelsZh : dayLabelsEn;
+
+    // Convert summary bars with localized day labels
+    const bars = (summary.bars || []).map((b, idx) => ({
+      ...b,
+      day: dayLabels[idx] || b.day
+    }));
+
+    // Rank habits by real completions this week
+    let topHabits = [];
+    if (summary.habitRank && summary.habitRank.length > 0) {
+      topHabits = summary.habitRank.slice(0, 3).map(item => {
+        const h = habitMap[item.id] || {};
+        const name = h.nameKey ? i18n.t(h.nameKey) : (h.name || h.cardTitle || item.id);
+        const sub = h.cardSubKey ? i18n.t(h.cardSubKey) : (h.cardSub || h.sub || '');
+        return {
+          id: item.id,
+          name,
+          sub,
+          count: item.count,
+          amount: `${item.count} ${lang === 'zh' ? '次' : 'times'}`
+        };
+      });
+    }
+
+    // Fallback if user hasn't checked in yet this week: show pinned habits
+    if (topHabits.length === 0) {
+      topHabits = allHabits.filter(h => h.isPrimary).slice(0, 3).map(h => ({
+        id: h.id,
+        name: h.nameKey ? i18n.t(h.nameKey) : (h.name || h.cardTitle),
+        sub: h.cardSubKey ? i18n.t(h.cardSubKey) : (h.cardSub || h.sub || ''),
+        count: 0,
+        amount: lang === 'zh' ? '本周开启中' : 'In progress'
+      }));
+    }
+
+    wx.createSelectorQuery().in(this)
+      .select('#weekShareCanvas')
+      .fields({ node: true, size: true })
+      .exec(res => {
+        if (res && res[0] && res[0].node) {
+          const canvas = res[0].node;
+          poster.renderPoster(canvas, {
+            type: 'week',
+            tag: 'EGOHABITS / WEEKLY REPORT',
+            title: i18n.t('share.weekTitle', 'Weekly Growth Report'),
+            rhythmTitle: '7-Day Rhythm',
+            topHabitsTitle: 'Top Habits',
+            nickname: profile.nickname || 'Avery',
+            dateStr: this.data.tDateRange,
+            bars,
+            total: summary.total || 0,
+            restCount: summary.restCount || 0,
+            moveCount: summary.moveCount || 0,
+            restLabel: 'Rest',
+            moveFocusLabel: 'Focus & Move',
+            noCheckinsYet: lang === 'zh' ? '本周开启中' : 'In progress',
+            habits: topHabits,
+            streakText: `${summary.total || 0} ${lang === 'zh' ? '次微习惯达成' : 'habits completed'}`
+          });
+
+          poster.exportPosterImage(canvas)
+            .then(tempFilePath => {
+              this.setData({
+                posterImageUrl: tempFilePath,
+                posterLoading: false
+              });
+            })
+            .catch(err => {
+              console.error('[week] exportPosterImage failed:', err);
+              this.setData({ posterLoading: false });
+            });
+        } else {
+          this.setData({ posterLoading: false });
+        }
+      });
+  },
+
+  onSavePosterToAlbum() {
+    if (!this.data.posterImageUrl) {
+      wx.showToast({
+        title: this.data.tSavingPoster || '正在生成海报...',
+        icon: 'none'
+      });
+      return;
+    }
+    this.setData({ posterSaving: true });
+    poster.saveImageToAlbum(this.data.posterImageUrl)
+      .then(() => {
+        const tabbar = this.getTabBar && this.getTabBar();
+        if (tabbar && tabbar.setHidden) tabbar.setHidden(false);
+        this.setData({ posterSaving: false, showPosterModal: false });
+        wx.showToast({
+          title: i18n.t('share.saved', 'Saved to photo album!'),
+          icon: 'success'
+        });
+      })
+      .catch((err) => {
+        this.setData({ posterSaving: false });
+      });
+  },
+
+  onCopyShareText() {
+    const profile = storage.getProfile();
+    const name = profile.nickname || 'Avery';
+    const summary = storage.getWeekSummary(this.data.weekOffset);
+    const lang = i18n.getLanguage();
+
+    const text = lang === 'zh'
+      ? `【EgoHabits 本周生活微步周报】\n记录者：${name}\n周期：${this.data.tDateRange}\n本周达成 ${summary.total} 次微习惯，慢慢成长，按自己的节奏从容前行。`
+      : `[EgoHabits Weekly Growth Report]\nName: ${name}\nPeriod: ${this.data.tDateRange}\nAchieved ${summary.total} gentle habits this week. Small habits. Room to grow.`;
+
+    wx.setClipboardData({
+      data: text,
+      success: () => {
+        wx.showToast({
+          title: lang === 'zh' ? '周报文案已复制' : 'Copied to clipboard',
+          icon: 'success',
+          duration: 1500
+        });
+      }
+    });
+  },
+
+  onShareAppMessage() {
+    const profile = storage.getProfile();
+    const summary = storage.getWeekSummary(this.data.weekOffset);
+    const name = profile.nickname || 'Avery';
+    const title = i18n.getLanguage() === 'zh'
+      ? `${name} 本周已达成 ${summary.total} 次生活微步，邀你一起从容成长`
+      : `${name} completed ${summary.total} gentle habits this week on EgoHabits`;
+    return {
+      title,
+      path: '/pages/index/index?from=week_share',
+      imageUrl: this.data.posterImageUrl || ''
+    };
+  },
+
+  onShareTimeline() {
+    const summary = storage.getWeekSummary(this.data.weekOffset);
+    const title = i18n.getLanguage() === 'zh'
+      ? `这一周，悄悄成长。已达成 ${summary.total} 个生活微步`
+      : `Room to grow. ${summary.total} gentle habits completed this week`;
+    return {
+      title,
+      query: 'from=timeline',
+      imageUrl: this.data.posterImageUrl || ''
+    };
+  },
+
+  preventProp() {}
 });

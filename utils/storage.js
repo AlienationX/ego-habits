@@ -7,7 +7,10 @@ const STORAGE_KEYS = {
   CHECKINS: 'egohabits_checkins',
   PROFILE: 'egohabits_profile',
   THEME: 'egohabits_theme',
-  LAST_CHECKINS: 'egohabits_last_checkins'
+  LAST_CHECKINS: 'egohabits_last_checkins',
+  CHECKIN_NOTES: 'egohabits_checkin_notes',
+  REMINDERS: 'egohabits_reminders',
+  SOUNDSCAPE: 'egohabits_soundscape'
 };
 
 const DEFAULT_HABITS = [
@@ -260,6 +263,10 @@ function logHabit(habitId, amount, note) {
     try {
       wx.setStorageSync(STORAGE_KEYS.LAST_CHECKINS, map);
     } catch (e) {}
+
+    if (hasNote && note.trim()) {
+      saveCheckinNote(habitId, today, hasAmount ? amount.trim() : '', note.trim());
+    }
   }
 
   notifyHabitChange();
@@ -334,6 +341,7 @@ function getWeekSummary(weekOffset) {
   const dayMs = 86400000;
   const dayLetters = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
   const bars = [];
+  const habitTally = {};
   let total = 0;
   let restCount = 0;
   let moveCount = 0;
@@ -346,6 +354,7 @@ function getWeekSummary(weekOffset) {
       const cat = catById[id];
       if (cat === 'move' || cat === 'focus') moveCount++;
       else restCount++;
+      habitTally[id] = (habitTally[id] || 0) + 1;
     });
     total += list.length;
     bars.push({ id: key, day: dayLetters[i], count: list.length, active: false });
@@ -362,7 +371,13 @@ function getWeekSummary(weekOffset) {
   });
   if (maxIdx > -1) bars[maxIdx].active = true;
 
-  return { bars, total, restCount, moveCount };
+  // Rank habits by completion count this week
+  const habitRank = Object.keys(habitTally).map(id => ({
+    id,
+    count: habitTally[id]
+  })).sort((a, b) => b.count - a.count);
+
+  return { bars, total, restCount, moveCount, habitRank, mostActiveDay: maxIdx };
 }
 
 function getProfile() {
@@ -393,6 +408,331 @@ function setTheme(theme) {
   } catch (e) {}
 }
 
+// Habit Management & Pinning
+function saveHabits(habits) {
+  try {
+    wx.setStorageSync(STORAGE_KEYS.HABITS, habits);
+  } catch (e) {}
+  invalidateCache();
+  notifyHabitChange();
+}
+
+function getTodayHabits() {
+  const habits = getHabits();
+  const primary = habits.filter(h => h.isPrimary);
+  if (primary.length > 0) return primary;
+  return habits.slice(0, 3);
+}
+
+function togglePinHabit(habitId) {
+  const habits = getHabits().map(h => ({ ...h }));
+  const target = habits.find(h => h.id === habitId);
+  if (!target) return false;
+
+  const currentPinned = habits.filter(h => h.isPrimary);
+  if (target.isPrimary) {
+    if (currentPinned.length <= 1) return false;
+    target.isPrimary = false;
+  } else {
+    if (currentPinned.length >= 4) return false;
+    target.isPrimary = true;
+  }
+  saveHabits(habits);
+  return true;
+}
+
+function addCustomHabit(data) {
+  const habits = getHabits().map(h => ({ ...h }));
+  const id = `custom_${Date.now()}`;
+  const amountStr = (data.amount || '10 min').trim();
+  const nameStr = (data.name || 'My Habit').trim();
+  const subStr = (data.sub || data.desc || '').trim();
+  const newHabit = {
+    id,
+    name: nameStr,
+    nameKey: '',
+    amount: amountStr,
+    amountKey: '',
+    cardTitle: nameStr,
+    cardTitleKey: '',
+    sub: subStr,
+    desc: subStr,
+    cardSub: subStr ? `${amountStr} · ${subStr}` : amountStr,
+    cardSubKey: '',
+    category: data.category || 'focus',
+    character: data.character || 'medal',
+    tint: data.tint || 'sage',
+    metricAmount: amountStr,
+    step: data.step || 1,
+    isPrimary: typeof data.isPrimary === 'boolean' ? data.isPrimary : false,
+    isCustom: true
+  };
+  habits.push(newHabit);
+  saveHabits(habits);
+  return newHabit;
+}
+
+function updateHabit(habitId, data) {
+  const habits = getHabits().map(h => ({ ...h }));
+  const habit = habits.find(h => h.id === habitId);
+  if (!habit) return false;
+
+  if (typeof data.name === 'string' && data.name.trim()) {
+    habit.name = data.name.trim();
+    habit.cardTitle = habit.name;
+  }
+  if (typeof data.amount === 'string' && data.amount.trim()) {
+    habit.amount = data.amount.trim();
+    habit.metricAmount = habit.amount;
+  }
+  if (typeof data.sub === 'string' || typeof data.desc === 'string') {
+    const subStr = (typeof data.sub === 'string' ? data.sub : data.desc).trim();
+    habit.sub = subStr;
+    habit.desc = subStr;
+  }
+  const currentSub = habit.sub || habit.desc || '';
+  habit.cardSub = currentSub ? `${habit.amount} · ${currentSub}` : habit.amount;
+
+  if (data.category) habit.category = data.category;
+  if (data.character) habit.character = data.character;
+  if (data.tint) habit.tint = data.tint;
+  if (typeof data.isPrimary === 'boolean') habit.isPrimary = data.isPrimary;
+
+  saveHabits(habits);
+  return true;
+}
+
+function deleteCustomHabit(habitId) {
+  let habits = getHabits();
+  habits = habits.filter(h => h.id !== habitId);
+  if (!habits.some(h => h.isPrimary) && habits.length > 0) {
+    habits[0].isPrimary = true;
+  }
+  saveHabits(habits);
+  return true;
+}
+
+// Backfill / Date Checkin Management
+function logHabitForDate(habitId, dateStr, amount, note) {
+  if (!habitId || !dateStr) return false;
+  const checkins = getCheckins();
+  if (!checkins[dateStr]) checkins[dateStr] = [];
+  if (!checkins[dateStr].includes(habitId)) {
+    checkins[dateStr].push(habitId);
+    try {
+      wx.setStorageSync(STORAGE_KEYS.CHECKINS, checkins);
+    } catch (e) {}
+    invalidateCache();
+  }
+  if (note && typeof note === 'string' && note.trim()) {
+    saveCheckinNote(habitId, dateStr, amount || '', note.trim());
+  }
+  notifyHabitChange();
+  return true;
+}
+
+function removeCheckinForDate(habitId, dateStr) {
+  if (!habitId || !dateStr) return false;
+  const checkins = getCheckins();
+  if (!checkins[dateStr]) return false;
+  const idx = checkins[dateStr].indexOf(habitId);
+  if (idx > -1) {
+    checkins[dateStr].splice(idx, 1);
+    try {
+      wx.setStorageSync(STORAGE_KEYS.CHECKINS, checkins);
+    } catch (e) {}
+    invalidateCache();
+    notifyHabitChange();
+    return true;
+  }
+  return false;
+}
+
+// Check-in Notes / Time Capsule Flow
+function getCheckinNotes(limit = 60) {
+  try {
+    const data = wx.getStorageSync(STORAGE_KEYS.CHECKIN_NOTES);
+    if (Array.isArray(data)) return data.slice(0, limit);
+  } catch (e) {}
+  return [];
+}
+
+function saveCheckinNote(habitId, date, amount, note) {
+  try {
+    let list = wx.getStorageSync(STORAGE_KEYS.CHECKIN_NOTES);
+    if (!Array.isArray(list)) list = [];
+    list = list.filter(item => !(item.habitId === habitId && item.date === date));
+    list.unshift({
+      id: `note_${Date.now()}_${Math.random().toString(36).substr(2, 5)}`,
+      habitId,
+      date,
+      amount: amount || '',
+      note,
+      timestamp: Date.now()
+    });
+    if (list.length > 200) list = list.slice(0, 200);
+    wx.setStorageSync(STORAGE_KEYS.CHECKIN_NOTES, list);
+  } catch (e) {}
+}
+
+// Badges & Milestone Gallery
+function getBadges() {
+  const checkins = getCheckins();
+  const stats = getStats();
+  const counts = {};
+  Object.keys(checkins).forEach(date => {
+    const ids = checkins[date];
+    if (Array.isArray(ids)) {
+      ids.forEach(id => {
+        counts[id] = (counts[id] || 0) + 1;
+      });
+    }
+  });
+
+  const streak = stats.streak;
+  const total = stats.total;
+
+  const badgeDefs = [
+    {
+      id: 'seed',
+      character: 'avatar',
+      target: 1,
+      current: total,
+      nameKey: 'badges.seed.title',
+      descKey: 'badges.seed.desc'
+    },
+    {
+      id: 'streak3',
+      character: 'guide',
+      target: 3,
+      current: streak,
+      nameKey: 'badges.streak3.title',
+      descKey: 'badges.streak3.desc'
+    },
+    {
+      id: 'streak7',
+      character: 'medal',
+      target: 7,
+      current: streak,
+      nameKey: 'badges.streak7.title',
+      descKey: 'badges.streak7.desc'
+    },
+    {
+      id: 'streak21',
+      character: 'celebrate',
+      target: 21,
+      current: streak,
+      nameKey: 'badges.streak21.title',
+      descKey: 'badges.streak21.desc'
+    },
+    {
+      id: 'water',
+      character: 'water',
+      target: 10,
+      current: counts['water'] || 0,
+      nameKey: 'badges.water.title',
+      descKey: 'badges.water.desc'
+    },
+    {
+      id: 'outside',
+      character: 'shoe',
+      target: 10,
+      current: counts['outside'] || 0,
+      nameKey: 'badges.outside.title',
+      descKey: 'badges.outside.desc'
+    },
+    {
+      id: 'read',
+      character: 'book',
+      target: 10,
+      current: counts['read'] || 0,
+      nameKey: 'badges.read.title',
+      descKey: 'badges.read.desc'
+    },
+    {
+      id: 'task',
+      character: 'hourglass',
+      target: 10,
+      current: counts['task'] || 0,
+      nameKey: 'badges.task.title',
+      descKey: 'badges.task.desc'
+    },
+    {
+      id: 'breathe',
+      character: 'cloud',
+      target: 10,
+      current: counts['breathe'] || 0,
+      nameKey: 'badges.breathe.title',
+      descKey: 'badges.breathe.desc'
+    },
+    {
+      id: 'eyes',
+      character: 'pillow',
+      target: 10,
+      current: counts['eyes'] || 0,
+      nameKey: 'badges.eyes.title',
+      descKey: 'badges.eyes.desc'
+    },
+    {
+      id: 'century',
+      character: 'medal',
+      target: 100,
+      current: total,
+      nameKey: 'badges.century.title',
+      descKey: 'badges.century.desc'
+    }
+  ];
+
+  return badgeDefs.map(b => {
+    const unlocked = b.current >= b.target;
+    const progress = Math.min(100, Math.round((Math.max(0, b.current) / b.target) * 100));
+    return {
+      ...b,
+      unlocked,
+      progress
+    };
+  });
+}
+
+// Gentle Reminders
+function getReminders() {
+  try {
+    const data = wx.getStorageSync(STORAGE_KEYS.REMINDERS);
+    if (data && typeof data === 'object') return data;
+  } catch (e) {}
+  return {
+    morningEnabled: false,
+    morningTime: '08:30',
+    eveningEnabled: false,
+    eveningTime: '21:30'
+  };
+}
+
+function saveReminders(settings) {
+  try {
+    wx.setStorageSync(STORAGE_KEYS.REMINDERS, settings);
+  } catch (e) {}
+}
+
+// Soundscape Preference
+function getSoundscapeSetting() {
+  try {
+    const data = wx.getStorageSync(STORAGE_KEYS.SOUNDSCAPE);
+    if (data && typeof data === 'object') return data;
+  } catch (e) {}
+  return {
+    sound: 'none',
+    volume: 50,
+    playing: false
+  };
+}
+
+function saveSoundscapeSetting(setting) {
+  try {
+    wx.setStorageSync(STORAGE_KEYS.SOUNDSCAPE, setting);
+  } catch (e) {}
+}
+
 // Full local wipe: habits + check-ins + preferences + module settings.
 // Language preference is kept (it is a user setting, not cache).
 function clearAllData() {
@@ -402,6 +742,9 @@ function clearAllData() {
     STORAGE_KEYS.PROFILE,
     STORAGE_KEYS.THEME,
     STORAGE_KEYS.LAST_CHECKINS,
+    STORAGE_KEYS.CHECKIN_NOTES,
+    STORAGE_KEYS.REMINDERS,
+    STORAGE_KEYS.SOUNDSCAPE,
     'egohabits_breath_mode',
     'egohabits_breath_free'
   ];
@@ -414,10 +757,25 @@ function clearAllData() {
 
 module.exports = {
   getHabits,
+  saveHabits,
+  getTodayHabits,
+  togglePinHabit,
+  addCustomHabit,
+  updateHabit,
+  deleteCustomHabit,
   getCheckins,
   isHabitCompletedToday,
   logHabit,
   toggleHabit,
+  logHabitForDate,
+  removeCheckinForDate,
+  getCheckinNotes,
+  saveCheckinNote,
+  getBadges,
+  getReminders,
+  saveReminders,
+  getSoundscapeSetting,
+  saveSoundscapeSetting,
   getStats,
   getWeekSummary,
   getProfile,

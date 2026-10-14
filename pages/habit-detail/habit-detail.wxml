@@ -72,6 +72,11 @@
         >
           <text class="cta-btn-text">{{isCompleted && !habit.module ? tAlreadyLogged : tLogButton}}</text>
         </view>
+
+        <!-- Delete Custom Habit option -->
+        <view wx:if="{{habit.isCustom}}" class="delete-habit-wrap" hover-class="press-soft" hover-stay-time="120" bindtap="onDeleteCustomHabit">
+          <text class="delete-habit-text">{{tDeleteHabit}}</text>
+        </view>
       </view>
 
     </view>
@@ -96,6 +101,18 @@
             <text class="stepper-sign">+</text>
           </view>
         </view>
+      </view>
+
+      <view wx:if="{{habit.isCustom}}" class="editor-row editor-note-row">
+        <text class="checkin-label">{{tSubLabel}}</text>
+        <input
+          class="note-input"
+          value="{{customSubValue}}"
+          placeholder="{{tSubPlaceholder}}"
+          placeholder-class="note-placeholder"
+          maxlength="30"
+          bindinput="onCustomSubInput"
+        />
       </view>
 
       <view class="editor-row editor-note-row">

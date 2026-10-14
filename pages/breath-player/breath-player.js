@@ -2,6 +2,7 @@
 const i18n = require('../../utils/i18n.js');
 const breath = require('../../utils/breath.js');
 const storage = require('../../utils/storage.js');
+const soundscape = require('../../utils/soundscape.js');
 
 const DURATIONS = [
   { secs: 30, key: 'breath.durations.s30' },
@@ -9,6 +10,14 @@ const DURATIONS = [
   { secs: 180, key: 'breath.durations.m3' },
   { secs: 300, key: 'breath.durations.m5' },
   { secs: 600, key: 'breath.durations.m10' }
+];
+
+const SOUND_OPTIONS = [
+  { id: 'none', key: 'soundscape.none' },
+  { id: 'rain', key: 'soundscape.rain' },
+  { id: 'waves', key: 'soundscape.waves' },
+  { id: 'bowl', key: 'soundscape.bowl' },
+  { id: 'forest', key: 'soundscape.forest' }
 ];
 
 function formatTime(total) {
@@ -26,6 +35,9 @@ Page({
     tint: 'blue',
     durations: [],
     selectedDuration: 60,
+    selectedSound: 'none',
+    soundList: [],
+    tSoundscape: '',
     running: false,
     phaseLabel: '',
     phaseCountdown: 0,
@@ -58,6 +70,8 @@ Page({
     this.elapsed = 0;
     this.rounds = 0;
 
+    const savedSound = storage.getSoundscapeSetting ? storage.getSoundscapeSetting() : { sound: 'none' };
+
     this.updateTheme();
     this.refreshLabels();
 
@@ -67,6 +81,7 @@ Page({
       this.setData({ selectedDuration: Math.round(dur) });
     }
 
+    this.setData({ selectedSound: savedSound.sound || 'none' });
     this.resetSession();
 
     this.unsubI18n = i18n.onLanguageChange(() => {
@@ -81,10 +96,12 @@ Page({
 
   onHide() {
     this.stopTimer();
+    soundscape.stop();
   },
 
   onUnload() {
     this.stopTimer();
+    soundscape.stop();
     if (this.unsubI18n) this.unsubI18n();
   },
 
@@ -102,6 +119,11 @@ Page({
       modeName: i18n.t(mode.nameKey),
       tint: mode.tint,
       durations: DURATIONS.map(d => ({ secs: d.secs, label: i18n.t(d.key) })),
+      soundList: SOUND_OPTIONS.map(s => ({
+        id: s.id,
+        label: i18n.t(s.key, s.id)
+      })),
+      tSoundscape: i18n.t('soundscape.title', 'Ambient Soundscape'),
       tTag: i18n.t('breath.tag'),
       tStart: i18n.t('breath.start'),
       tRemaining: i18n.t('breath.player.remaining'),
@@ -134,6 +156,13 @@ Page({
       phaseSecs: step.secs,
       scale: step.scale
     });
+
+    // Tactile haptic pulse on breathing phase shift for eyes-closed mindfulness
+    try {
+      if (wx.vibrateShort) {
+        wx.vibrateShort({ type: 'light' });
+      }
+    } catch (e) {}
   },
 
   onSelectDuration(e) {
@@ -141,6 +170,18 @@ Page({
     const secs = Number(e.currentTarget.dataset.secs);
     this.setData({ selectedDuration: secs });
     this.resetSession();
+  },
+
+  onSelectSound(e) {
+    const soundId = e.currentTarget.dataset.id;
+    this.setData({ selectedSound: soundId });
+    if (this.data.running) {
+      soundscape.play(soundId, 50);
+    } else {
+      if (storage.saveSoundscapeSetting) {
+        storage.saveSoundscapeSetting({ sound: soundId, volume: 50, playing: false });
+      }
+    }
   },
 
   onStart() {
@@ -153,6 +194,9 @@ Page({
       rounds: 0
     });
     this.applyStep(0);
+    if (this.data.selectedSound && this.data.selectedSound !== 'none') {
+      soundscape.play(this.data.selectedSound, 50);
+    }
     this.startTimer();
   },
 
@@ -166,6 +210,7 @@ Page({
       clearInterval(this.timer);
       this.timer = null;
     }
+    soundscape.stop();
   },
 
   tick() {
@@ -194,6 +239,7 @@ Page({
 
   finish() {
     this.stopTimer();
+    soundscape.stop();
     this.setData({ running: false, remainingText: '0:00', phaseCountdown: 0 });
     storage.logHabit('breathe');
     setTimeout(() => {
@@ -204,6 +250,7 @@ Page({
   onEnd() {
     // Early stop: do NOT record or celebrate — only a full session counts.
     this.stopTimer();
+    soundscape.stop();
     this.setData({ running: false });
     wx.navigateBack({ fail: () => wx.switchTab({ url: '/pages/index/index' }) });
   }

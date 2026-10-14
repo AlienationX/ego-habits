@@ -5,7 +5,10 @@
   "isGameTourist": false,
   "packOptions": {
     "ignore": [
-      { "type": "folder", "value": "ui" }
+      {
+        "type": "folder",
+        "value": "ui"
+      }
     ],
     "include": []
   },

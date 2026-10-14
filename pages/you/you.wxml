@@ -35,17 +35,53 @@
         </view>
       </view>
 
-      <!-- Milestone Section -->
+      <!-- Milestone Badges Gallery Section -->
       <view class="section-group">
-        <text class="group-title">{{tMilestoneSection}}</text>
-        <view class="milestone-box">
-          <view class="milestone-badge-wrap">
-            <habit-character name="medal" size="100" />
+        <view class="group-header">
+          <text class="group-title">{{tMilestoneSection}}</text>
+        </view>
+        
+        <scroll-view class="badges-scroll" scroll-x enable-passive>
+          <view class="badges-row">
+            <view
+              wx:for="{{badges}}"
+              wx:key="id"
+              class="badge-card {{item.unlocked ? 'badge-card-unlocked' : 'badge-card-locked'}}"
+              data-id="{{item.id}}"
+              hover-class="press-soft"
+              hover-stay-time="120"
+              bindtap="onTapBadge"
+            >
+              <view class="badge-character-wrap">
+                <habit-character name="{{item.character}}" size="88" />
+              </view>
+              <text class="badge-card-title">{{item.title}}</text>
+              <view class="badge-status-pill {{item.unlocked ? 'status-unlocked' : ''}}">
+                <text class="badge-status-text">{{item.unlocked ? tUnlocked : item.progress + '%'}}</text>
+              </view>
+            </view>
           </view>
-          <view class="milestone-box-info">
-            <text class="milestone-badge-name">{{tBadgeTitle}}</text>
-            <text class="milestone-badge-desc">{{tBadgeDesc}}</text>
+        </scroll-view>
+      </view>
+
+      <!-- Habit Notes Stream Section -->
+      <view class="section-group">
+        <text class="group-title">{{tNotesSection}}</text>
+        
+        <view wx:if="{{checkinNotes.length > 0}}" class="notes-list">
+          <view wx:for="{{checkinNotes}}" wx:key="id" class="note-card">
+            <view class="note-card-header">
+              <view class="note-meta-left">
+                <habit-character name="{{item.character}}" size="48" />
+                <text class="note-habit-name">{{item.habitName}}</text>
+              </view>
+              <text class="note-date">{{item.date}}</text>
+            </view>
+            <text class="note-content">“{{item.note}}”</text>
           </view>
+        </view>
+        <view wx:else class="empty-notes-box">
+          <text class="empty-notes-text">{{tNotesEmpty}}</text>
         </view>
       </view>
 
@@ -75,6 +111,83 @@
     </view>
   </scroll-view>
 
+  <!-- Badge Detail Popover Modal -->
+  <view wx:if="{{showBadgeModal && selectedBadge}}" class="modal-overlay" bindtap="onCloseBadgeModal">
+    <view class="badge-modal-card" catchtap="preventProp">
+      <view class="badge-modal-character">
+        <habit-character name="{{selectedBadge.character}}" size="160" animate="{{true}}" />
+      </view>
+      <text class="badge-modal-title">{{selectedBadge.title}}</text>
+      <text class="badge-modal-desc">{{selectedBadge.desc}}</text>
+      
+      <view class="badge-modal-progress">
+        <view class="progress-track">
+          <view class="progress-bar progress-bar-fill" style="width: {{selectedBadge.progress}}%;"></view>
+        </view>
+        <text class="badge-modal-prog-text">{{selectedBadge.current}} / {{selectedBadge.target}} ({{selectedBadge.progress}}%)</text>
+      </view>
+
+      <view class="btn-moru btn-ink badge-modal-btn" hover-class="press" hover-stay-time="120" bindtap="onCloseBadgeModal">
+        <text class="badge-modal-btn-text">{{selectedBadge.unlocked ? tUnlocked : tLocked}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- Reminders Modal -->
+  <view wx:if="{{showRemindersModal}}" class="modal-overlay" bindtap="onCloseReminders">
+    <view class="modal-card" catchtap="preventProp">
+      <view class="modal-header">
+        <view class="modal-title-wrap">
+          <text class="modal-title">{{tRemindersTitle}}</text>
+          <text class="modal-subtitle">{{tRemindersSub}}</text>
+        </view>
+        <text class="modal-close" hover-class="press-deep" hover-stay-time="120" bindtap="onCloseReminders">✕</text>
+      </view>
+
+      <!-- Morning Reminder Row -->
+      <view class="reminder-row">
+        <view class="reminder-left">
+          <text class="reminder-label">{{tMorning}}</text>
+          <text class="reminder-sub">{{tMorningSub}}</text>
+        </view>
+        <view class="reminder-right">
+          <picker mode="time" value="{{reminders.morningTime}}" bindchange="onChangeMorningTime">
+            <view class="time-picker-pill">
+              <text class="time-picker-text">{{reminders.morningTime}}</text>
+            </view>
+          </picker>
+          <switch checked="{{reminders.morningEnabled}}" color="var(--green)" bindchange="onToggleMorning" />
+        </view>
+      </view>
+
+      <!-- Evening Reminder Row -->
+      <view class="reminder-row">
+        <view class="reminder-left">
+          <text class="reminder-label">{{tEvening}}</text>
+          <text class="reminder-sub">{{tEveningSub}}</text>
+        </view>
+        <view class="reminder-right">
+          <picker mode="time" value="{{reminders.eveningTime}}" bindchange="onChangeEveningTime">
+            <view class="time-picker-pill">
+              <text class="time-picker-text">{{reminders.eveningTime}}</text>
+            </view>
+          </picker>
+          <switch checked="{{reminders.eveningEnabled}}" color="var(--green)" bindchange="onToggleEvening" />
+        </view>
+      </view>
+
+      <!-- Action Buttons -->
+      <view class="reminders-actions">
+        <view class="btn-moru btn-green reminder-action-btn" hover-class="press" hover-stay-time="120" bindtap="onAddCalendarReminders">
+          <text class="reminder-action-btn-text">{{tAddToCalendar}}</text>
+        </view>
+        <view class="btn-moru btn-sage reminder-action-btn" hover-class="press" hover-stay-time="120" bindtap="onSubscribeNotice">
+          <text class="reminder-action-btn-text btn-text-dark">{{tSubscribeMsg}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
   <!-- Preferences Modal -->
   <view wx:if="{{showPrefModal}}" class="modal-overlay" bindtap="onClosePreferences">
     <view class="modal-card" catchtap="preventProp">
@@ -99,14 +212,7 @@
             bindtap="onSelectLanguage"
             data-lang="zh"
           >
-            <text class="pref-opt-text">中文</text>
-          </view>
-          <view 
-            hover-class="press-soft" hover-stay-time="120" class="pref-opt-pill {{langPref === 'auto' ? 'pref-opt-active' : ''}}"
-            bindtap="onSelectLanguage"
-            data-lang="auto"
-          >
-            <text class="pref-opt-text">Auto</text>
+            <text class="pref-opt-text">中文 (Chinese)</text>
           </view>
         </view>
       </view>
@@ -115,6 +221,13 @@
       <view class="pref-row">
         <text class="pref-label">{{tTheme}}</text>
         <view class="pref-options">
+          <view 
+            hover-class="press-soft" hover-stay-time="120" class="pref-opt-pill {{currentTheme === 'auto' ? 'pref-opt-active' : ''}}"
+            bindtap="onSelectTheme"
+            data-theme="auto"
+          >
+            <text class="pref-opt-text">Auto</text>
+          </view>
           <view 
             hover-class="press-soft" hover-stay-time="120" class="pref-opt-pill {{currentTheme === 'light' ? 'pref-opt-active' : ''}}"
             bindtap="onSelectTheme"
@@ -129,20 +242,14 @@
           >
             <text class="pref-opt-text">Dark</text>
           </view>
-          <view 
-            hover-class="press-soft" hover-stay-time="120" class="pref-opt-pill {{currentTheme === 'auto' ? 'pref-opt-active' : ''}}"
-            bindtap="onSelectTheme"
-            data-theme="auto"
-          >
-            <text class="pref-opt-text">Auto</text>
-          </view>
         </view>
       </view>
 
-      <!-- Clear All Local Data -->
-      <view class="pref-btn-clear" hover-class="press" hover-stay-time="120" bindtap="onClearCache">
-        <text class="pref-btn-clear-text">{{tClearData}}</text>
+      <!-- Clear Data -->
+      <view class="pref-clear-row" hover-class="press-soft" hover-stay-time="120" bindtap="onClearCache">
+        <text class="pref-clear-text">{{tClearData}}</text>
       </view>
+
     </view>
   </view>
 </view>

@@ -52,6 +52,13 @@
           </view>
         </view>
 
+        <!-- Share Poster CTA -->
+        <view class="share-btn-wrap">
+          <view class="btn-moru btn-cream share-poster-btn" hover-class="press" hover-stay-time="120" bindtap="onOpenPosterModal">
+            <text class="share-btn-text">{{tSharePosterBtn}}</text>
+          </view>
+        </view>
+
         <!-- Slogan Footer -->
         <view class="footer-wrap">
           <text class="footer-text">{{tFooterText}}</text>
@@ -128,7 +135,7 @@
 
               <!-- Floating Cheer Interactive Toast -->
               <view wx:if="{{cheerPillVisible}}" class="cheer-toast">
-                <text class="cheer-toast-text">🎉 {{tCheerPraise}} +{{cheerCount}}</text>
+                <text class="cheer-toast-text">{{tCheerPraise}} +{{cheerCount}}</text>
               </view>
             </view>
           </view>
@@ -161,6 +168,13 @@
           </view>
         </view>
 
+        <!-- Share Poster CTA -->
+        <view class="share-btn-wrap">
+          <view class="btn-moru btn-cream share-poster-btn" hover-class="press" hover-stay-time="120" bindtap="onOpenPosterModal">
+            <text class="share-btn-text">{{tSharePosterBtn}}</text>
+          </view>
+        </view>
+
         <!-- Slogan Footer -->
         <view class="footer-wrap">
           <text class="footer-text">{{tFooterText}}</text>
@@ -169,4 +183,61 @@
 
     </view>
   </scroll-view>
+
+  <!-- Poster Share Modal -->
+  <view wx:if="{{showPosterModal}}" class="modal-backdrop" bindtap="onClosePosterModal">
+    <view class="poster-modal-card" catchtap="preventProp">
+      <view class="modal-header">
+        <text class="modal-title">{{tSharePosterBtn}}</text>
+        <view class="modal-close-hit" bindtap="onClosePosterModal">
+          <text class="modal-close">×</text>
+        </view>
+      </view>
+      <!-- Poster Preview -->
+      <view class="poster-preview-box">
+        <image
+          wx:if="{{posterImageUrl}}"
+          class="poster-preview-img"
+          src="{{posterImageUrl}}"
+          mode="aspectFit"
+          show-menu-by-longpress="{{true}}"
+        />
+        <view wx:else class="poster-loading-box">
+          <view class="poster-spinner"></view>
+          <text class="poster-loading-text">{{tSavingPoster}}</text>
+        </view>
+      </view>
+      <!-- Actions Dock -->
+      <view class="poster-actions-dock">
+        <view
+          class="btn-moru btn-green save-album-btn {{posterLoading ? 'btn-disabled' : ''}}"
+          hover-class="press"
+          hover-stay-time="120"
+          bindtap="onSavePosterToAlbum"
+        >
+          <text class="save-album-text">{{posterSaving ? '...' : tSaveImage}}</text>
+        </view>
+
+        <view class="poster-secondary-row">
+          <!-- Native Share to WeChat Friends -->
+          <button class="action-dock-btn" open-type="share" hover-class="press-soft" hover-stay-time="120">
+            <text class="action-dock-text">{{tShareToFriend}}</text>
+          </button>
+
+          <!-- Copy Text for Sharing -->
+          <view class="action-dock-btn" hover-class="press-soft" hover-stay-time="120" bindtap="onCopyShareText">
+            <text class="action-dock-text">{{tCopyShareText}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- Offscreen Canvas for Poster Generation -->
+  <canvas
+    type="2d"
+    id="completeShareCanvas"
+    class="poster-canvas-offscreen"
+    style="width: 360px; height: 540px;"
+  ></canvas>
 </view>

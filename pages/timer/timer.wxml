@@ -21,6 +21,24 @@
       <text class="hint">{{tHint}}</text>
     </view>
 
+    <!-- Ambient Soundscape Selector -->
+    <view class="soundscape-section">
+      <text class="soundscape-label">{{tSoundscape}}</text>
+      <view class="soundscape-pills">
+        <view
+          wx:for="{{soundList}}"
+          wx:key="id"
+          class="soundscape-pill {{selectedSound === item.id ? 'soundscape-pill-active' : ''}}"
+          hover-class="press-soft"
+          hover-stay-time="120"
+          data-id="{{item.id}}"
+          bindtap="onSelectSound"
+        >
+          <text class="soundscape-pill-text">{{item.label}}</text>
+        </view>
+      </view>
+    </view>
+
     <!-- Controls -->
     <view class="controls">
       <view class="btn-moru btn-ink primary-btn" hover-class="press" hover-stay-time="120" bindtap="onPrimary">

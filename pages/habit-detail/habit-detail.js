@@ -29,7 +29,7 @@ Page({
     tLogButton: '',
     tAlreadyLogged: '',
 
-    // Check-in input (amount + generic note)
+    // Check-in input (amount + generic note + custom subtitle)
     showEditor: false,
     displayAmount: '',
     amountValue: 0,
@@ -37,6 +37,9 @@ Page({
     amountUnitLabel: '',
     amountStep: 1,
     noteValue: '',
+    customSubValue: '',
+    tSubLabel: '',
+    tSubPlaceholder: '',
     tAmountLabel: '',
     tEditDefault: '',
     tNoteLabel: '',
@@ -101,9 +104,9 @@ Page({
       habit,
       isCompleted: storage.isHabitCompletedToday(habit.id),
       tTag: detailText(id, 'tag'),
-      tHeadline: detailText(id, 'headline') || i18n.t(habit.cardTitleKey),
+      tHeadline: detailText(id, 'headline') || (habit.cardTitleKey ? i18n.t(habit.cardTitleKey) : (habit.name || habit.cardTitle)),
       tHeroTitle: detailText(id, 'heroTitle'),
-      tHeroSub: detailText(id, 'heroSub'),
+      tHeroSub: habit.sub || detailText(id, 'heroSub') || (habit.cardSub ? habit.cardSub.replace(/^.*?·\s*/, '') : ''),
       tMetricAmountLabel: detailText(id, 'metricAmountLabel'),
       tMetricRhythm: detailText(id, 'rhythmDaily'),
       tMetricRhythmLabel: detailText(id, 'metricRhythmLabel'),
@@ -113,18 +116,42 @@ Page({
         ? i18n.t(`detail.module.${habit.module}`)
         : detailText(id, 'logButton'),
       tAlreadyLogged: detailText(id, 'alreadyLogged'),
+      tDeleteHabit: i18n.t('custom.deleteBtn', 'Delete habit'),
       displayAmount: displayText,
       amountValue: parsed.value,
       amountUnit: parsed.unit,
       amountUnitLabel: unitLabel,
       amountStep: habit.step || 1,
       noteValue: (last && last.note) || '',
+      customSubValue: habit.sub || (habit.cardSub ? habit.cardSub.replace(/^.*?·\s*/, '') : ''),
+      tSubLabel: i18n.t('custom.subLabel', '小标题'),
+      tSubPlaceholder: i18n.t('custom.subPlaceholder', '例如：随时随地，不慌不忙 / 属于故事的宁静时刻'),
       tAmountLabel: detailText(id, 'amountLabel'),
       tEditDefault: detailText(id, 'editDefaultLabel'),
       tNoteLabel: detailText(id, 'noteLabel'),
       tNotePlaceholder: detailText(id, 'notePlaceholder'),
       tCancel: i18n.t('common.cancel'),
       tSave: i18n.t('common.save')
+    });
+  },
+
+  onDeleteCustomHabit() {
+    const isZh = i18n.getLanguage() === 'zh';
+    wx.showModal({
+      title: isZh ? '删除习惯' : 'Delete Habit',
+      content: i18n.t('custom.deleteConfirm'),
+      confirmText: isZh ? '删除' : 'Delete',
+      confirmColor: '#FF5A5F',
+      cancelText: i18n.t('common.cancel'),
+      success: (res) => {
+        if (res.confirm) {
+          storage.deleteCustomHabit(this.data.habitId);
+          wx.showToast({ title: isZh ? '已删除' : 'Deleted', icon: 'success' });
+          setTimeout(() => {
+            wx.navigateBack({ delta: 1 });
+          }, 350);
+        }
+      }
     });
   },
 
@@ -152,6 +179,10 @@ Page({
     this.setData({ noteValue: e.detail.value });
   },
 
+  onCustomSubInput(e) {
+    this.setData({ customSubValue: e.detail.value });
+  },
+
   noop() {},
 
   onOpenEditor() {
@@ -165,6 +196,13 @@ Page({
   },
 
   onConfirmEditor() {
+    const habit = this.data.habit;
+    if (habit.isCustom) {
+      storage.updateHabit(this.data.habitId, {
+        amount: this.buildAmountString(),
+        sub: (this.data.customSubValue || '').trim()
+      });
+    }
     storage.setLastCheckin(this.data.habitId, {
       amount: this.buildAmountString(),
       note: (this.data.noteValue || '').trim()

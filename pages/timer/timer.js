@@ -1,6 +1,7 @@
 // pages/timer/timer.js - Reusable timed session (eyes rest / quiet focus)
 const i18n = require('../../utils/i18n.js');
 const storage = require('../../utils/storage.js');
+const soundscape = require('../../utils/soundscape.js');
 
 function formatTime(total) {
   const s = Math.max(0, Math.round(total));
@@ -9,6 +10,14 @@ function formatTime(total) {
   return `${m}:${String(r).padStart(2, '0')}`;
 }
 
+const SOUND_OPTIONS = [
+  { id: 'none', key: 'soundscape.none' },
+  { id: 'rain', key: 'soundscape.rain' },
+  { id: 'waves', key: 'soundscape.waves' },
+  { id: 'bowl', key: 'soundscape.bowl' },
+  { id: 'forest', key: 'soundscape.forest' }
+];
+
 Page({
   data: {
     themeClass: '',
@@ -16,6 +25,10 @@ Page({
     habit: {},
     leftText: '2:00',
     status: 'idle', // idle | running | paused
+
+    selectedSound: 'none',
+    soundList: [],
+    tSoundscape: '',
 
     tName: '',
     tHint: '',
@@ -40,9 +53,14 @@ Page({
     this.left = this.durationSec;
     this.timer = null;
 
+    const savedSound = storage.getSoundscapeSetting ? storage.getSoundscapeSetting() : { sound: 'none' };
+
     this.updateTheme();
     this.loadLabels(habit);
-    this.setData({ leftText: formatTime(this.left) });
+    this.setData({
+      leftText: formatTime(this.left),
+      selectedSound: savedSound.sound || 'none'
+    });
 
     this.unsubI18n = i18n.onLanguageChange(() => {
       this.loadLabels(habit);
@@ -59,6 +77,7 @@ Page({
 
   onUnload() {
     this.stopTimer();
+    soundscape.stop();
     if (this.unsubI18n) this.unsubI18n();
   },
 
@@ -74,6 +93,11 @@ Page({
     this.setData({
       habit,
       habitId: habit.id,
+      soundList: SOUND_OPTIONS.map(s => ({
+        id: s.id,
+        label: i18n.t(s.key, s.id)
+      })),
+      tSoundscape: i18n.t('soundscape.title', 'Ambient Soundscape'),
       tName: i18n.t(`session.${habit.id}.name`) || i18n.t(habit.cardTitleKey),
       tHint: i18n.t(`session.${habit.id}.hint`),
       tStart: i18n.t('session.start'),
@@ -81,6 +105,18 @@ Page({
       tResume: i18n.t('session.resume'),
       tEnd: i18n.t('session.end')
     });
+  },
+
+  onSelectSound(e) {
+    const soundId = e.currentTarget.dataset.id;
+    this.setData({ selectedSound: soundId });
+    if (this.data.status === 'running') {
+      soundscape.play(soundId, 60);
+    } else {
+      if (storage.saveSoundscapeSetting) {
+        storage.saveSoundscapeSetting({ sound: soundId, volume: 60, playing: false });
+      }
+    }
   },
 
   onPrimary() {
@@ -94,11 +130,15 @@ Page({
   startTimer() {
     this.setData({ status: 'running' });
     this.stopTimer();
+    if (this.data.selectedSound && this.data.selectedSound !== 'none') {
+      soundscape.play(this.data.selectedSound, 60);
+    }
     this.timer = setInterval(() => this.tick(), 1000);
   },
 
   pauseTimer() {
     this.stopTimer();
+    soundscape.stop();
     this.setData({ status: 'paused' });
   },
 
@@ -120,6 +160,7 @@ Page({
 
   finish() {
     this.stopTimer();
+    soundscape.stop();
     this.setData({ status: 'idle', leftText: '0:00' });
     storage.logHabit(this.habitId);
     setTimeout(() => {
@@ -130,6 +171,7 @@ Page({
   onEnd() {
     // Early stop: do NOT record or celebrate — only a full session counts.
     this.stopTimer();
+    soundscape.stop();
     this.setData({ status: 'idle' });
     wx.navigateBack({ fail: () => wx.switchTab({ url: '/pages/index/index' }) });
   }

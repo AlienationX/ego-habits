@@ -403,3 +403,18 @@
   background-color: var(--green);
   opacity: 0.9;
 }
+
+.delete-habit-wrap {
+  margin-top: 24rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16rpx 0;
+}
+
+.delete-habit-text {
+  font-size: 26rpx;
+  color: #FF5A5F;
+  font-weight: 600;
+  letter-spacing: 0.5rpx;
+}

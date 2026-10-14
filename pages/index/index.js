@@ -14,12 +14,28 @@ Page({
     tHeroSub: '',
     tGetStarted: '',
     tSectionTitle: '',
-    todayHabits: []
+    todayHabits: [],
+    availableHabits: [],
+    showManageModal: false,
+    tManageModalTitle: '',
+    tManageModalSub: '',
+    tPinnedSectionTitle: '',
+    tAvailableSectionTitle: '',
+    tUnpin: '',
+    tPin: '',
+    tDone: ''
   },
 
   onLoad() {
     this.updateTheme();
     this.loadTodayData();
+
+    if (wx.showShareMenu) {
+      wx.showShareMenu({
+        withShareTicket: true,
+        menus: ['shareAppMessage', 'shareTimeline']
+      });
+    }
 
     this.unsubI18n = i18n.onLanguageChange(() => {
       this.loadTodayData();
@@ -80,49 +96,126 @@ Page({
       tHeroTitle: i18n.t('today.heroTitle'),
       tHeroSub: i18n.t('today.heroSub'),
       tGetStarted: i18n.t('today.getStarted'),
-      tSectionTitle: i18n.t('today.sectionTitle')
+      tSectionTitle: i18n.t('today.sectionTitle'),
+      tManage: i18n.t('today.manage', '管理今日'),
+      tManageModalTitle: i18n.t('today.manageModalTitle', '管理今日微习惯'),
+      tManageModalSub: i18n.t('today.manageModalSub', '从容专注：建议保留 1~4 件小事'),
+      tPinnedSectionTitle: i18n.t('today.pinnedSectionTitle', '已在今日的微习惯'),
+      tAvailableSectionTitle: i18n.t('today.availableSectionTitle', '习惯库其他微习惯'),
+      tUnpin: i18n.t('today.unpin', '移出'),
+      tPin: i18n.t('today.pin', '加入今日'),
+      tDone: i18n.t('today.done', '完成')
     });
     this.loadTodayHabits();
   },
 
   loadTodayHabits() {
-    const allHabits = storage.getHabits();
-    const primary = allHabits.slice(0, 3);
-    const todayHabits = primary.map(h => {
-      // Use the remembered default amount (last check-in value) instead of the
-      // static card copy's amount, keeping the rest of the copy unchanged.
+    const all = storage.getHabits();
+    const formatHabit = (h) => {
       const last = storage.getLastCheckin(h.id);
-      const amountStr = (last && last.amount) || h.metricAmount || '';
+      const amountStr = (last && last.amount) || h.metricAmount || h.amount || '';
       const parsed = storage.parseAmount(amountStr);
       const unitLabel = parsed.unit ? i18n.t(`units.${parsed.unit}`, parsed.unit) : '';
       const amountText = parsed.unit ? `${parsed.value} ${unitLabel}` : amountStr;
 
-      const cardSub = i18n.t(h.cardSubKey) || '';
-      const sepIndex = cardSub.indexOf(' · ');
-      const sub = sepIndex > -1
-        ? `${amountText} · ${cardSub.slice(sepIndex + 3)}`
-        : (amountText || cardSub);
+      let title = h.nameKey ? i18n.t(h.cardTitleKey || h.nameKey) : (h.cardTitle || h.name);
+      
+      // Determine tagline (小标题内容)
+      let tagline = '';
+      if (typeof h.sub === 'string' && h.sub.trim()) {
+        tagline = h.sub.trim();
+      } else {
+        const rawSub = h.cardSubKey ? i18n.t(h.cardSubKey) : (h.cardSub || '');
+        const sepIndex = rawSub ? rawSub.indexOf(' · ') : -1;
+        if (sepIndex > -1) {
+          tagline = rawSub.slice(sepIndex + 3).trim();
+        }
+      }
+      const sub = tagline ? `${amountText} · ${tagline}` : amountText;
 
       return {
         id: h.id,
-        title: i18n.t(h.cardTitleKey),
+        title,
         sub,
-        character: h.character,
-        tint: h.tint,
+        character: h.character || 'medal',
+        tint: h.tint || 'sage',
+        isPrimary: !!h.isPrimary,
         completed: storage.isHabitCompletedToday(h.id)
       };
-    });
-    this.setData({ todayHabits });
+    };
+
+    const formattedAll = all.map(formatHabit);
+    const todayHabits = formattedAll.filter(h => h.isPrimary);
+    const availableHabits = formattedAll.filter(h => !h.isPrimary);
+
+    this.setData({ todayHabits, availableHabits });
   },
 
   onGetStarted() {
     wx.switchTab({ url: '/pages/habits/habits' });
   },
 
+  onManageHabits() {
+    this.loadTodayHabits();
+    this.toggleTabBar(true);
+    this.setData({ showManageModal: true });
+  },
+
+  onCloseManageModal() {
+    this.toggleTabBar(false);
+    this.setData({ showManageModal: false });
+    this.loadTodayHabits();
+  },
+
+  onTogglePinFromModal(e) {
+    const habitId = e.currentTarget.dataset.id;
+    const ok = storage.togglePinHabit(habitId);
+    if (!ok) {
+      const isPinned = this.data.todayHabits.some(h => h.id === habitId);
+      wx.showToast({
+        title: isPinned 
+          ? i18n.t('today.minLimitToast', '至少保留 1 个今日习惯') 
+          : i18n.t('today.maxLimitToast', '建议今日最多保留 4 个习惯'),
+        icon: 'none'
+      });
+      return;
+    }
+    this.loadTodayHabits();
+  },
+
+  toggleTabBar(hidden) {
+    const tabBar = this.getTabBar && this.getTabBar();
+    if (tabBar && tabBar.setHidden) tabBar.setHidden(hidden);
+  },
+
+  preventProp() {},
+
   onOpenHabit(e) {
     const habitId = e.currentTarget.dataset.id;
     wx.navigateTo({
       url: `/pages/habit-detail/habit-detail?id=${habitId}`
     });
+  },
+
+  onShareAppMessage() {
+    const profile = storage.getProfile();
+    const name = profile.nickname || 'Avery';
+    const title = i18n.getLanguage() === 'zh'
+      ? `${name} 邀你一起开启生活微习惯，从容过好每一天`
+      : `${name} invites you to cultivate gentle micro-habits together on EgoHabits`;
+    return {
+      title,
+      path: '/pages/index/index?from=app_share'
+    };
+  },
+
+  onShareTimeline() {
+    const title = i18n.getLanguage() === 'zh'
+      ? 'EgoHabits · 为生活做一点小习惯，从容向前'
+      : 'EgoHabits · Small habits. Room to grow.';
+    return {
+      title,
+      query: 'from=timeline'
+    };
   }
 });

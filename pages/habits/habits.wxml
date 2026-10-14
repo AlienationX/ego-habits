@@ -6,21 +6,36 @@
       <!-- Top Title -->
       <view class="header-section">
         <text class="tag-label">{{tLibraryTitle}}</text>
-        <text class="headline-title">{{tLibraryHeadline}}</text>
+        <view class="headline-row">
+          <text class="headline-title">{{tLibraryHeadline}}</text>
+        </view>
       </view>
 
-      <!-- Category Filter Pills -->
-      <view class="filters-row">
+      <!-- Category Filter Pills & Add Plus Button Row -->
+      <view class="filters-container">
+        <view class="filters-row">
+          <view
+            wx:for="{{categories}}"
+            wx:key="key"
+            class="filter-pill {{currentCategory === item.key ? 'filter-pill-active' : ''}}"
+            hover-class="press-soft"
+            hover-stay-time="120"
+            data-key="{{item.key}}"
+            bindtap="onSelectCategory"
+          >
+            <text class="filter-pill-text">{{item.label}}</text>
+          </view>
+        </view>
+
+        <!-- Right: Add Habit Plus Button -->
         <view
-          wx:for="{{categories}}"
-          wx:key="key"
-          class="filter-pill {{currentCategory === item.key ? 'filter-pill-active' : ''}}"
-          hover-class="press-soft"
-          hover-stay-time="120"
-          data-key="{{item.key}}"
-          bindtap="onSelectCategory"
+          class="header-add-btn"
+          hover-class="press"
+          hover-stay-time="100"
+          bindtap="onOpenCreateModal"
+          aria-label="{{tAddHabit}}"
         >
-          <text class="filter-pill-text">{{item.label}}</text>
+          <text class="header-add-plus">+</text>
         </view>
       </view>
 
@@ -36,7 +51,7 @@
           bindtap="onSelectHabit"
         >
           <view class="grid-character-wrap">
-            <habit-character name="{{item.character}}" size="180" animate="{{true}}" />
+            <habit-character name="{{item.character}}" size="170" animate="{{true}}" />
           </view>
           <view class="grid-card-info">
             <text class="grid-habit-name">{{item.name}}</text>
@@ -47,4 +62,136 @@
 
     </view>
   </scroll-view>
+
+  <!-- Create Custom Habit Modal -->
+  <view wx:if="{{showCreateModal}}" class="modal-overlay" bindtap="onCloseCreateModal">
+    <view class="modal-card" catchtap="preventProp">
+      <view class="modal-header">
+        <text class="modal-title">{{tCreateTitle}}</text>
+        <text class="modal-close" hover-class="press-deep" hover-stay-time="120" bindtap="onCloseCreateModal">✕</text>
+      </view>
+
+      <scroll-view class="modal-body-scroll" scroll-y enable-passive show-scrollbar="{{false}}" enhanced="{{true}}">
+        <!-- Name Input -->
+        <view class="form-item">
+          <text class="form-label">{{tNameLabel}}</text>
+          <input
+            class="form-input"
+            placeholder-class="input-placeholder"
+            placeholder="{{tNamePlaceholder}}"
+            value="{{newHabitName}}"
+            bindinput="onInputName"
+            maxlength="20"
+          />
+        </view>
+
+        <!-- Subtitle Input -->
+        <view class="form-item">
+          <text class="form-label">{{tSubLabel}}</text>
+          <input
+            class="form-input"
+            placeholder-class="input-placeholder"
+            placeholder="{{tSubPlaceholder}}"
+            value="{{newHabitSub}}"
+            bindinput="onInputSub"
+            maxlength="30"
+          />
+        </view>
+
+        <!-- Amount / Metric Input -->
+        <view class="form-item">
+          <text class="form-label">{{tAmountLabel}}</text>
+          <input
+            class="form-input"
+            placeholder-class="input-placeholder"
+            placeholder="{{tAmountPlaceholder}}"
+            value="{{newHabitAmount}}"
+            bindinput="onInputAmount"
+            maxlength="20"
+          />
+        </view>
+
+        <!-- Category Picker -->
+        <view class="form-item">
+          <text class="form-label">{{tCategoryLabel}}</text>
+          <view class="pill-group">
+            <view
+              class="choice-pill {{newCategory === 'focus' ? 'choice-pill-active' : ''}}"
+              data-cat="focus"
+              bindtap="onPickCategory"
+            >
+              <text class="choice-pill-text">Focus (专注)</text>
+            </view>
+            <view
+              class="choice-pill {{newCategory === 'move' ? 'choice-pill-active' : ''}}"
+              data-cat="move"
+              bindtap="onPickCategory"
+            >
+              <text class="choice-pill-text">Move (活动)</text>
+            </view>
+            <view
+              class="choice-pill {{newCategory === 'rest' ? 'choice-pill-active' : ''}}"
+              data-cat="rest"
+              bindtap="onPickCategory"
+            >
+              <text class="choice-pill-text">Rest (休憩)</text>
+            </view>
+          </view>
+        </view>
+
+        <!-- Mascot Character Picker -->
+        <view class="form-item">
+          <text class="form-label">{{tCharacterLabel}}</text>
+          <scroll-view class="char-scroll" scroll-x enable-passive>
+            <view class="char-row">
+              <view
+                wx:for="{{availableCharacters}}"
+                wx:key="*this"
+                class="char-pick-item {{newCharacter === item ? 'char-pick-active' : ''}}"
+                data-char="{{item}}"
+                bindtap="onPickCharacter"
+              >
+                <habit-character name="{{item}}" size="80" />
+              </view>
+            </view>
+          </scroll-view>
+        </view>
+
+        <!-- Tint Color Picker -->
+        <view class="form-item">
+          <text class="form-label">{{tTintLabel}}</text>
+          <view class="tint-row">
+            <view
+              wx:for="{{availableTints}}"
+              wx:key="*this"
+              class="tint-swatch card-tint-{{item}} {{newTint === item ? 'tint-swatch-active' : ''}}"
+              data-tint="{{item}}"
+              bindtap="onPickTint"
+            >
+              <text wx:if="{{newTint === item}}" class="tint-check">✓</text>
+            </view>
+          </view>
+        </view>
+
+        <!-- Pin to Today Toggle -->
+        <view class="form-item form-toggle-row" bindtap="onToggleNewPin">
+          <view class="toggle-text-wrap">
+            <text class="form-label mb-0">{{tPinLabel}}</text>
+            <text class="form-hint">{{tPinHint}}</text>
+          </view>
+          <switch checked="{{newPinToToday}}" color="var(--green)" bindchange="onToggleNewPin" />
+        </view>
+      </scroll-view>
+
+      <!-- Modal Footer -->
+      <view class="modal-footer">
+        <view class="btn-moru btn-cream modal-btn-cancel" hover-class="press" hover-stay-time="120" bindtap="onCloseCreateModal">
+          <text class="modal-btn-cancel-text">{{tCancel}}</text>
+        </view>
+        <view class="btn-moru btn-ink modal-btn-submit" hover-class="press" hover-stay-time="120" bindtap="onSubmitCreateHabit">
+          <text class="modal-btn-submit-text">{{tCreateBtn}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
 </view>

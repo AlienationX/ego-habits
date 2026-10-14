@@ -9,7 +9,8 @@ const ICONS = {
   arrow: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"><path d="M9 5 L15 12 L9 19" stroke="#000000" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
   back: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"><path d="M15 5 L9 12 L15 19" stroke="#000000" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
   bell: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"><path d="M18 16 V11 C18 7.68 15.31 5 12 5 C8.69 5 6 7.68 6 11 V16 L4 18 H20 L18 16 Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 19 C10 20.1 10.9 21 12 21 C13.1 21 14 20.1 14 19" stroke="#000000" stroke-width="2" stroke-linecap="round"/></svg>',
-  settings: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"><path d="M8.2 3 H15.8 L21 8.2 V15.8 L15.8 21 H8.2 L3 15.8 V8.2 Z" stroke="#000000" stroke-width="2" stroke-linejoin="round"/><circle cx="12" cy="12" r="2.8" stroke="#000000" stroke-width="2"/></svg>'
+  settings: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"><path d="M8.2 3 H15.8 L21 8.2 V15.8 L15.8 21 H8.2 L3 15.8 V8.2 Z" stroke="#000000" stroke-width="2" stroke-linejoin="round"/><circle cx="12" cy="12" r="2.8" stroke="#000000" stroke-width="2"/></svg>',
+  share: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"><path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7" stroke="#000000" stroke-width="2" stroke-linecap="round"/><path d="M12 15V4m0 0l-4 4m4-4l4 4" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
 };
 
 const iconCache = {};

@@ -1,6 +1,7 @@
 // pages/habit-complete/habit-complete.js
 const i18n = require('../../utils/i18n.js');
 const storage = require('../../utils/storage.js');
+const poster = require('../../utils/poster.js');
 
 // Wavy ribbon streamers (SVG assets in /assets/confetti/)
 const CELEBRATION_STREAMERS = [
@@ -88,6 +89,17 @@ Page({
     badgePunched: false,
     cheerPillVisible: false,
 
+    // Poster Modal
+    showPosterModal: false,
+    posterImageUrl: '',
+    posterLoading: false,
+    posterSaving: false,
+    tSharePosterBtn: '',
+    tSaveImage: '',
+    tSavingPoster: '',
+    tShareToFriend: '',
+    tCopyShareText: '',
+
     // Localized strings
     tDone: '',
     tTapToCheer: '',
@@ -107,6 +119,13 @@ Page({
     this.setData({ habitId });
     this.updateTheme();
     this.loadContent();
+
+    if (wx.showShareMenu) {
+      wx.showShareMenu({
+        withShareTicket: true,
+        menus: ['shareAppMessage', 'shareTimeline']
+      });
+    }
 
     this.unsubI18n = i18n.onLanguageChange(() => {
       this.loadContent();
@@ -161,8 +180,8 @@ Page({
     const stats = storage.getStats();
     const streak = stats.streak || 1;
     const streakText = streak > 1
-      ? `🔥 ${streak} ${i18n.t('complete.common.streakPill', 'Day Streak')}`
-      : `🏅 ${i18n.t('complete.common.goalCompletedPill', 'Goal Complete')}`;
+      ? `${streak} ${i18n.t('complete.common.streakPill', 'Day Streak')}`
+      : `${i18n.t('complete.common.goalCompletedPill', 'Goal Complete')}`;
 
     // Titles & personalized sub copy
     const awardTitle = completeText(id, 'awardTitle') || i18n.t('complete.common.awardBadgeTitle', 'New Award');
@@ -192,6 +211,11 @@ Page({
       tDone: i18n.t('complete.common.done', 'Done'),
       tTapToCheer: i18n.t('complete.common.tapToCheer', 'Tap badge to cheer!'),
       tCheerPraise: i18n.t('complete.common.cheerPraise', 'Way to go!'),
+      tSharePosterBtn: i18n.t('share.posterBtn', '生成分享海报'),
+      tSaveImage: i18n.t('share.saveImage', '保存海报到相册'),
+      tSavingPoster: i18n.t('share.saving', '正在生成海报...'),
+      tShareToFriend: i18n.t('share.shareToFriend', '分享给好友'),
+      tCopyShareText: i18n.t('share.copyShareText', '复制分享文案'),
 
       // Fallback for water page
       tTag: completeText(id, 'tag'),
@@ -261,5 +285,147 @@ Page({
 
   onViewWeek() {
     wx.switchTab({ url: '/pages/week/week' });
-  }
+  },
+
+  // Share Poster Generation & Saving
+  onOpenPosterModal() {
+    this.setData({
+      showPosterModal: true,
+      posterImageUrl: '',
+      posterLoading: true
+    });
+    setTimeout(() => {
+      this.drawCompletePoster();
+    }, 100);
+  },
+
+  onClosePosterModal() {
+    this.setData({ showPosterModal: false });
+  },
+
+  drawCompletePoster() {
+    const profile = storage.getProfile();
+    const stats = storage.getStats();
+    const streak = stats.streak || 1;
+    const streakText = streak > 1
+      ? `连续达成 ${streak} 天 · 每一步都有回响`
+      : '每一个微小习惯，都在重塑从容的自己';
+
+    const todayHabits = storage.getHabits().filter(h => h.completedToday).map(h => ({
+      name: h.nameKey ? i18n.t(h.nameKey) : (h.name || h.cardTitle),
+      amount: h.metricAmount || h.amount || '已达成'
+    }));
+
+    // Ensure current habit is present in poster list
+    const currentName = this.data.habitName;
+    if (!todayHabits.some(h => h.name === currentName)) {
+      todayHabits.unshift({
+        name: currentName,
+        amount: this.data.metricAdded || '已达成'
+      });
+    }
+
+    const d = new Date();
+    const dateStr = `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, '0')}.${String(d.getDate()).padStart(2, '0')}`;
+
+    wx.createSelectorQuery().in(this)
+      .select('#completeShareCanvas')
+      .fields({ node: true, size: true })
+      .exec(res => {
+        if (res && res[0] && res[0].node) {
+          const canvas = res[0].node;
+          poster.renderPoster(canvas, {
+            tag: 'EGOHABITS / TODAY ACHIEVED',
+            title: i18n.t('share.todayTitle', '今日微习惯达成'),
+            nickname: profile.nickname || 'Avery',
+            dateStr,
+            habits: todayHabits,
+            streakText
+          });
+
+          poster.exportPosterImage(canvas)
+            .then(tempFilePath => {
+              this.setData({
+                posterImageUrl: tempFilePath,
+                posterLoading: false
+              });
+            })
+            .catch(err => {
+              console.error('[habit-complete] exportPosterImage failed:', err);
+              this.setData({ posterLoading: false });
+            });
+        } else {
+          this.setData({ posterLoading: false });
+        }
+      });
+  },
+
+  onSavePosterToAlbum() {
+    if (!this.data.posterImageUrl) {
+      wx.showToast({
+        title: this.data.tSavingPoster || '正在生成海报...',
+        icon: 'none'
+      });
+      return;
+    }
+    this.setData({ posterSaving: true });
+    poster.saveImageToAlbum(this.data.posterImageUrl)
+      .then(() => {
+        this.setData({ posterSaving: false, showPosterModal: false });
+        wx.showToast({
+          title: i18n.t('share.saved', '海报已保存至相册！'),
+          icon: 'success'
+        });
+      })
+      .catch((err) => {
+        this.setData({ posterSaving: false });
+      });
+  },
+
+  onCopyShareText() {
+    const habitName = this.data.habitName || '微习惯';
+    const lang = i18n.getLanguage();
+    const text = lang === 'zh'
+      ? `今天在 EgoHabits 达成了【${habitName}】。微习惯，慢慢成长。`
+      : `Achieved [${habitName}] on EgoHabits today. Small habits. Room to grow.`;
+
+    wx.setClipboardData({
+      data: text,
+      success: () => {
+        wx.showToast({
+          title: lang === 'zh' ? '文案已复制' : 'Copied to clipboard',
+          icon: 'success',
+          duration: 1500
+        });
+      }
+    });
+  },
+
+  onShareAppMessage() {
+    const profile = storage.getProfile();
+    const habitName = this.data.habitName || '微习惯';
+    const name = profile.nickname || 'Avery';
+    const title = i18n.getLanguage() === 'zh'
+      ? `${name} 刚刚达成了【${habitName}】，邀你一起慢慢成长`
+      : `${name} just achieved [${habitName}] on EgoHabits`;
+    return {
+      title,
+      path: '/pages/index/index?from=complete_share',
+      imageUrl: this.data.posterImageUrl || ''
+    };
+  },
+
+  onShareTimeline() {
+    const habitName = this.data.habitName || '微习惯';
+    const title = i18n.getLanguage() === 'zh'
+      ? `今日微习惯达成：${habitName}。从容前行，按自己的节奏。`
+      : `Gentle step achieved: ${habitName}. Room to grow.`;
+    return {
+      title,
+      query: 'from=timeline',
+      imageUrl: this.data.posterImageUrl || ''
+    };
+  },
+
+  preventProp() {}
 });
