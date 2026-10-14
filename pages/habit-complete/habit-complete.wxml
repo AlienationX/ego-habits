@@ -8,63 +8,164 @@
         <nav-back />
       </view>
 
-      <!-- Top Title -->
-      <view class="nav-header">
-        <text class="tag-label">{{tTag}}</text>
-        <text class="headline-title">{{tHeadline}}</text>
-      </view>
+      <!-- ============================================== -->
+      <!-- WATER COMPLETION: Original signature design    -->
+      <!-- ============================================== -->
+      <block wx:if="{{isWater}}">
+        <!-- Top Title -->
+        <view class="nav-header">
+          <text class="tag-label">{{tTag}}</text>
+          <text class="headline-title">{{tHeadline}}</text>
+        </view>
 
-      <!-- Center Celebration: green check badge + confetti (water keeps its character) -->
-      <view class="celebration-center {{useBadge ? 'celebration-badge' : ''}}">
-        <block wx:if="{{useBadge}}">
-          <view class="confetti-layer">
-            <view
-              wx:for="{{confetti}}"
-              wx:key="index"
-              class="confetti {{item.shape}}"
-              style="left: {{item.x}}%; top: {{item.y}}%; width: {{item.w}}rpx; height: {{item.h}}rpx; background-color: {{item.color}}; animation-delay: {{item.d}}s;"
-            ></view>
+        <!-- Center Celebration: smiling celebrate water cup -->
+        <view class="celebration-center">
+          <view class="char-bounce">
+            <habit-character name="celebrate" size="420" animate="{{true}}" />
           </view>
-          <view class="award-badge">
-            <view class="check-mark"></view>
+        </view>
+
+        <!-- Metric Count & Progress Bar -->
+        <view class="metric-section">
+          <text class="metric-val">{{metricAdded}}</text>
+          <text class="metric-label">{{tMetricLabel}}</text>
+          <text wx:if="{{note}}" class="metric-note">{{note}}</text>
+          
+          <view class="progress-track">
+            <view class="progress-bar {{barAnimated ? 'progress-bar-fill' : ''}}"></view>
           </view>
-        </block>
-        <view wx:else class="char-bounce">
-          <habit-character name="celebrate" size="420" animate="{{true}}" />
         </view>
-      </view>
 
-      <!-- Metric Count & Progress Bar -->
-      <view class="metric-section">
-        <text class="metric-val">{{metricAdded}}</text>
-        <text class="metric-label">{{tMetricLabel}}</text>
-        <text wx:if="{{note}}" class="metric-note">{{note}}</text>
-        
-        <view class="progress-track">
-          <view class="progress-bar {{barAnimated ? 'progress-bar-fill' : ''}}"></view>
+        <!-- Encouragement Card -->
+        <view class="encouragement-card">
+          <text class="card-title">{{tCardTitle}}</text>
+          <text class="card-sub">{{tCardSub}}</text>
         </view>
-      </view>
 
-      <!-- Encouragement Card -->
-      <view class="encouragement-card">
-        <text class="card-title">{{tCardTitle}}</text>
-        <text class="card-sub">{{tCardSub}}</text>
-      </view>
-
-      <!-- Dual Action Buttons -->
-      <view class="actions-row">
-        <view class="btn-moru btn-ink action-btn" hover-class="press" hover-stay-time="120" bindtap="onBackToToday">
-          <text class="action-btn-text">{{tBtnBack}}</text>
+        <!-- Dual Action Buttons -->
+        <view class="actions-row">
+          <view class="btn-moru btn-ink action-btn" hover-class="press" hover-stay-time="120" bindtap="onBackToToday">
+            <text class="action-btn-text">{{tBtnBack}}</text>
+          </view>
+          <view class="btn-moru btn-sage action-btn" hover-class="press" hover-stay-time="120" bindtap="onViewWeek">
+            <text class="action-btn-text btn-text-dark">{{tBtnViewWeek}}</text>
+          </view>
         </view>
-        <view class="btn-moru btn-sage action-btn" hover-class="press" hover-stay-time="120" bindtap="onViewWeek">
-          <text class="action-btn-text btn-text-dark">{{tBtnViewWeek}}</text>
-        </view>
-      </view>
 
-      <!-- Slogan Footer -->
-      <view class="footer-wrap">
-        <text class="footer-text">{{tFooterText}}</text>
-      </view>
+        <!-- Slogan Footer -->
+        <view class="footer-wrap">
+          <text class="footer-text">{{tFooterText}}</text>
+        </view>
+      </block>
+
+      <!-- ============================================== -->
+      <!-- OTHER HABITS: Same layout as water completion, -->
+      <!-- only the success icon (award badge) differs    -->
+      <!-- ============================================== -->
+      <block wx:else>
+        <!-- Top Title -->
+        <view class="nav-header">
+          <text class="tag-label">{{tTag}}</text>
+          <text class="headline-title">{{tHeadline}}</text>
+        </view>
+
+        <!-- Center Celebration: award badge with confetti (success icon) -->
+        <view class="celebration-center">
+          <view class="award-stage" bindtap="onTapBadge">
+
+            <!-- Confetti & Streamers Layer -->
+            <view class="confetti-field">
+              <!-- Ribbon streamers (SVG) -->
+              <image
+                wx:for="{{streamers}}"
+                wx:key="id"
+                class="confetti-streamer streamer-sway"
+                src="{{item.src}}"
+                style="left: {{item.x}}%; top: {{item.y}}%; width: {{item.w}}rpx; height: {{item.h}}rpx; transform: rotate({{item.rot}}deg); animation-delay: {{item.d}}s; animation-duration: {{item.dur}}s;"
+              />
+
+              <!-- Falling confetti pieces (rect, square, dot, star) -->
+              <view
+                wx:for="{{confettiPieces}}"
+                wx:key="id"
+                class="confetti-item {{item.type}}"
+                style="left: {{item.x}}%; top: {{item.y}}%; width: {{item.w}}rpx; height: {{item.h}}rpx; background-color: {{item.color}}; transform: rotate({{item.rot}}deg); animation-delay: {{item.d}}s; animation-duration: {{item.dur}}s;"
+              ></view>
+
+              <!-- Dynamic Tap Burst Sparks -->
+              <view
+                wx:for="{{burstSparks}}"
+                wx:key="id"
+                class="burst-spark"
+                style="left: 50%; top: 50%; background-color: {{item.color}}; --tx: {{item.tx}}rpx; --ty: {{item.ty}}rpx; --rot: {{item.rot}}deg; --scale: {{item.scale}};"
+              ></view>
+            </view>
+
+            <!-- Golden Shield Award Badge (success icon) -->
+            <view class="award-shield-wrap {{badgePunched ? 'badge-punched' : 'badge-floating'}}">
+              <!-- Ambient Glow Aura -->
+              <view class="shield-aura"></view>
+
+              <!-- Shield Badge Body -->
+              <view class="award-shield">
+                <!-- Shimmer light reflection -->
+                <view class="shield-shimmer"></view>
+
+                <!-- Top section: Metric (e.g. 10km, 10 min, 5 pages) -->
+                <view class="shield-top">
+                  <text class="shield-metric-num">{{badgeMetricVal}}</text>
+                  <text wx:if="{{badgeMetricUnit}}" class="shield-metric-unit">{{badgeMetricUnit}}</text>
+                </view>
+
+                <!-- Horizontal division line -->
+                <view class="shield-divider"></view>
+
+                <!-- Bottom section: Habit Category / Tag -->
+                <view class="shield-bottom">
+                  <text class="shield-tag">{{badgeSub}}</text>
+                </view>
+              </view>
+
+              <!-- Floating Cheer Interactive Toast -->
+              <view wx:if="{{cheerPillVisible}}" class="cheer-toast">
+                <text class="cheer-toast-text">🎉 {{tCheerPraise}} +{{cheerCount}}</text>
+              </view>
+            </view>
+          </view>
+        </view>
+
+        <!-- Metric Count & Progress Bar -->
+        <view class="metric-section">
+          <text class="metric-val">{{metricAdded}}</text>
+          <text class="metric-label">{{tMetricLabel}}</text>
+          <text wx:if="{{note}}" class="metric-note">{{note}}</text>
+
+          <view class="progress-track">
+            <view class="progress-bar {{barAnimated ? 'progress-bar-fill' : ''}}"></view>
+          </view>
+        </view>
+
+        <!-- Encouragement Card -->
+        <view class="encouragement-card">
+          <text class="card-title">{{tCardTitle}}</text>
+          <text class="card-sub">{{tCardSub}}</text>
+        </view>
+
+        <!-- Dual Action Buttons -->
+        <view class="actions-row">
+          <view class="btn-moru btn-ink action-btn" hover-class="press" hover-stay-time="120" bindtap="onBackToToday">
+            <text class="action-btn-text">{{tBtnBack}}</text>
+          </view>
+          <view class="btn-moru btn-sage action-btn" hover-class="press" hover-stay-time="120" bindtap="onViewWeek">
+            <text class="action-btn-text btn-text-dark">{{tBtnViewWeek}}</text>
+          </view>
+        </view>
+
+        <!-- Slogan Footer -->
+        <view class="footer-wrap">
+          <text class="footer-text">{{tFooterText}}</text>
+        </view>
+      </block>
 
     </view>
   </scroll-view>

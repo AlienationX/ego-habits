@@ -11,7 +11,9 @@
   align-items: center;
 }
 
-/* Nav Header (safe-area handled by .topbar above) */
+/* ================================================= */
+/* WATER COMPLETION (Signature original styling)     */
+/* ================================================= */
 .nav-header {
   padding-top: 0;
   width: 100%;
@@ -39,76 +41,14 @@
   letter-spacing: -0.5rpx;
 }
 
-/* Center Celebration Character */
 .celebration-center {
+  width: 100%;
   margin: 30rpx 0 20rpx;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-/* Award badge + confetti (non-water habits) */
-.celebration-badge {
-  position: relative;
-  width: 100%;
-  height: 420rpx;
-}
-
-.confetti-layer {
-  position: absolute;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
-}
-
-.confetti {
-  position: absolute;
-  border-radius: 6rpx;
-  opacity: 0.9;
-  animation: confetti-sway 2.6s ease-in-out infinite alternate;
-}
-
-.confetti.dot {
-  border-radius: 50%;
-}
-
-@keyframes confetti-sway {
-  from {
-    transform: translateY(-8rpx);
-    opacity: 0.7;
-  }
-  to {
-    transform: translateY(10rpx);
-    opacity: 0.95;
-  }
-}
-
-.award-badge {
-  position: relative;
-  width: 240rpx;
-  height: 240rpx;
-  border-radius: 50%;
-  background-color: var(--green);
-  border: 8rpx solid var(--bg-card);
-  box-shadow: 0 16rpx 40rpx rgba(35, 35, 35, 0.16);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  animation: pop-in 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) 0.15s both;
-}
-
-.check-mark {
-  width: 100rpx;
-  height: 56rpx;
-  border-left: 14rpx solid #FFFFFF;
-  border-bottom: 14rpx solid #FFFFFF;
-  border-radius: 6rpx;
-  transform: rotate(-45deg);
-  margin-top: -12rpx;
-}
-
-/* Entrance & idle animations (shared by all completion pages) */
 .char-bounce {
   display: flex;
   align-items: center;
@@ -116,42 +56,6 @@
   animation: soft-bounce 1.8s ease-in-out infinite;
 }
 
-@keyframes pop-in {
-  0% {
-    transform: scale(0);
-    opacity: 0;
-  }
-  60% {
-    transform: scale(1.12);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
-@keyframes rise-in {
-  from {
-    transform: translateY(24rpx);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-@keyframes soft-bounce {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-16rpx);
-  }
-}
-
-/* Metric Section */
 .metric-section {
   width: 100%;
   display: flex;
@@ -185,7 +89,6 @@
   margin-bottom: 28rpx;
 }
 
-/* Progress Track & Fill */
 .progress-track {
   width: 100%;
   height: 12rpx;
@@ -207,7 +110,6 @@
   width: 100%;
 }
 
-/* Encouragement Card */
 .encouragement-card {
   width: 100%;
   background-color: var(--bg-card-sage);
@@ -216,6 +118,7 @@
   display: flex;
   flex-direction: column;
   margin-bottom: 48rpx;
+  box-sizing: border-box;
   animation: rise-in 0.5s ease 0.35s both;
 }
 
@@ -234,7 +137,6 @@
   white-space: pre-line;
 }
 
-/* Dual Action Buttons */
 .actions-row {
   width: 100%;
   display: flex;
@@ -247,7 +149,7 @@
 .action-btn {
   flex: 1;
   padding: 28rpx 0;
-  border-radius: 999rpx;
+  border-radius: 24rpx;
 }
 
 .action-btn-text {
@@ -257,6 +159,526 @@
 
 .btn-text-dark {
   color: #232323;
+}
+
+/* ================================================= */
+/* OTHER HABITS: AWARD SHIELD & FESTIVE CELEBRATION  */
+/* (Inspired by Attachments 1 & 2)                  */
+/* ================================================= */
+
+.award-stage {
+  position: relative;
+  align-self: stretch;
+  width: 100%;
+  flex-shrink: 0;
+  height: 440rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20rpx;
+}
+
+/* Confetti & Streamers field */
+.confetti-field {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.confetti-streamer {
+  position: absolute;
+  pointer-events: none;
+  opacity: 0.92;
+}
+
+.streamer-sway {
+  animation: streamer-wiggle 3.2s ease-in-out infinite alternate;
+}
+
+@keyframes streamer-wiggle {
+  0% {
+    transform: translateY(-8rpx) rotate(0deg);
+  }
+  100% {
+    transform: translateY(14rpx) rotate(8deg);
+  }
+}
+
+.confetti-item {
+  position: absolute;
+  pointer-events: none;
+  opacity: 0.88;
+  animation: confetti-flutter 3.4s ease-in-out infinite alternate;
+}
+
+.confetti-item.rect {
+  border-radius: 4rpx;
+}
+
+.confetti-item.square {
+  border-radius: 4rpx;
+}
+
+.confetti-item.dot {
+  border-radius: 50%;
+}
+
+.confetti-item.star {
+  clip-path: polygon(50% 0%, 65% 35%, 100% 50%, 65% 65%, 50% 100%, 35% 65%, 0% 50%, 35% 35%);
+}
+
+@keyframes confetti-flutter {
+  0% {
+    transform: translateY(-12rpx) rotate(0deg) scale(0.95);
+    opacity: 0.75;
+  }
+  50% {
+    transform: translateY(6rpx) rotate(180deg) scale(1.05);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(18rpx) rotate(360deg) scale(0.95);
+    opacity: 0.8;
+  }
+}
+
+/* Dynamic Burst Sparks on tap */
+.burst-spark {
+  position: absolute;
+  width: 14rpx;
+  height: 14rpx;
+  border-radius: 4rpx;
+  pointer-events: none;
+  animation: burst-fly 0.75s ease-out forwards;
+}
+
+@keyframes burst-fly {
+  0% {
+    transform: translate(-50%, -50%) scale(1) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(var(--scale)) rotate(var(--rot));
+    opacity: 0;
+  }
+}
+
+/* Award Shield Badge Container (Image 2) */
+.award-shield-wrap {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+  cursor: pointer;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.badge-floating {
+  animation: award-pop-in 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s both, award-float 3.2s ease-in-out 0.7s infinite alternate;
+}
+
+.badge-punched {
+  animation: badge-punch 0.38s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes award-pop-in {
+  0% {
+    transform: scale(0.3);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.08);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes award-float {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-12rpx);
+  }
+}
+
+@keyframes badge-punch {
+  0% {
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(0.9) rotate(-3deg);
+  }
+  70% {
+    transform: scale(1.1) rotate(2deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+/* Ambient Warm Glow Aura */
+.shield-aura {
+  position: absolute;
+  width: 330rpx;
+  height: 330rpx;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 215, 64, 0.45) 0%, rgba(255, 215, 64, 0) 70%);
+  filter: blur(18rpx);
+  z-index: -1;
+  animation: aura-breathe 2.8s ease-in-out infinite alternate;
+}
+
+@keyframes aura-breathe {
+  0% {
+    transform: scale(0.92);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(1.08);
+    opacity: 0.95;
+  }
+}
+
+/* Golden Medal Badge Body: circular medal style */
+.award-shield {
+  position: relative;
+  width: 280rpx;
+  height: 280rpx;
+  background: linear-gradient(175deg, #FFDF43 0%, #F5C62B 52%, #E8B41D 100%);
+  border-radius: 50%;
+  border: 3rpx solid rgba(255, 255, 255, 0.55);
+  box-shadow: 0 18rpx 50rpx rgba(232, 180, 29, 0.4), inset 0 0 0 10rpx rgba(255, 255, 255, 0.22), inset 0 2rpx 4rpx rgba(255, 255, 255, 0.8);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 20rpx;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* Dark mode theme support for the Award Medal */
+.theme-dark .award-shield {
+  background: linear-gradient(175deg, #E6C843 0%, #C99E24 55%, #A88112 100%);
+  border: 3rpx solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 18rpx 50rpx rgba(232, 180, 29, 0.28), 0 4rpx 16rpx rgba(0, 0, 0, 0.4), inset 0 0 0 10rpx rgba(255, 255, 255, 0.14);
+}
+
+.theme-dark .shield-aura {
+  background: radial-gradient(circle, rgba(245, 198, 43, 0.35) 0%, rgba(245, 198, 43, 0) 70%);
+}
+
+/* Shimmer Light Reflection Sweep */
+.shield-shimmer {
+  position: absolute;
+  top: -60%;
+  left: -120%;
+  width: 80rpx;
+  height: 240%;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.48) 50%, rgba(255, 255, 255, 0) 100%);
+  transform: rotate(25deg);
+  animation: shimmer-pass 3.8s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes shimmer-pass {
+  0%, 40% {
+    left: -120%;
+  }
+  75%, 100% {
+    left: 200%;
+  }
+}
+
+/* Top Section: Metric Count (10km, 10 min, 5 pages) */
+.shield-top {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: center;
+  gap: 6rpx;
+}
+
+.shield-metric-num {
+  font-size: 64rpx;
+  line-height: 68rpx;
+  font-weight: 900;
+  color: #1A1A1A;
+  letter-spacing: -1.5rpx;
+}
+
+.shield-metric-unit {
+  font-size: 28rpx;
+  line-height: 32rpx;
+  font-weight: 800;
+  color: #232323;
+}
+
+/* Division line across medal */
+.shield-divider {
+  width: 60%;
+  height: 2rpx;
+  background: rgba(35, 35, 35, 0.22);
+  margin: 14rpx 0;
+}
+
+/* Bottom Section: Category / Tag (RUNNING, OUTSIDE, READING) */
+.shield-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.shield-tag {
+  font-size: 24rpx;
+  line-height: 30rpx;
+  font-weight: 800;
+  color: #232323;
+  letter-spacing: 2rpx;
+  text-transform: uppercase;
+}
+
+/* Interactive Floating Cheer Toast */
+.cheer-toast {
+  position: absolute;
+  top: -36rpx;
+  background-color: #232323;
+  padding: 10rpx 28rpx;
+  border-radius: 999rpx;
+  box-shadow: 0 12rpx 32rpx rgba(0, 0, 0, 0.25);
+  animation: cheer-rise 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  z-index: 10;
+  white-space: nowrap;
+}
+
+.cheer-toast-text {
+  font-size: 24rpx;
+  font-weight: 700;
+  color: #FFFFFF;
+}
+
+@keyframes cheer-rise {
+  0% {
+    opacity: 0;
+    transform: translateY(20rpx) scale(0.85);
+  }
+  30% {
+    opacity: 1;
+    transform: translateY(-8rpx) scale(1.05);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(-16rpx) scale(1);
+  }
+}
+
+/* Hint under badge */
+.cheer-hint-wrap {
+  margin-top: 14rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cheer-hint-text {
+  font-size: 22rpx;
+  color: var(--text-muted);
+  letter-spacing: 1rpx;
+}
+
+/* Streak / Goal Milestone Pill */
+.streak-pill-wrap {
+  margin-bottom: 18rpx;
+  animation: rise-in 0.45s ease 0.15s both;
+}
+
+.streak-pill {
+  padding: 10rpx 28rpx;
+  border-radius: 999rpx;
+  background-color: var(--bg-pill);
+  border: 1rpx solid var(--border-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.streak-pill-text {
+  font-size: 24rpx;
+  font-weight: 700;
+  color: var(--green);
+  letter-spacing: 0.5rpx;
+}
+
+/* Celebratory Title & Subtitle (Attachments 1 & 2) */
+.award-header {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 36rpx;
+  animation: rise-in 0.5s ease 0.25s both;
+}
+
+.award-headline {
+  font-size: 52rpx;
+  line-height: 62rpx;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -0.5rpx;
+  margin-bottom: 14rpx;
+}
+
+.award-sub {
+  font-size: 28rpx;
+  line-height: 42rpx;
+  color: var(--text-secondary);
+  padding: 0 20rpx;
+  max-width: 620rpx;
+}
+
+/* Habit Summary Card */
+.habit-summary-card {
+  width: 100%;
+  background-color: var(--bg-card);
+  border-radius: 32rpx;
+  padding: 28rpx 32rpx;
+  margin-bottom: 40rpx;
+  border: 1rpx solid var(--border-light);
+  box-shadow: 0 8rpx 24rpx rgba(35, 35, 35, 0.04);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+  animation: rise-in 0.5s ease 0.35s both;
+}
+
+.summary-card-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 20rpx;
+}
+
+.summary-card-meta {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.summary-card-name {
+  font-size: 30rpx;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 4rpx;
+}
+
+.summary-card-amount {
+  font-size: 26rpx;
+  font-weight: 600;
+  color: var(--green);
+}
+
+.summary-check-icon {
+  width: 48rpx;
+  height: 48rpx;
+  border-radius: 50%;
+  background-color: var(--green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.check-tick {
+  width: 20rpx;
+  height: 12rpx;
+  border-left: 4rpx solid #FFFFFF;
+  border-bottom: 4rpx solid #FFFFFF;
+  border-radius: 2rpx;
+  transform: rotate(-45deg);
+  margin-top: -2rpx;
+}
+
+.summary-card-note {
+  padding-top: 14rpx;
+  border-top: 1rpx solid var(--border-light);
+}
+
+.note-quote {
+  font-size: 24rpx;
+  line-height: 34rpx;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+/* Actions Container (Image 1 Done Button) */
+.actions-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+  margin-bottom: 40rpx;
+  animation: rise-in 0.5s ease 0.45s both;
+}
+
+.done-btn {
+  width: 100%;
+  padding: 32rpx 0;
+  border-radius: 24rpx;
+  box-shadow: 0 12rpx 32rpx rgba(35, 35, 35, 0.16);
+}
+
+.done-btn-text {
+  font-size: 32rpx;
+  font-weight: 800;
+  letter-spacing: 0.5rpx;
+  color: var(--btn-ink-text);
+}
+
+.sub-btn {
+  width: 100%;
+  padding: 26rpx 0;
+  border-radius: 24rpx;
+  background-color: transparent;
+  border: 2rpx solid var(--border-light);
+}
+
+.sub-btn-text {
+  font-size: 28rpx;
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+
+/* Common Animations */
+@keyframes rise-in {
+  from {
+    transform: translateY(24rpx);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes soft-bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-16rpx);
+  }
 }
 
 /* Footer Slogan */

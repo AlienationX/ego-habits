@@ -105,19 +105,20 @@
   margin-right: -10rpx;
 }
 
-/* 2-Column Metrics */
+/* 2-Column Metrics: equal-width columns, both left-aligned */
 .metrics-row {
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  align-items: flex-start;
   margin-bottom: 32rpx;
-  gap: 80rpx;
   padding: 0 8rpx;
 }
 
 .metric-col {
+  flex: 1;
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
 }
 
 .metric-val {
@@ -379,11 +380,18 @@
   margin-bottom: 32rpx;
 }
 
+/* Flat CTA, shared by all habits (matches the app's card style) */
 .cta-btn {
   width: 100%;
   padding: 32rpx 0;
-  border-radius: 999rpx;
-  box-shadow: 0 8rpx 28rpx rgba(35, 35, 35, 0.16);
+  border-radius: 32rpx;
+  box-shadow: none;
+}
+
+/* Module-practice CTA: token green */
+.cta-module {
+  background-color: var(--btn-green-bg);
+  color: var(--btn-green-text);
 }
 
 .cta-btn-text {

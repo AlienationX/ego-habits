@@ -66,19 +66,28 @@ App({
     // Keep the status bar (time/battery/signal) readable across themes.
     // With `navigationStyle: "custom"` the page content runs beneath the
     // status bar, so its text color must be flipped when the theme changes.
-    if (wx.setNavigationBarColor) {
-      const isDark = resolvedTheme === 'dark';
-      wx.setNavigationBarColor({
-        frontColor: isDark ? '#ffffff' : '#000000',
-        backgroundColor: isDark ? '#171917' : '#F6F5EE'
-      });
-    }
+    this.applyStatusBar(resolvedTheme);
 
     this._notifyThemeChange();
   },
 
+  // Explicitly set the status-bar foreground color for the CURRENT page.
+  // `wx.setNavigationBarColor` only affects the page that calls it, so every
+  // tab page must call this in its `updateTheme` (via onShow) as well — the
+  // `@navTxtStyle` variable in theme.json is unreliable with `navigationStyle:
+  // "custom"` on device, which leaves some tabs with black text in dark mode.
+  applyStatusBar(theme) {
+    if (!wx.setNavigationBarColor) return;
+    const isDark = theme === 'dark';
+    wx.setNavigationBarColor({
+      frontColor: isDark ? '#ffffff' : '#000000',
+      backgroundColor: isDark ? '#171917' : '#F6F5EE'
+    });
+  },
+
   globalData: {
     theme: 'light',
-    themePreference: 'auto'
+    themePreference: 'auto',
+    tabIndex: 0
   }
 });

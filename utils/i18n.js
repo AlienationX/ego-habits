@@ -7,25 +7,33 @@ const zh = require('../locales/zh.js');
 const STORAGE_LANG_KEY = 'egohabits_lang';
 const listeners = [];
 
+// User preference: 'auto' (follow system) | 'en' | 'zh'
+let langPreference = 'auto';
 let currentLang = 'en';
 
-try {
-  const saved = wx.getStorageSync(STORAGE_LANG_KEY);
-  if (saved === 'zh' || saved === 'en') {
-    currentLang = saved;
-  } else {
-    // Check system language
+// Resolve the preference to a concrete language.
+// 'auto' follows the system language (zh* -> zh, otherwise en).
+function resolveLang(pref) {
+  if (pref === 'en' || pref === 'zh') return pref;
+  try {
     let lang = '';
     if (wx.getAppBaseInfo) {
       lang = wx.getAppBaseInfo().language || '';
     }
-    if (lang.startsWith('zh')) {
-      currentLang = 'zh';
-    }
+    return lang.startsWith('zh') ? 'zh' : 'en';
+  } catch (e) {
+    return 'en';
   }
-} catch (e) {
-  currentLang = 'en';
 }
+
+try {
+  const saved = wx.getStorageSync(STORAGE_LANG_KEY);
+  if (saved === 'zh' || saved === 'en' || saved === 'auto') {
+    langPreference = saved;
+  }
+} catch (e) {}
+
+currentLang = resolveLang(langPreference);
 
 function getDictionary() {
   return currentLang === 'zh' ? zh : en;
@@ -52,9 +60,14 @@ function getLanguage() {
   return currentLang;
 }
 
+function getLanguagePreference() {
+  return langPreference;
+}
+
 function setLanguage(lang) {
-  if (lang !== 'en' && lang !== 'zh') return;
-  currentLang = lang;
+  if (lang !== 'en' && lang !== 'zh' && lang !== 'auto') return;
+  langPreference = lang;
+  currentLang = resolveLang(lang);
   try {
     wx.setStorageSync(STORAGE_LANG_KEY, lang);
   } catch (e) {}
@@ -77,6 +90,7 @@ function onLanguageChange(fn) {
 module.exports = {
   t,
   getLanguage,
+  getLanguagePreference,
   setLanguage,
   onLanguageChange,
   getDictionary

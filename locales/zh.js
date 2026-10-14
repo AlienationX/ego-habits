@@ -182,7 +182,15 @@ module.exports = {
       cardSub: "又一个温柔时刻，被记住了。",
       btnBack: "返回今日",
       btnViewWeek: "查看本周",
-      footerText: "微习惯，慢慢成长。"
+      footerText: "微习惯，慢慢成长。",
+      awardBadgeTitle: "新成就达成",
+      youAreAllSet: "全部搞定！",
+      done: "完成",
+      tapToCheer: "轻触奖牌欢呼！",
+      cheered: "次欢呼",
+      streakPill: "天连续达成",
+      goalCompletedPill: "今日目标达成",
+      awardSub: "恭喜完成今日打卡！太棒了{name}，保持从容，踏实前行，遇见更美好的自己。"
     },
     water: {
       tag: "喝水完成 / 已达成",
@@ -194,13 +202,46 @@ module.exports = {
       tag: "散步完成 / 已达成",
       headline: "透了一口气，完成。",
       cardTitle: "你轻轻地动了动。",
-      cardSub: "走一小段路，也能改变一整天。"
+      cardSub: "走一小段路，也能改变一整天。",
+      badgeLabel: "户外散步",
+      awardTitle: "新成就达成",
+      awardSub: "恭喜达成今日户外散步！太棒了{name}，走入自然，新鲜空气能为身心注入满满能量。"
     },
     read: {
       tag: "阅读完成 / 已达成",
       headline: "读了几页，完成。",
       cardTitle: "你为故事留了时间。",
-      cardSub: "一页一页，慢慢积累。"
+      cardSub: "一页一页，慢慢积累。",
+      badgeLabel: "静心阅读",
+      awardTitle: "新成就达成",
+      awardSub: "恭喜完成今日阅读时光！太棒了{name}，翻过几页，字里行间的沉淀正悄然为你构筑广阔世界。"
+    },
+    eyes: {
+      tag: "护眼完成 / 已达成",
+      headline: "闭目养神，完成。",
+      cardTitle: "你让眼睛歇了歇。",
+      cardSub: "片刻的黑暗，换来持久的清澈。",
+      badgeLabel: "闭目养神",
+      awardTitle: "温柔停顿",
+      awardSub: "恭喜完成双眼休整！太棒了{name}，闭目放空片刻，让视线与心灵重获清明与轻松。"
+    },
+    task: {
+      tag: "专注完成 / 已达成",
+      headline: "专注一事，完成。",
+      cardTitle: "你沉浸在其中。",
+      cardSub: "十五分钟的心流，带来内心的笃定。",
+      badgeLabel: "专注达成",
+      awardTitle: "专注成就",
+      awardSub: "恭喜完成今日专注时刻！太棒了{name}，不慌不忙沉浸其中，微小的专注正在汇聚成笃定的力量。"
+    },
+    breathe: {
+      tag: "呼吸完成 / 已达成",
+      headline: "平缓呼吸，完成。",
+      cardTitle: "你找回了内心的节奏。",
+      cardSub: "深长的一呼一吸，抚平浮躁与疲惫。",
+      badgeLabel: "平缓呼吸",
+      awardTitle: "静心达成",
+      awardSub: "恭喜完成深呼吸练习！太棒了{name}，在舒缓节律中重归当下，身心重获宁静与平衡。"
     }
   },
   breath: {

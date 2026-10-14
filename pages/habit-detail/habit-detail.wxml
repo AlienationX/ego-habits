@@ -65,7 +65,7 @@
       <!-- CTA Button -->
       <view class="cta-wrap">
         <view
-          class="btn-moru btn-ink cta-btn {{isCompleted ? 'cta-completed' : ''}}"
+          class="btn-moru cta-btn {{habit.module ? 'cta-module' : (isCompleted ? 'btn-ink cta-completed' : 'btn-ink')}}"
           hover-class="press"
           hover-stay-time="120"
           bindtap="onLogHabit"

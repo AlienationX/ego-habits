@@ -40,11 +40,12 @@ Page({
   },
 
   updateTheme(theme) {
+    const app = getApp();
     if (!theme) {
-      const app = getApp();
       theme = (app && app.globalData.theme) || 'light';
     }
     this.setData({ themeClass: `theme-${theme}` });
+    if (app && app.applyStatusBar) app.applyStatusBar(theme);
   },
 
   loadHabitsLibraryData() {

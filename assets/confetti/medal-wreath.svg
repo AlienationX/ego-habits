@@ -1,0 +1,167 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 350 330" width="350" height="330" fill="none">
+  <defs>
+    <linearGradient id="gold-stem" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#D99E10"/>
+      <stop offset="50%" stop-color="#F5C62B"/>
+      <stop offset="100%" stop-color="#FFE066"/>
+    </linearGradient>
+    <linearGradient id="gold-grain" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#CF910C"/>
+      <stop offset="60%" stop-color="#F7C934"/>
+      <stop offset="100%" stop-color="#FFEB80"/>
+    </linearGradient>
+    <linearGradient id="gold-grain-hl" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#F7C934" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.75"/>
+    </linearGradient>
+    <filter id="drop-shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="1.5" stdDeviation="1.2" flood-color="#A67305" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+
+  <!-- Left stem arc -->
+  <path d="M175,308 C115,305 40,245 42,150 C43,105 70,60 102,35" stroke="url(#gold-stem)" stroke-width="3.8" stroke-linecap="round" fill="none"/>
+  <!-- Right stem arc -->
+  <path d="M175,308 C235,305 310,245 308,150 C307,105 280,60 248,35" stroke="url(#gold-stem)" stroke-width="3.8" stroke-linecap="round" fill="none"/>
+
+  <!-- Wheat grains -->
+  
+      <g transform="translate(136.7,22.0) rotate(-107) scale(1.00)">
+        <!-- grain body -->
+        <path d="M0,0 C6,-9 7,-22 0,-28 C-7,-22 -6,-9 0,0 Z" fill="url(#gold-grain)" filter="url(#drop-shadow)"/>
+        <path d="M0,-2 C3,-9 3,-20 0,-25 C-3,-20 -3,-9 0,-2 Z" fill="url(#gold-grain-hl)"/>
+        <!-- grain awn / whisker -->
+        <path d="M0,-28 Q2,-38 5,-46" stroke="#D99E10" stroke-width="1.4" stroke-linecap="round" fill="none"/>
+      </g>
+    
+      <g transform="translate(90.1,43.8) rotate(-87) scale(0.95)">
+        <!-- grain body -->
+        <path d="M0,0 C6,-9 7,-22 0,-28 C-7,-22 -6,-9 0,0 Z" fill="url(#gold-grain)" filter="url(#drop-shadow)"/>
+        <path d="M0,-2 C3,-9 3,-20 0,-25 C-3,-20 -3,-9 0,-2 Z" fill="url(#gold-grain-hl)"/>
+        <!-- grain awn / whisker -->
+        <path d="M0,-28 Q2,-38 5,-46" stroke="#D99E10" stroke-width="1.4" stroke-linecap="round" fill="none"/>
+      </g>
+    
+      <g transform="translate(53.8,80.1) rotate(-67) scale(0.90)">
+        <!-- grain body -->
+        <path d="M0,0 C6,-9 7,-22 0,-28 C-7,-22 -6,-9 0,0 Z" fill="url(#gold-grain)" filter="url(#drop-shadow)"/>
+        <path d="M0,-2 C3,-9 3,-20 0,-25 C-3,-20 -3,-9 0,-2 Z" fill="url(#gold-grain-hl)"/>
+        <!-- grain awn / whisker -->
+        <path d="M0,-28 Q2,-38 5,-46" stroke="#D99E10" stroke-width="1.4" stroke-linecap="round" fill="none"/>
+      </g>
+    
+      <g transform="translate(32.0,126.7) rotate(-47) scale(0.85)">
+        <!-- grain body -->
+        <path d="M0,0 C6,-9 7,-22 0,-28 C-7,-22 -6,-9 0,0 Z" fill="url(#gold-grain)" filter="url(#drop-shadow)"/>
+        <path d="M0,-2 C3,-9 3,-20 0,-25 C-3,-20 -3,-9 0,-2 Z" fill="url(#gold-grain-hl)"/>
+        <!-- grain awn / whisker -->
+        <path d="M0,-28 Q2,-38 5,-46" stroke="#D99E10" stroke-width="1.4" stroke-linecap="round" fill="none"/>
+      </g>
+    
+      <g transform="translate(27.6,177.9) rotate(-27) scale(0.80)">
+        <!-- grain body -->
+        <path d="M0,0 C6,-9 7,-22 0,-28 C-7,-22 -6,-9 0,0 Z" fill="url(#gold-grain)" filter="url(#drop-shadow)"/>
+        <path d="M0,-2 C3,-9 3,-20 0,-25 C-3,-20 -3,-9 0,-2 Z" fill="url(#gold-grain-hl)"/>
+        <!-- grain awn / whisker -->
+        <path d="M0,-28 Q2,-38 5,-46" stroke="#D99E10" stroke-width="1.4" stroke-linecap="round" fill="none"/>
+      </g>
+    
+      <g transform="translate(40.9,227.5) rotate(-7) scale(0.75)">
+        <!-- grain body -->
+        <path d="M0,0 C6,-9 7,-22 0,-28 C-7,-22 -6,-9 0,0 Z" fill="url(#gold-grain)" filter="url(#drop-shadow)"/>
+        <path d="M0,-2 C3,-9 3,-20 0,-25 C-3,-20 -3,-9 0,-2 Z" fill="url(#gold-grain-hl)"/>
+        <!-- grain awn / whisker -->
+        <path d="M0,-28 Q2,-38 5,-46" stroke="#D99E10" stroke-width="1.4" stroke-linecap="round" fill="none"/>
+      </g>
+    
+      <g transform="translate(70.3,269.7) rotate(13) scale(0.70)">
+        <!-- grain body -->
+        <path d="M0,0 C6,-9 7,-22 0,-28 C-7,-22 -6,-9 0,0 Z" fill="url(#gold-grain)" filter="url(#drop-shadow)"/>
+        <path d="M0,-2 C3,-9 3,-20 0,-25 C-3,-20 -3,-9 0,-2 Z" fill="url(#gold-grain-hl)"/>
+        <!-- grain awn / whisker -->
+        <path d="M0,-28 Q2,-38 5,-46" stroke="#D99E10" stroke-width="1.4" stroke-linecap="round" fill="none"/>
+      </g>
+    
+      <g transform="translate(105.5,295.7) rotate(30) scale(0.65)">
+        <!-- grain body -->
+        <path d="M0,0 C6,-9 7,-22 0,-28 C-7,-22 -6,-9 0,0 Z" fill="url(#gold-grain)" filter="url(#drop-shadow)"/>
+        <path d="M0,-2 C3,-9 3,-20 0,-25 C-3,-20 -3,-9 0,-2 Z" fill="url(#gold-grain-hl)"/>
+        <!-- grain awn / whisker -->
+        <path d="M0,-28 Q2,-38 5,-46" stroke="#D99E10" stroke-width="1.4" stroke-linecap="round" fill="none"/>
+      </g>
+    
+  
+      <g transform="translate(213.3,22.0) rotate(107) scale(1.00)">
+        <!-- grain body -->
+        <path d="M0,0 C6,-9 7,-22 0,-28 C-7,-22 -6,-9 0,0 Z" fill="url(#gold-grain)" filter="url(#drop-shadow)"/>
+        <path d="M0,-2 C3,-9 3,-20 0,-25 C-3,-20 -3,-9 0,-2 Z" fill="url(#gold-grain-hl)"/>
+        <!-- grain awn / whisker -->
+        <path d="M0,-28 Q-2,-38 -5,-46" stroke="#D99E10" stroke-width="1.4" stroke-linecap="round" fill="none"/>
+      </g>
+    
+      <g transform="translate(259.9,43.8) rotate(87) scale(0.95)">
+        <!-- grain body -->
+        <path d="M0,0 C6,-9 7,-22 0,-28 C-7,-22 -6,-9 0,0 Z" fill="url(#gold-grain)" filter="url(#drop-shadow)"/>
+        <path d="M0,-2 C3,-9 3,-20 0,-25 C-3,-20 -3,-9 0,-2 Z" fill="url(#gold-grain-hl)"/>
+        <!-- grain awn / whisker -->
+        <path d="M0,-28 Q-2,-38 -5,-46" stroke="#D99E10" stroke-width="1.4" stroke-linecap="round" fill="none"/>
+      </g>
+    
+      <g transform="translate(296.2,80.1) rotate(67) scale(0.90)">
+        <!-- grain body -->
+        <path d="M0,0 C6,-9 7,-22 0,-28 C-7,-22 -6,-9 0,0 Z" fill="url(#gold-grain)" filter="url(#drop-shadow)"/>
+        <path d="M0,-2 C3,-9 3,-20 0,-25 C-3,-20 -3,-9 0,-2 Z" fill="url(#gold-grain-hl)"/>
+        <!-- grain awn / whisker -->
+        <path d="M0,-28 Q-2,-38 -5,-46" stroke="#D99E10" stroke-width="1.4" stroke-linecap="round" fill="none"/>
+      </g>
+    
+      <g transform="translate(318.0,126.7) rotate(47) scale(0.85)">
+        <!-- grain body -->
+        <path d="M0,0 C6,-9 7,-22 0,-28 C-7,-22 -6,-9 0,0 Z" fill="url(#gold-grain)" filter="url(#drop-shadow)"/>
+        <path d="M0,-2 C3,-9 3,-20 0,-25 C-3,-20 -3,-9 0,-2 Z" fill="url(#gold-grain-hl)"/>
+        <!-- grain awn / whisker -->
+        <path d="M0,-28 Q-2,-38 -5,-46" stroke="#D99E10" stroke-width="1.4" stroke-linecap="round" fill="none"/>
+      </g>
+    
+      <g transform="translate(322.4,177.9) rotate(27) scale(0.80)">
+        <!-- grain body -->
+        <path d="M0,0 C6,-9 7,-22 0,-28 C-7,-22 -6,-9 0,0 Z" fill="url(#gold-grain)" filter="url(#drop-shadow)"/>
+        <path d="M0,-2 C3,-9 3,-20 0,-25 C-3,-20 -3,-9 0,-2 Z" fill="url(#gold-grain-hl)"/>
+        <!-- grain awn / whisker -->
+        <path d="M0,-28 Q-2,-38 -5,-46" stroke="#D99E10" stroke-width="1.4" stroke-linecap="round" fill="none"/>
+      </g>
+    
+      <g transform="translate(309.1,227.5) rotate(7) scale(0.75)">
+        <!-- grain body -->
+        <path d="M0,0 C6,-9 7,-22 0,-28 C-7,-22 -6,-9 0,0 Z" fill="url(#gold-grain)" filter="url(#drop-shadow)"/>
+        <path d="M0,-2 C3,-9 3,-20 0,-25 C-3,-20 -3,-9 0,-2 Z" fill="url(#gold-grain-hl)"/>
+        <!-- grain awn / whisker -->
+        <path d="M0,-28 Q-2,-38 -5,-46" stroke="#D99E10" stroke-width="1.4" stroke-linecap="round" fill="none"/>
+      </g>
+    
+      <g transform="translate(279.7,269.7) rotate(-13) scale(0.70)">
+        <!-- grain body -->
+        <path d="M0,0 C6,-9 7,-22 0,-28 C-7,-22 -6,-9 0,0 Z" fill="url(#gold-grain)" filter="url(#drop-shadow)"/>
+        <path d="M0,-2 C3,-9 3,-20 0,-25 C-3,-20 -3,-9 0,-2 Z" fill="url(#gold-grain-hl)"/>
+        <!-- grain awn / whisker -->
+        <path d="M0,-28 Q-2,-38 -5,-46" stroke="#D99E10" stroke-width="1.4" stroke-linecap="round" fill="none"/>
+      </g>
+    
+      <g transform="translate(244.5,295.7) rotate(-30) scale(0.65)">
+        <!-- grain body -->
+        <path d="M0,0 C6,-9 7,-22 0,-28 C-7,-22 -6,-9 0,0 Z" fill="url(#gold-grain)" filter="url(#drop-shadow)"/>
+        <path d="M0,-2 C3,-9 3,-20 0,-25 C-3,-20 -3,-9 0,-2 Z" fill="url(#gold-grain-hl)"/>
+        <!-- grain awn / whisker -->
+        <path d="M0,-28 Q-2,-38 -5,-46" stroke="#D99E10" stroke-width="1.4" stroke-linecap="round" fill="none"/>
+      </g>
+    
+
+  <!-- Bottom Tie Knot / Bow -->
+  <g transform="translate(175, 308)">
+    <ellipse cx="0" cy="0" rx="9" ry="7" fill="#F5C62B" stroke="#CF910C" stroke-width="1.5"/>
+    <path d="M-8,1 C-18,-4 -22,6 -14,10 Z" fill="#F7C934" stroke="#CF910C" stroke-width="1"/>
+    <path d="M8,1 C18,-4 22,6 14,10 Z" fill="#F7C934" stroke="#CF910C" stroke-width="1"/>
+    <!-- Center star accent -->
+    <path d="M0,-4 L1,-1 L4,-1 L1.5,1 L2.5,4 L0,2 L-2.5,4 L-1.5,1 L-4,-1 L-1,-1 Z" fill="#FFFFFF" opacity="0.9"/>
+  </g>
+</svg>

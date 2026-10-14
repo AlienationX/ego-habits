@@ -25,7 +25,7 @@
   justify-content: space-between;
   background-color: var(--tabbar-bg, #232323);
   box-shadow: var(--tabbar-shadow, 0 16rpx 48rpx rgba(35, 35, 35, 0.16));
-  border-radius: 999rpx;
+  border-radius: 40rpx;
   padding: 12rpx;
 }
 
@@ -37,7 +37,7 @@
   align-items: center;
   justify-content: center;
   padding: 14rpx 0 10rpx;
-  border-radius: 999rpx;
+  border-radius: 28rpx;
   transition: transform 0.15s ease, opacity 0.15s ease;
 }
 

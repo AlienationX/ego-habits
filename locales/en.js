@@ -182,7 +182,15 @@ module.exports = {
       cardSub: "Another gentle moment, remembered.",
       btnBack: "Back to today",
       btnViewWeek: "View my week",
-      footerText: "Small habits. Room to grow."
+      footerText: "Small habits. Room to grow.",
+      awardBadgeTitle: "New Award",
+      youAreAllSet: "You Are All Set!",
+      done: "Done",
+      tapToCheer: "Tap badge to cheer!",
+      cheered: "Cheers",
+      streakPill: "Day Streak",
+      goalCompletedPill: "Goal Complete",
+      awardSub: "You completed your daily habit! Way to go {name}, train hard and reach new heights."
     },
     water: {
       tag: "WATER BREAK / COMPLETE",
@@ -194,13 +202,46 @@ module.exports = {
       tag: "STEP OUT / COMPLETE",
       headline: "A breath of fresh air, done.",
       cardTitle: "You moved, gently.",
-      cardSub: "A little walk can change the whole day."
+      cardSub: "A little walk can change the whole day.",
+      badgeLabel: "OUTSIDE",
+      awardTitle: "New Award",
+      awardSub: "You completed your outdoor walk! Way to go {name}, fresh air and movement charge your whole day."
     },
     read: {
       tag: "READ / COMPLETE",
       headline: "A few pages, done.",
       cardTitle: "You made time for a story.",
-      cardSub: "Little by little, the pages add up."
+      cardSub: "Little by little, the pages add up.",
+      badgeLabel: "READING",
+      awardTitle: "New Award",
+      awardSub: "You made quiet time for reading! Way to go {name}, page by page you unfold new worlds."
+    },
+    eyes: {
+      tag: "REST EYES / COMPLETE",
+      headline: "A gentle pause, done.",
+      cardTitle: "You rested your eyes.",
+      cardSub: "A few moments of quiet rest goes a long way.",
+      badgeLabel: "EYE REST",
+      awardTitle: "Gentle Pause",
+      awardSub: "You gave your eyes a peaceful rest! Way to go {name}, mindful stillness restores your focus."
+    },
+    task: {
+      tag: "TASK / COMPLETE",
+      headline: "One small focus, done.",
+      cardTitle: "You stayed with it.",
+      cardSub: "Fifteen mindful minutes bring clarity.",
+      badgeLabel: "FOCUS",
+      awardTitle: "Focused Win",
+      awardSub: "You finished your focused session! Way to go {name}, steady steps create massive momentum."
+    },
+    breathe: {
+      tag: "BREATHE / COMPLETE",
+      headline: "Calm breath, done.",
+      cardTitle: "You centered yourself.",
+      cardSub: "Deep breaths soothe body and mind.",
+      badgeLabel: "BREATHE",
+      awardTitle: "Inner Calm",
+      awardSub: "You finished your breathing rhythm! Way to go {name}, returning to calm keeps you centered."
     }
   },
   breath: {

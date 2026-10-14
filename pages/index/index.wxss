@@ -85,6 +85,7 @@
   align-self: flex-start;
   padding: 28rpx 46rpx;
   font-size: 30rpx;
+  border-radius: 24rpx;
 }
 
 .hero-btn-text {

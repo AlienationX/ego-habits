@@ -23,6 +23,7 @@ Page({
     // Preferences Modal
     showPrefModal: false,
     currentLang: 'en',
+    langPref: 'auto',
     currentTheme: 'auto',
     tPrefTitle: '',
     tLanguage: '',
@@ -55,11 +56,12 @@ Page({
   },
 
   updateTheme(theme) {
+    const app = getApp();
     if (!theme) {
-      const app = getApp();
       theme = (app && app.globalData.theme) || 'light';
     }
     this.setData({ themeClass: `theme-${theme}` });
+    if (app && app.applyStatusBar) app.applyStatusBar(theme);
   },
 
   loadProfileData() {
@@ -71,6 +73,7 @@ Page({
     this.setData({
       profile,
       currentLang: i18n.getLanguage(),
+      langPref: i18n.getLanguagePreference(),
       currentTheme: storage.getTheme(),
       tTag: i18n.t('you.tag'),
       tYouHeadline: i18n.t('you.headline'),
@@ -139,7 +142,10 @@ Page({
   onSelectLanguage(e) {
     const lang = e.currentTarget.dataset.lang;
     i18n.setLanguage(lang);
-    this.setData({ currentLang: lang });
+    this.setData({
+      currentLang: i18n.getLanguage(),
+      langPref: i18n.getLanguagePreference()
+    });
     this.loadProfileData();
   },
 
