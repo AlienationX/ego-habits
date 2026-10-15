@@ -55,14 +55,15 @@ Page({
   },
 
   updateTheme(theme) {
+    const app = getApp();
     if (!theme) {
-      const app = getApp();
       theme = (app && app.globalData.theme) || 'light';
     }
     this.setData({
       themeClass: `theme-${theme}`,
       sliderColor: theme === 'dark' ? '#54B560' : '#4FA65A'
     });
+    if (app && app.applyStatusBar) app.applyStatusBar(theme);
   },
 
   loadModes() {

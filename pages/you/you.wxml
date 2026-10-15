@@ -200,14 +200,21 @@
       <view class="pref-row">
         <text class="pref-label">{{tLanguage}}</text>
         <view class="pref-options">
-          <view 
+          <view
+            hover-class="press-soft" hover-stay-time="120" class="pref-opt-pill {{langPref === 'auto' ? 'pref-opt-active' : ''}}"
+            bindtap="onSelectLanguage"
+            data-lang="auto"
+          >
+            <text class="pref-opt-text">Auto</text>
+          </view>
+          <view
             hover-class="press-soft" hover-stay-time="120" class="pref-opt-pill {{langPref === 'en' ? 'pref-opt-active' : ''}}"
             bindtap="onSelectLanguage"
             data-lang="en"
           >
             <text class="pref-opt-text">English</text>
           </view>
-          <view 
+          <view
             hover-class="press-soft" hover-stay-time="120" class="pref-opt-pill {{langPref === 'zh' ? 'pref-opt-active' : ''}}"
             bindtap="onSelectLanguage"
             data-lang="zh"

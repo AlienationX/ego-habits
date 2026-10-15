@@ -1,0 +1,22 @@
+{
+  "date": "2026-10-15",
+  "topic": "water",
+  "topicTitle": "喝一杯水",
+  "angle": "feature",
+  "character": "water",
+  "tint": "blue",
+  "gongzhonghao": {
+    "title": "「喝一杯水」：一杯温水。一次小小重启。",
+    "file": "gongzhonghao.md"
+  },
+  "xiaohongshu": {
+    "title": "每天1件小事治愈内耗｜喝一杯水",
+    "file": "xiaohongshu.md"
+  },
+  "images": {
+    "cover": true,
+    "stickers": 3,
+    "prompts": "images/prompts.json"
+  },
+  "generatedAt": "2026-10-15T05:50:10.318Z"
+}
